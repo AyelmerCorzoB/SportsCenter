@@ -1,15 +1,15 @@
-package com.skeletonhexa.infrastructure.database;
+package com.skeletonhexa.config;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public enum AppSingleton {
+public enum HexaSingleton {
     INSTANCIA;
 
     private final Properties propiedades = new Properties();
 
-    AppSingleton() {
+    HexaSingleton() {
         cargarConfiguraciones("config.properties");
     }
 

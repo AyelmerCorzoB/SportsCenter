@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.skeletonhexa.config.HexaSingleton;
+
 public class ConnMySql implements ConnectionDb {
     @Override
     public Connection getConexion() throws SQLException {
-        AppSingleton config = AppSingleton.INSTANCIA;
+        HexaSingleton config = HexaSingleton.INSTANCIA;
         String url = config.get("db.url");
         String usuario = config.get("db.user");
         String password = config.get("db.password");
