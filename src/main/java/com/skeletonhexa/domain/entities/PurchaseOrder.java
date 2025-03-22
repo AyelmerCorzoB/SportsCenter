@@ -8,14 +8,13 @@ import com.skeletonhexa.domain.model.StatusType;
 public class PurchaseOrder {
     private int id;
     private Date date;
-    private int supplierId; // Referencia al proveedor (Supplier)
-    private StatusType status; // Enum para el estado de la orden
-    private int employeeId; // Referencia al empleado (Employee)
+    private int supplierId;
+    private StatusType status;
+    private int employeeId;
 
-    // Constructor vacío
-    public PurchaseOrder() {}
+    public PurchaseOrder() {
+    }
 
-    // Constructor con todos los campos
     public PurchaseOrder(int id, Date date, int supplierId, StatusType status, int employeeId) {
         this.id = id;
         this.date = date;
@@ -24,7 +23,6 @@ public class PurchaseOrder {
         this.employeeId = employeeId;
     }
 
-    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -65,7 +63,6 @@ public class PurchaseOrder {
         this.employeeId = employeeId;
     }
 
-    // Método toString para representación en cadena
     @Override
     public String toString() {
         return "PurchaseOrder{" +
@@ -77,13 +74,15 @@ public class PurchaseOrder {
                 '}';
     }
 
-    // Método equals y hashCode para comparar objetos PurchaseOrder
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         PurchaseOrder that = (PurchaseOrder) o;
-        return id == that.id && supplierId == that.supplierId && employeeId == that.employeeId && Objects.equals(date, that.date) && status == that.status;
+        return id == that.id && supplierId == that.supplierId && employeeId == that.employeeId
+                && Objects.equals(date, that.date) && status == that.status;
     }
 
     @Override

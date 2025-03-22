@@ -5,16 +5,15 @@ import java.util.Objects;
 
 public class SaleDetail {
     private int id;
-    private int saleId; // Referencia a la venta (Sale)
-    private int productId; // Referencia al producto (Product)
-    private int quantity; // Cantidad vendida
-    private BigDecimal unitPrice; // Precio unitario del producto
-    private BigDecimal subtotal; // Subtotal (quantity * unitPrice)
+    private int saleId;
+    private int productId;
+    private int quantity;
+    private BigDecimal unitPrice;
+    private BigDecimal subtotal;
 
-    // Constructor vacío
-    public SaleDetail() {}
+    public SaleDetail() {
+    }
 
-    // Constructor con todos los campos
     public SaleDetail(int id, int saleId, int productId, int quantity, BigDecimal unitPrice, BigDecimal subtotal) {
         this.id = id;
         this.saleId = saleId;
@@ -24,7 +23,6 @@ public class SaleDetail {
         this.subtotal = subtotal;
     }
 
-    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -73,7 +71,6 @@ public class SaleDetail {
         this.subtotal = subtotal;
     }
 
-    // Método toString para representación en cadena
     @Override
     public String toString() {
         return "SaleDetail{" +
@@ -86,13 +83,15 @@ public class SaleDetail {
                 '}';
     }
 
-    // Método equals y hashCode para comparar objetos SaleDetail
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         SaleDetail that = (SaleDetail) o;
-        return id == that.id && saleId == that.saleId && productId == that.productId && quantity == that.quantity && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(subtotal, that.subtotal);
+        return id == that.id && saleId == that.saleId && productId == that.productId && quantity == that.quantity
+                && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(subtotal, that.subtotal);
     }
 
     @Override
