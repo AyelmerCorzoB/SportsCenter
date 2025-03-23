@@ -5,11 +5,11 @@ import java.util.Scanner;
 import com.skeletonhexa.adapter.validations.ValidationInt;
 
 public class SearchCategory {
-    public void buscar(Scanner sc, CategoryUseCase categoryUseCase) {
+    public void search(Scanner sc, CategoryUseCase categoryUseCase) {
         System.out.print("Ingresa el ID de la categoria a buscar: ");
         ValidationInt.validate(sc);
-        int idBusqueda = sc.nextInt();
+        int idSearch = sc.nextInt();
         sc.nextLine();
-        categoryUseCase.getCategory(idBusqueda);
+        categoryUseCase.getCategory(idSearch);
     }
 }

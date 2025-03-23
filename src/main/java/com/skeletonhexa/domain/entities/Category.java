@@ -23,7 +23,9 @@ public class Category {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+    public Category(int id) {
+        this.id = id;
+    }
     public Category(String name, String description) {
         this.name = name;
         this.description = description;

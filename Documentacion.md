@@ -12,7 +12,7 @@
 
 ·     Registrar clientes con nombre, tipo (individual o empresa), documento, correo y teléfono.
 
-·     Consultar historial de compras de cada cliente.
+·     Consultar historial de Purchases de cada cliente.
 
 **- Gestión de Ventas**
 
@@ -42,7 +42,7 @@
 
 ·     Listar productos más vendidos.
 
-·     Mostrar clientes con mayor número de compras.
+·     Mostrar clientes con mayor número de Purchases.
 
 ·     Generar reporte de productos con bajo inventario.
 
@@ -67,7 +67,7 @@
 2. **Editar información de un cliente**: El sistema permite modificar los datos de un cliente registrado.
 3. **Consultar información de un cliente**: El sistema muestra los detalles de un cliente específico.
 4. **Eliminar un cliente**: El sistema permite eliminar un cliente del registro.
-5. **Consultar historial de compras de un cliente**: El sistema muestra todas las compras realizadas por un cliente.
+5. **Consultar historial de Purchases de un cliente**: El sistema muestra todas las Purchases realizadas por un cliente.
 
 ------
 
@@ -105,7 +105,7 @@
 2. **Generar  reporte de ventas semanales**: El sistema genera un reporte de todas las ventas realizadas en una semana.
 3. **Generar reporte de ventas mensuales**: El sistema genera un reporte de todas las ventas realizadas en un mes.
 4. **Listar  productos más vendidos**: El sistema muestra un listado de los productos con mayor cantidad de ventas.
-5. **Mostrar clientes con mayor número de compras**: El sistema muestra un listado de los clientes que más compras han realizado.
+5. **Mostrar clientes con mayor número de Purchases**: El sistema muestra un listado de los clientes que más Purchases han realizado.
 6. **Generar reporte de productos con bajo inventario**: El sistema genera un reporte de los productos que tienen un stock por debajo del mínimo establecido.
 
 ------
@@ -209,8 +209,8 @@ CREATE TABLE User (
     CHECK (LENGTH(password) >= 8)
 );
 
--- Tabla PurchaseOrder
-CREATE TABLE PurchaseOrder (
+-- Tabla Purchase
+CREATE TABLE Purchase (
     id INT PRIMARY KEY AUTO_INCREMENT,
     date DATE NOT NULL,
     supplier_id INT NOT NULL,
@@ -220,15 +220,15 @@ CREATE TABLE PurchaseOrder (
     FOREIGN KEY (employee_id) REFERENCES Employee(id) ON DELETE CASCADE
 );
 
--- Tabla PurchaseOrderDetail
-CREATE TABLE PurchaseOrderDetail (
+-- Tabla PurchaseDetail
+CREATE TABLE PurchaseDetail (
     id INT PRIMARY KEY AUTO_INCREMENT,
     purchase_order_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT CHECK (quantity > 0), 
     unit_price DECIMAL(10,2) CHECK (unit_price >= 0), 
     subtotal DECIMAL(10,2) CHECK (subtotal >= 0), 
-    FOREIGN KEY (purchase_order_id) REFERENCES PurchaseOrder(id) ON DELETE CASCADE,
+    FOREIGN KEY (purchase_order_id) REFERENCES Purchase(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES Product(id) ON DELETE CASCADE
 );
 
@@ -257,8 +257,8 @@ CREATE TABLE SaleDetail (
     FOREIGN KEY (product_id) REFERENCES Product(id) ON DELETE CASCADE
 );
 
--- Tabla CustomerOrder
-CREATE TABLE CustomerOrder (
+-- Tabla Order
+CREATE TABLE Order (
     id INT PRIMARY KEY AUTO_INCREMENT,
     customer_id INT NOT NULL,
     order_date DATE NOT NULL,

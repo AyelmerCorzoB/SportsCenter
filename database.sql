@@ -78,8 +78,8 @@ CREATE TABLE User (
     CHECK (LENGTH(password) >= 8)
 );
 
--- Tabla PurchaseOrder
-CREATE TABLE PurchaseOrder (
+-- Tabla Purchase
+CREATE TABLE Purchase (
     id INT PRIMARY KEY AUTO_INCREMENT,
     date DATE NOT NULL,
     supplier_id INT NOT NULL,
@@ -89,15 +89,15 @@ CREATE TABLE PurchaseOrder (
     FOREIGN KEY (employee_id) REFERENCES Employee(id) ON DELETE CASCADE
 );
 
--- Tabla PurchaseOrderDetail
-CREATE TABLE PurchaseOrderDetail (
+-- Tabla PurchaseDetail
+CREATE TABLE PurchaseDetail (
     id INT PRIMARY KEY AUTO_INCREMENT,
     purchase_order_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT CHECK (quantity > 0), 
     unit_price DECIMAL(10,2) CHECK (unit_price >= 0), 
     subtotal DECIMAL(10,2) CHECK (subtotal >= 0), 
-    FOREIGN KEY (purchase_order_id) REFERENCES PurchaseOrder(id) ON DELETE CASCADE,
+    FOREIGN KEY (purchase_order_id) REFERENCES Purchase(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES Product(id) ON DELETE CASCADE
 );
 
@@ -126,8 +126,8 @@ CREATE TABLE SaleDetail (
     FOREIGN KEY (product_id) REFERENCES Product(id) ON DELETE CASCADE
 );
 
--- Tabla CustomerOrder
-CREATE TABLE CustomerOrder (
+-- Tabla Order
+CREATE TABLE Order (
     id INT PRIMARY KEY AUTO_INCREMENT,
     customer_id INT NOT NULL,
     order_date DATE NOT NULL,

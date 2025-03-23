@@ -5,10 +5,10 @@ import java.util.Scanner;
 import com.skeletonhexa.adapter.validations.ValidationInt;
 
 public class DeleteCustomer {
-    public void eliminar(Scanner sc, CustomerUseCase customerUseCase) {
+    public void delete(Scanner sc, CustomerUseCase customerUseCase) {
         System.out.print("Ingresa el ID de el Cliente que quieres eliminar: ");
         ValidationInt.validate(sc);
-        int idEliminar = sc.nextInt();
-        customerUseCase.deleteCustomer(idEliminar);
+        int idDelete = sc.nextInt();
+        customerUseCase.deleteCustomer(idDelete);
     }
 }

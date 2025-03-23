@@ -24,7 +24,7 @@ public class UpdateCategory {
         String newDescription = sc.nextLine();
     
     
-        categoryUseCase.updateCategry(newId, newName, newDescription);
+        categoryUseCase.updateCategory(newId, newName, newDescription);
         System.out.println("✅ Categoria actualizada exitosamente.");
     }
 }

@@ -25,7 +25,7 @@ public class CategoryUseCase {
         return repository.listAll();
     }
 
-    public void updateCategry(int id,String name, String description){
+    public void updateCategory(int id,String name, String description){
         Category category = new Category(id, name, description);
         repository.update(category);
     }

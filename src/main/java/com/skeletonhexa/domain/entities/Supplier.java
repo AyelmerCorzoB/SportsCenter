@@ -56,7 +56,9 @@ public class Supplier {
     public void setTax_id(String tax_id) {
         this.tax_id = tax_id;
     }
-
+    public Supplier(int id) {
+        this.id = id;
+    }
     public Supplier(String name, int phone, String email, String address, String tax_id) {
         this.name = name;
         this.phone = phone;

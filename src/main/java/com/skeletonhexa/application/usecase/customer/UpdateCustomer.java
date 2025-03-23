@@ -8,6 +8,10 @@ public class UpdateCustomer {
     public void update(Scanner sc, CustomerUseCase customerUseCase) {
 
         try {
+            System.out.print("Ingrese el id del Cliente a actualizar: ");
+            int newId = sc.nextInt();
+            sc.nextLine();
+            
             System.out.print("Ingrese el nuevo nombre del cliente: ");
             String newName = sc.nextLine();
 
@@ -18,13 +22,13 @@ public class UpdateCustomer {
             int customerTypeOption = sc.nextInt();
             sc.nextLine();
 
-            String customerType;
+            String newCustomerType;
             switch (customerTypeOption) {
                 case 1:
-                    customerType = "INDIVIDUAL";
+                    newCustomerType = "INDIVIDUAL";
                     break;
                 case 2:
-                    customerType = "COMPANY";
+                    newCustomerType = "COMPANY";
                     break;
                 default:
                     throw new IllegalArgumentException("Opción no válida. Debe ser 1 o 2.");
@@ -46,7 +50,7 @@ public class UpdateCustomer {
             String registrationDateStr = sc.nextLine();
             Date registrationDate = Date.valueOf(registrationDateStr);
 
-            customerUseCase.registerCustomer(customerType, newName, identityDocument, email, phone, address, registrationDate);
+            customerUseCase.updateCustomer(newId,newCustomerType, newName, identityDocument, email, phone, address, registrationDate);
             System.out.println("✅ Cliento actualizado exitosamente.");
         } catch (IllegalArgumentException e) {
             System.out.println("❌ Error: " + e.getMessage());
