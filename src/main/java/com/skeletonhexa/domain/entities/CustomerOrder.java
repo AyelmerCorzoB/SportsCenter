@@ -7,14 +7,21 @@ public class CustomerOrder {
     private int id;
     private int customerId;
     private Date orderDate;
-    private String status; // Alternatively, you could use an Enum for status
+    private String status;
     private BigDecimal total;
     private int userId;
 
-    // Default constructor
-    public CustomerOrder() {}
+    public CustomerOrder() {
+    }
 
-    // Parameterized constructor
+    public CustomerOrder(int customerId, Date orderDate, String status, BigDecimal total, int userId) {
+        this.customerId = customerId;
+        this.orderDate = orderDate;
+        this.status = status;
+        this.total = total;
+        this.userId = userId;
+    }
+
     public CustomerOrder(int id, int customerId, Date orderDate, String status, BigDecimal total, int userId) {
         this.id = id;
         this.customerId = customerId;
@@ -24,7 +31,6 @@ public class CustomerOrder {
         this.userId = userId;
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }

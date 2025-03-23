@@ -15,6 +15,17 @@ public class Customer {
     public Customer() {
     }
 
+    public Customer(String customerType, String name, String identityDocument, String email, String phone,
+            String address, Date registrationDate) {
+        this.customerType = customerType;
+        this.name = name;
+        this.identityDocument = identityDocument;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.registrationDate = registrationDate;
+    }
+
     public Customer(int id, String customerType, String name, String identityDocument, String email, String phone,
             String address, Date registrationDate) {
         this.id = id;

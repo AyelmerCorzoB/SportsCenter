@@ -16,6 +16,16 @@ public class Sale {
     public Sale() {
     }
 
+    public Sale(int customerId, Date saleDate, String paymentMethod, BigDecimal discount, BigDecimal total,
+            int userId) {
+        this.customerId = customerId;
+        this.saleDate = saleDate;
+        this.paymentMethod = paymentMethod;
+        this.discount = discount;
+        this.total = total;
+        this.userId = userId;
+    }
+
     public Sale(int id, int customerId, Date saleDate, String paymentMethod, BigDecimal discount, BigDecimal total,
             int userId) {
         this.id = id;

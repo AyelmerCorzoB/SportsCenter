@@ -14,72 +14,124 @@ public class Product {
     private Date entry_date;
     private Category category;
     private Supplier supplier;
+
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
     public double getUnit_price() {
         return unit_price;
     }
+
     public void setUnit_price(double unit_price) {
         this.unit_price = unit_price;
     }
+
     public String getSize() {
         return size;
     }
+
     public void setSize(String size) {
         this.size = size;
     }
+
     public String getColor() {
         return color;
     }
+
     public void setColor(String color) {
         this.color = color;
     }
+
     public int getCurrent_stock() {
         return current_stock;
     }
+
     public void setCurrent_stock(int current_stock) {
         this.current_stock = current_stock;
     }
+
     public int getMinimum_stock() {
         return minimum_stock;
     }
+
     public void setMinimum_stock(int minimum_stock) {
         this.minimum_stock = minimum_stock;
     }
+
     public Date getEntry_date() {
         return entry_date;
     }
+
     public void setEntry_date(Date entry_date) {
         this.entry_date = entry_date;
     }
+
     public Category getCategory() {
         return category;
     }
+
     public void setCategory(Category category) {
         this.category = category;
     }
+
     public Supplier getSupplier() {
         return supplier;
     }
+
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
     }
+
+    public Product(String name, String description, double unit_price, String size, String color, int current_stock,
+            int minimum_stock, Date entry_date, Category category, Supplier supplier) {
+        this.name = name;
+        this.description = description;
+        this.unit_price = unit_price;
+        this.size = size;
+        this.color = color;
+        this.current_stock = current_stock;
+        this.minimum_stock = minimum_stock;
+        this.entry_date = entry_date;
+        this.category = category;
+        this.supplier = supplier;
+    }
+
+    public Product(int id, String name, String description, double unit_price, String size, String color,
+            int current_stock, int minimum_stock, Date entry_date, Category category, Supplier supplier) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.unit_price = unit_price;
+        this.size = size;
+        this.color = color;
+        this.current_stock = current_stock;
+        this.minimum_stock = minimum_stock;
+        this.entry_date = entry_date;
+        this.category = category;
+        this.supplier = supplier;
+    }
+
     @Override
     public String toString() {
         return "Product [id=" + id + ", name=" + name + ", description=" + description + ", unit_price=" + unit_price

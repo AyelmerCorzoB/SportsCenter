@@ -15,6 +15,14 @@ public class Invoice {
     public Invoice() {
     }
 
+    public Invoice(int saleId, String invoiceNumber, Date issueDate, BigDecimal totalAmount, BigDecimal taxes) {
+        this.saleId = saleId;
+        this.invoiceNumber = invoiceNumber;
+        this.issueDate = issueDate;
+        this.totalAmount = totalAmount;
+        this.taxes = taxes;
+    }
+
     public Invoice(int id, int saleId, String invoiceNumber, Date issueDate, BigDecimal totalAmount, BigDecimal taxes) {
         this.id = id;
         this.saleId = saleId;

@@ -15,6 +15,13 @@ public class PurchaseOrder {
     public PurchaseOrder() {
     }
 
+    public PurchaseOrder(Date date, int supplierId, StatusType status, int employeeId) {
+        this.date = date;
+        this.supplierId = supplierId;
+        this.status = status;
+        this.employeeId = employeeId;
+    }
+
     public PurchaseOrder(int id, Date date, int supplierId, StatusType status, int employeeId) {
         this.id = id;
         this.date = date;

@@ -1,7 +1,8 @@
 package com.skeletonhexa.domain.repository;
 
 import java.util.List;
-import java.util.Locale.Category;
+
+import com.skeletonhexa.domain.entities.Category;
 
 public interface CategoryRepository {
     void save(Category category);

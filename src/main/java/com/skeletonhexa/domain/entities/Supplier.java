@@ -57,6 +57,23 @@ public class Supplier {
         this.tax_id = tax_id;
     }
 
+    public Supplier(String name, int phone, String email, String address, String tax_id) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.tax_id = tax_id;
+    }
+
+    public Supplier(int id, String name, int phone, String email, String address, String tax_id) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.tax_id = tax_id;
+    }
+
     @Override
     public String toString() {
         return "Supplier [id=" + id + ", name=" + name + ", phone=" + phone + ", email=" + email + ", address="

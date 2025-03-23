@@ -14,6 +14,15 @@ public class PurchaseOrderDetail {
     public PurchaseOrderDetail() {
     }
 
+    public PurchaseOrderDetail(int purchaseOrderId, int productId, int quantity, BigDecimal unitPrice,
+            BigDecimal subtotal) {
+        this.purchaseOrderId = purchaseOrderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.subtotal = subtotal;
+    }
+
     public PurchaseOrderDetail(int id, int purchaseOrderId, int productId, int quantity, BigDecimal unitPrice,
             BigDecimal subtotal) {
         this.id = id;

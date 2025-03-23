@@ -14,6 +14,14 @@ public class SaleDetail {
     public SaleDetail() {
     }
 
+    public SaleDetail(int saleId, int productId, int quantity, BigDecimal unitPrice, BigDecimal subtotal) {
+        this.saleId = saleId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.subtotal = subtotal;
+    }
+
     public SaleDetail(int id, int saleId, int productId, int quantity, BigDecimal unitPrice, BigDecimal subtotal) {
         this.id = id;
         this.saleId = saleId;

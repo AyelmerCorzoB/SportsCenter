@@ -24,6 +24,15 @@ public class Category {
         this.description = description;
     }
     
+    public Category(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+    public Category(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
     @Override
     public String toString() {
         return "Category [id=" + id + ", name=" + name + ", description=" + description + "]";
