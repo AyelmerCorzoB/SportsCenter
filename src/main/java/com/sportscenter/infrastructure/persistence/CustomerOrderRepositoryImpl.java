@@ -21,7 +21,7 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
         String sql = "INSERT INTO CustomerOrder (customer_id, order_date, status_id, total, user_id) " +
                    "VALUES (?, ?, ?, ?, ?)";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, customerOrder.getCustomerId());
@@ -40,7 +40,7 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
     public CustomerOrder findById(int id) {
         String sql = "SELECT * FROM CustomerOrder WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -67,7 +67,7 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
         List<CustomerOrder> customerOrders = new ArrayList<>();
         String sql = "SELECT * FROM CustomerOrder";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             
@@ -92,7 +92,7 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
         String sql = "UPDATE CustomerOrder SET customer_id = ?, order_date = ?, status_id = ?, " +
                    "total = ? WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, customerOrder.getCustomerId());
@@ -111,7 +111,7 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
     public void delete(int id) {
         String sql = "DELETE FROM CustomerOrder WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);

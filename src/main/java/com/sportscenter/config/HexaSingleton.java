@@ -1,7 +1,7 @@
 package com.sportscenter.config;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public enum HexaSingleton {
@@ -13,10 +13,22 @@ public enum HexaSingleton {
         cargarConfiguraciones("config.properties");
     }
 
+    // private void cargarConfiguraciones(String rutaArchivo) {
+    // ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+    // try (FileInputStream archivo = new
+    // FileInputStream(classLoader.getResource(rutaArchivo).getFile())) {
+    // propiedades.load(archivo);
+    // } catch (IOException e) {
+    // System.err.println("❌ Error cargando configuración: " + e.getMessage());
+    // }
+    // }
     private void cargarConfiguraciones(String rutaArchivo) {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        try (FileInputStream archivo = new FileInputStream(classLoader.getResource(rutaArchivo).getFile())) {
-            propiedades.load(archivo);
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(rutaArchivo)) {
+            if (inputStream == null) {
+                System.err.println("❌ Archivo de configuración no encontrado: " + rutaArchivo);
+                return;
+            }
+            propiedades.load(inputStream);
         } catch (IOException e) {
             System.err.println("❌ Error cargando configuración: " + e.getMessage());
         }

@@ -21,7 +21,7 @@ public class SaleRepositoryImpl implements SaleRepository {
         String sql = "INSERT INTO Sale (customer_id, sale_date, payment_method_id, total, user_id) " +
                      "VALUES (?, ?, ?, ?, ?)";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, sale.getCustomerId());
@@ -40,7 +40,7 @@ public class SaleRepositoryImpl implements SaleRepository {
     public Sale findById(int id) {
         String sql = "SELECT * FROM Sale WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -67,7 +67,7 @@ public class SaleRepositoryImpl implements SaleRepository {
         List<Sale> sales = new ArrayList<>();
         String sql = "SELECT * FROM Sale";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             
@@ -92,7 +92,7 @@ public class SaleRepositoryImpl implements SaleRepository {
         String sql = "UPDATE Sale SET customer_id = ?, sale_date = ?, payment_method_id = ?, " +
                      "total = ? WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, sale.getCustomerId());
@@ -111,7 +111,7 @@ public class SaleRepositoryImpl implements SaleRepository {
     public void delete(int id) {
         String sql = "DELETE FROM Sale WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);

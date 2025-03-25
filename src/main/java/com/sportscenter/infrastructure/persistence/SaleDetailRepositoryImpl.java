@@ -21,7 +21,7 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
         String sql = "INSERT INTO SaleDetail (sale_id, product_id, quantity, unit_price) " +
                      "VALUES (?, ?, ?, ?)";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, detail.getSaleId());
@@ -40,7 +40,7 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
         List<SaleDetail> details = new ArrayList<>();
         String sql = "SELECT * FROM SaleDetail WHERE sale_id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, saleId);
@@ -65,7 +65,7 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
     public void deleteBySaleId(int saleId) {
         String sql = "DELETE FROM SaleDetail WHERE sale_id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, saleId);

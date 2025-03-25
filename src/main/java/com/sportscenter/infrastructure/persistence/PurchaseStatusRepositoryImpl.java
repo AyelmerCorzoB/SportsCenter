@@ -20,7 +20,7 @@ public class PurchaseStatusRepositoryImpl implements PurchaseStatusRepository {
     public void save(PurchaseStatus purchaseStatus) {
         String sql = "INSERT INTO PurchaseStatus (status_name, description) VALUES (?, ?)";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, purchaseStatus.getStatusName());
@@ -36,7 +36,7 @@ public class PurchaseStatusRepositoryImpl implements PurchaseStatusRepository {
     public PurchaseStatus findById(int id) {
         String sql = "SELECT * FROM PurchaseStatus WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -60,7 +60,7 @@ public class PurchaseStatusRepositoryImpl implements PurchaseStatusRepository {
         List<PurchaseStatus> purchaseStatuses = new ArrayList<>();
         String sql = "SELECT * FROM PurchaseStatus";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             
@@ -81,7 +81,7 @@ public class PurchaseStatusRepositoryImpl implements PurchaseStatusRepository {
     public void update(PurchaseStatus purchaseStatus) {
         String sql = "UPDATE PurchaseStatus SET status_name = ?, description = ? WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, purchaseStatus.getStatusName());
@@ -98,7 +98,7 @@ public class PurchaseStatusRepositoryImpl implements PurchaseStatusRepository {
     public void delete(int id) {
         String sql = "DELETE FROM PurchaseStatus WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);

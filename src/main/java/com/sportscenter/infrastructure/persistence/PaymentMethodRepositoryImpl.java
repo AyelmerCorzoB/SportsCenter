@@ -20,7 +20,7 @@ public class PaymentMethodRepositoryImpl implements PaymentMethodRepository {
     public void save(PaymentMethod paymentMethod) {
         String sql = "INSERT INTO PaymentMethod (method_name, description) VALUES (?, ?)";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, paymentMethod.getMethodName());
@@ -36,7 +36,7 @@ public class PaymentMethodRepositoryImpl implements PaymentMethodRepository {
     public PaymentMethod findById(int id) {
         String sql = "SELECT * FROM PaymentMethod WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -60,7 +60,7 @@ public class PaymentMethodRepositoryImpl implements PaymentMethodRepository {
         List<PaymentMethod> paymentMethods = new ArrayList<>();
         String sql = "SELECT * FROM PaymentMethod";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             
@@ -81,7 +81,7 @@ public class PaymentMethodRepositoryImpl implements PaymentMethodRepository {
     public void update(PaymentMethod paymentMethod) {
         String sql = "UPDATE PaymentMethod SET method_name = ?, description = ? WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, paymentMethod.getMethodName());
@@ -98,7 +98,7 @@ public class PaymentMethodRepositoryImpl implements PaymentMethodRepository {
     public void delete(int id) {
         String sql = "DELETE FROM PaymentMethod WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);

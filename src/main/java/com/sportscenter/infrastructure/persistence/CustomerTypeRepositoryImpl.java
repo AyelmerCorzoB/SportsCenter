@@ -20,7 +20,7 @@ public class CustomerTypeRepositoryImpl implements CustomerTypeRepository {
     public void save(CustomerType customerType) {
         String sql = "INSERT INTO CustomerType (type_name, description) VALUES (?, ?)";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, customerType.getTypeName());
@@ -36,7 +36,7 @@ public class CustomerTypeRepositoryImpl implements CustomerTypeRepository {
     public CustomerType findById(int id) {
         String sql = "SELECT * FROM CustomerType WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -60,7 +60,7 @@ public class CustomerTypeRepositoryImpl implements CustomerTypeRepository {
         List<CustomerType> customerTypes = new ArrayList<>();
         String sql = "SELECT * FROM CustomerType";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             
@@ -81,7 +81,7 @@ public class CustomerTypeRepositoryImpl implements CustomerTypeRepository {
     public void update(CustomerType customerType) {
         String sql = "UPDATE CustomerType SET type_name = ?, description = ? WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, customerType.getTypeName());
@@ -98,7 +98,7 @@ public class CustomerTypeRepositoryImpl implements CustomerTypeRepository {
     public void delete(int id) {
         String sql = "DELETE FROM CustomerType WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);

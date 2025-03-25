@@ -20,7 +20,7 @@ public class OrderStatusRepositoryImpl implements OrderStatusRepository {
     public void save(OrderStatus orderStatus) {
         String sql = "INSERT INTO OrderStatus (status_name, description) VALUES (?, ?)";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, orderStatus.getStatusName());
@@ -36,7 +36,7 @@ public class OrderStatusRepositoryImpl implements OrderStatusRepository {
     public OrderStatus findById(int id) {
         String sql = "SELECT * FROM OrderStatus WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -60,7 +60,7 @@ public class OrderStatusRepositoryImpl implements OrderStatusRepository {
         List<OrderStatus> orderStatuses = new ArrayList<>();
         String sql = "SELECT * FROM OrderStatus";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             
@@ -81,7 +81,7 @@ public class OrderStatusRepositoryImpl implements OrderStatusRepository {
     public void update(OrderStatus orderStatus) {
         String sql = "UPDATE OrderStatus SET status_name = ?, description = ? WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, orderStatus.getStatusName());
@@ -98,7 +98,7 @@ public class OrderStatusRepositoryImpl implements OrderStatusRepository {
     public void delete(int id) {
         String sql = "DELETE FROM OrderStatus WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
