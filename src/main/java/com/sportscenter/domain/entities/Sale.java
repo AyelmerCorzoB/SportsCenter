@@ -2,7 +2,6 @@ package com.sportscenter.domain.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Sale {
     private int id;
@@ -87,10 +86,5 @@ public class Sale {
     @Override
     public String toString() {
         return "Sale [id=" + id + ", customerId=" + customerId + ", total=" + total + "]";
-    }
-
-    public void setDetails(List<SaleDetail> bySaleId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDetails'");
     }
 }
