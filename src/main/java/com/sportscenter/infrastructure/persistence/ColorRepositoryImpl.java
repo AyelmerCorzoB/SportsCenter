@@ -20,7 +20,7 @@ public class ColorRepositoryImpl implements ColorRepository {
     public void save(Color color) {
         String sql = "INSERT INTO Color (name, hex_code) VALUES (?, ?)";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, color.getName());
@@ -36,7 +36,7 @@ public class ColorRepositoryImpl implements ColorRepository {
     public Color findById(int id) {
         String sql = "SELECT * FROM Color WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -60,7 +60,7 @@ public class ColorRepositoryImpl implements ColorRepository {
         List<Color> colors = new ArrayList<>();
         String sql = "SELECT * FROM Color";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             
@@ -81,7 +81,7 @@ public class ColorRepositoryImpl implements ColorRepository {
     public void update(Color color) {
         String sql = "UPDATE Color SET name = ?, hex_code = ? WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, color.getName());
@@ -98,7 +98,7 @@ public class ColorRepositoryImpl implements ColorRepository {
     public void delete(int id) {
         String sql = "DELETE FROM Color WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);

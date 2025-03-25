@@ -9,9 +9,8 @@ import com.sportscenter.infrastructure.database.ConnectionFactory;
 public class Main {
     public static void main(String[] args) {
         ConnectionDb connectionDb = ConnectionFactory.crearConexion();
-
-        try (Connection connection = connectionDb.getConnection()) {
-
+        
+        try (Connection connection = connectionDb.getConexion()) {
             if (connection != null && !connection.isClosed()) {
                 System.out.println("¡Conexión a la base de datos establecida correctamente!");
             } else {

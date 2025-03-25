@@ -22,7 +22,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         String sql = "INSERT INTO Product (name, description, unit_price, size, current_stock, category_id) " +
                      "VALUES (?, ?, ?, ?, ?, ?)";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, product.getName());
@@ -42,7 +42,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Product findById(int id) {
         String sql = "SELECT * FROM Product WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -70,7 +70,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM Product";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             
@@ -96,7 +96,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         String sql = "UPDATE Product SET name = ?, description = ?, unit_price = ?, " +
                      "size = ?, current_stock = ?, category_id = ? WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, product.getName());
@@ -117,7 +117,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public void delete(int id) {
         String sql = "DELETE FROM Product WHERE id = ?";
         
-        try (Connection conn = connection.getConnection();
+        try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
