@@ -1,0 +1,20 @@
+package com.sportscenter.infrastructure.database;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import com.sportscenter.config.HexaSingleton;
+
+public class ConnMySql implements ConnectionDb {
+    @Override
+    public Connection getConnection() throws SQLException {
+        HexaSingleton config = HexaSingleton.INSTANCIA;
+        String url = config.get("db.url");
+        String usuario = config.get("db.user");
+        String password = config.get("db.password");
+
+        return DriverManager.getConnection(url, usuario, password);
+    }
+
+}
