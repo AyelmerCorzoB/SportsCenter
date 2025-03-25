@@ -73,8 +73,4 @@ public class SaleDetail {
         return "SaleDetail [id=" + id + ", productId=" + productId + ", quantity=" + quantity + "]";
     }
 
-    public void setSubtotal(double double1) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setSubtotal'");
-    }
 }

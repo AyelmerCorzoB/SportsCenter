@@ -25,8 +25,10 @@ public class Product {
         this.id = id;
     }
 
-    public Product(String name, String description, double unitPrice, String size, 
-                  int currentStock, int minimumStock, LocalDate entryDate) {
+    
+
+    public Product(String name, String description, double unitPrice, String size, int currentStock, int minimumStock,
+            LocalDate entryDate, int categoryId, int supplierId, int colorId, int createdBy) {
         this.name = name;
         this.description = description;
         this.unitPrice = unitPrice;
@@ -34,6 +36,10 @@ public class Product {
         this.currentStock = currentStock;
         this.minimumStock = minimumStock;
         this.entryDate = entryDate;
+        this.categoryId = categoryId;
+        this.supplierId = supplierId;
+        this.colorId = colorId;
+        this.createdBy = createdBy;
     }
 
     // Getters and Setters

@@ -9,7 +9,7 @@ public interface PurchaseDetailRepository {
 
     PurchaseDetail searchById(int id);
 
-    List<PurchaseDetail> listAll();
+    List<PurchaseDetail> listAll(int id);
 
     void update(PurchaseDetail PurchaseDetail);
 
