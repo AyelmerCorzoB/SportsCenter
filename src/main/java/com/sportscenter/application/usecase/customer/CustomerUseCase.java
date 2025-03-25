@@ -2,6 +2,8 @@ package com.sportscenter.application.usecase.customer;
 
 import com.sportscenter.domain.entities.Customer;
 import com.sportscenter.domain.repository.CustomerRepository;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public class CustomerUseCase {
@@ -12,7 +14,7 @@ public class CustomerUseCase {
     }
 
     public void registerCustomer(int customerTypeId, String name, String identityDocument,
-                               String email, String phone, String address) {
+                               String email, String phone, String address, LocalDate registrationDate) {
         Customer customer = new Customer();
         customer.setCustomerTypeId(customerTypeId);
         customer.setName(name);
@@ -20,6 +22,7 @@ public class CustomerUseCase {
         customer.setEmail(email);
         customer.setPhone(phone);
         customer.setAddress(address);
+        customer.setRegistrationDate(registrationDate);
         repository.save(customer);
     }
 
