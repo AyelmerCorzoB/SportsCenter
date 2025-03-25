@@ -35,7 +35,14 @@ public class ActualizarPurchaseStatus {
         System.out.print("Nueva descripción (opcional): ");
         String newDescription = sc.nextLine();
         
-        purchaseStatusUseCase.updatePurchaseStatus(id, newStatusName, newDescription.isEmpty() ? null : newDescription);
-        System.out.println("✅ Estado de compra actualizado exitosamente.");
+        
+        try {
+            purchaseStatusUseCase.updatePurchaseStatus(id, newStatusName, newDescription.isEmpty() ? null : newDescription);
+            System.out.println("✅ Estado de compra actualizado exitosamente.");
+
+        } catch (Exception e) {
+            System.out.println("❌ Error al actualizar el estado de venta: " + e.getMessage());
+        }
+
     }
 }

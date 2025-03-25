@@ -6,9 +6,14 @@ public class ListarPurchaseStatuses {
         System.out.printf("%-5s %-15s %-30s%n", "ID", "ESTADO", "DESCRIPCIÓN");
         System.out.println("--------------------------------------------------");
 
-        purchaseStatusUseCase.getAllPurchaseStatuses().forEach(s -> System.out.printf("%-5d %-15s %-30s%n",
-                s.getId(),
-                s.getStatusName(),
-                s.getDescription() != null ? s.getDescription() : "N/A"));
+        try {
+            purchaseStatusUseCase.getAllPurchaseStatuses().forEach(s -> System.out.printf("%-5d %-15s %-30s%n",
+                    s.getId(),
+                    s.getStatusName(),
+                    s.getDescription() != null ? s.getDescription() : "N/A"));
+
+        } catch (Exception e) {
+            System.out.println("❌ Error al obtener los estados de venta: " + e.getMessage());
+        }
     }
 }
