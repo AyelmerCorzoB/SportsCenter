@@ -33,10 +33,7 @@ public class SportsCenterManagementSystem {
     }
 
     private void showWelcomeMessage() {
-        System.out.println("\n╔══════════════════════════════════════╗");
-        System.out.println("║    SISTEMA DE GESTIÓN DEPORTIVA      ║");
-        System.out.println("║            BIENVENIDO               ║");
-        System.out.println("╚══════════════════════════════════════╝");
+        System.out.println("======= Bienvenido al sistema de gestión del Sports Center =======");
     }
 
     
