@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class InvoiceRepositoryImpl implements InvoiceRepository {
 
     private final ConnectionDb connection;
