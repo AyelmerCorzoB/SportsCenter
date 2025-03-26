@@ -255,7 +255,146 @@ CREATE TABLE AuditLog (
     changed_by INT,
     FOREIGN KEY (changed_by) REFERENCES User(id) ON DELETE SET NULL
 );
+-- Inserccion de datos de prueba
 
+INSERT INTO User (username, email, password, role, active, last_login) VALUES 
+('admin1', 'admin1@sportscenter.com', 'admin', 'ADMIN', TRUE, '2023-05-15 09:30:00'),
+('cashier1', 'cashier1@sportscenter.com', 'cashier', 'CASHIER', TRUE, '2023-05-15 10:15:00'),
+('inventory1', 'inventory1@sportscenter.com', 'inventory', 'INVENTORY', TRUE, '2023-05-14 14:20:00'),
+('consumer1', 'consumer1@sportscenter.com', 'consumer', 'CONSUMER', TRUE, '2023-05-15 11:45:00'),
+('consumer2', 'consumer2@sportscenter.com', 'consumer', 'CONSUMER', FALSE, '2023-05-10 16:30:00');
+
+
+INSERT INTO Category (name, description, created_by) VALUES 
+('Footwear', 'Sports shoes for various activities', 1),
+('Apparel', 'Clothing for sports and exercise', 1),
+('Equipment', 'Sports gear and equipment', 1),
+('Accessories', 'Sports-related accessories', 1),
+('Team Sports', 'Equipment for team sports', 1);
+
+
+INSERT INTO Color (name, hex_code) VALUES 
+('Red', '#FF0000'),
+('Blue', '#0000FF'),
+('Black', '#000000'),
+('White', '#FFFFFF'),
+('Green', '#00FF00');
+
+
+INSERT INTO Supplier (name, phone, email, address, tax_id, created_by) VALUES 
+('SportsGear Inc.', '555-100-2000', 'contact@sportsgear.com', '123 Industrial Park, City', 'TAX123456', 1),
+('ActiveWear Ltd.', '555-200-3000', 'sales@activewear.com', '456 Commerce St, Town', 'TAX654321', 1),
+('ProEquipment Co.', '555-300-4000', 'info@proequipment.com', '789 Business Ave, Village', 'TAX987654', 1),
+('TeamSports Supply', '555-400-5000', 'orders@teamsports.com', '321 Athletic Blvd, District', 'TAX456789', 1),
+('Outdoor Adventures', '555-500-6000', 'support@outdoor.com', '654 Nature Trail, County', 'TAX789123', 1);
+
+
+INSERT INTO Product (name, description, unit_price, size, current_stock, minimum_stock, entry_date, category_id, supplier_id, color_id, created_by) VALUES 
+('Running Shoes', 'Lightweight running shoes with cushioning', 89.99, 'M', 50, 10, '2023-01-15', 1, 1, 3, 3),
+('Basketball Jersey', 'Breathable mesh basketball jersey', 29.99, 'L', 30, 5, '2023-02-20', 2, 2, 1, 3),
+('Yoga Mat', 'Non-slip yoga mat with carrying strap', 24.99, NULL, 40, 8, '2023-03-10', 3, 3, 4, 3),
+('Tennis Racket', 'Professional grade tennis racket', 129.99, NULL, 15, 3, '2023-04-05', 3, 4, 2, 3),
+('Soccer Ball', 'FIFA approved soccer ball', 39.99, NULL, 25, 5, '2023-05-01', 5, 5, 5, 3);
+
+INSERT INTO CustomerType (type_name, description) VALUES 
+('INDIVIDUAL', 'Individual customers purchasing for personal use'),
+('COMPANY', 'Business entities purchasing for their organizations');
+
+INSERT INTO Customer (customer_type_id, name, identity_document, email, phone, address, registration_date, created_by) VALUES 
+(1, 'John Smith', 'ID123456789', 'john.smith@email.com', '555-111-2222', '123 Main St, City', '2023-01-10', 1),
+(1, 'Maria Garcia', 'ID987654321', 'maria.garcia@email.com', '555-222-3333', '456 Oak Ave, Town', '2023-02-15', 1),
+(2, 'ABC Corporation', 'TAXCORP123', 'purchasing@abc.com', '555-333-4444', '789 Business Park, District', '2023-03-20', 1),
+(1, 'Robert Johnson', 'ID456123789', 'robert.j@email.com', '555-444-5555', '321 Pine Rd, Village', '2023-04-05', 1),
+(2, 'XYZ Sports Club', 'TAXCLUB456', 'manager@xyzclub.com', '555-555-6666', '654 Stadium Blvd, County', '2023-05-01', 1);
+
+
+INSERT INTO Employee (name, position, phone, email, user_id, hire_date, created_by) VALUES 
+('Alice Johnson', 'ADMINISTRATOR', '555-111-0001', 'alice.j@sportscenter.com', 1, '2022-01-15', 1),
+('Bob Williams', 'CASHIER', '555-111-0002', 'bob.w@sportscenter.com', 2, '2022-03-20', 1),
+('Charlie Brown', 'INVENTORY', '555-111-0003', 'charlie.b@sportscenter.com', 3, '2022-05-10', 1),
+('Diana Prince', 'CASHIER', '555-111-0004', 'diana.p@sportscenter.com', NULL, '2022-07-15', 1),
+('Ethan Hunt', 'INVENTORY', '555-111-0005', 'ethan.h@sportscenter.com', NULL, '2022-09-20', 1);
+
+
+INSERT INTO PurchaseStatus (status_name, description) VALUES 
+('PENDING', 'Order placed but not yet received'),
+('RECEIVED', 'Order has been received and processed'),
+('CANCELED', 'Order was canceled');
+
+
+INSERT INTO Purchase (date, supplier_id, status_id, employee_id) VALUES 
+('2023-04-01', 1, 2, 3),
+('2023-04-15', 2, 2, 3),
+('2023-05-01', 3, 1, 3),
+('2023-05-10', 4, 3, 5),
+('2023-05-12', 5, 2, 5);
+
+
+INSERT INTO PurchaseDetail (purchase_id, product_id, quantity, unit_price) VALUES 
+(1, 1, 20, 60.00),
+(1, 2, 15, 18.00),
+(2, 3, 30, 15.00),
+(3, 4, 10, 90.00),
+(4, 5, 20, 25.00);
+
+
+INSERT INTO PaymentMethod (method_name, description) VALUES 
+('CASH', 'Payment with physical currency'),
+('CARD', 'Payment with credit/debit card'),
+('TRANSFER', 'Electronic bank transfer');
+
+
+INSERT INTO Sale (customer_id, sale_date, payment_method_id, discount, total, user_id) VALUES 
+(1, '2023-05-01', 2, 5.00, 84.99, 2),
+(2, '2023-05-02', 1, 0.00, 59.98, 2),
+(3, '2023-05-05', 3, 10.00, 224.97, 4),
+(4, '2023-05-08', 2, 0.00, 129.99, 2),
+(5, '2023-05-10', 2, 15.00, 169.96, 4);
+
+
+INSERT INTO SaleDetail (sale_id, product_id, quantity, unit_price) VALUES 
+(1, 1, 1, 89.99),
+(2, 2, 2, 29.99),
+(3, 3, 3, 24.99),
+(3, 4, 1, 129.99),
+(4, 4, 1, 129.99),
+(5, 5, 4, 39.99);
+
+
+INSERT INTO OrderStatus (status_name, description) VALUES 
+('IN PROCESS', 'Order is being prepared'),
+('DELIVERED', 'Order has been delivered'),
+('CANCELED', 'Order was canceled');
+
+
+INSERT INTO CustomerOrder (customer_id, order_date, status_id, total, user_id) VALUES 
+(1, '2023-05-01', 2, 89.99, 2),
+(2, '2023-05-03', 1, 59.98, 2),
+(3, '2023-05-05', 1, 224.97, 4),
+(4, '2023-05-08', 3, 129.99, 2),
+(5, '2023-05-10', 2, 159.96, 4);
+
+
+INSERT INTO Invoice (sale_id, invoice_number, issue_date, total_amount, taxes) VALUES 
+(1, 'INV-2023-001', '2023-05-01', 84.99, 12.74),
+(2, 'INV-2023-002', '2023-05-02', 59.98, 8.99),
+(3, 'INV-2023-003', '2023-05-05', 224.97, 33.74),
+(4, 'INV-2023-004', '2023-05-08', 129.99, 19.49),
+(5, 'INV-2023-005', '2023-05-10', 169.96, 25.49);
+
+
+INSERT INTO ReportType (type_name, description) VALUES 
+('SALES', 'Reports related to sales data'),
+('INVENTORY', 'Reports about stock levels and inventory'),
+('CUSTOMERS', 'Reports on customer activities and trends');
+
+
+INSERT INTO Report (report_type_id, generation_date, user_id, file_path, parameters) VALUES 
+(1, '2023-05-01', 1, '/reports/sales_20230501.pdf', '{"date_from": "2023-04-01", "date_to": "2023-04-30"}'),
+(2, '2023-05-02', 1, '/reports/inventory_20230502.pdf', '{"category": "all", "stock_level": "low"}'),
+(3, '2023-05-05', 1, '/reports/customers_20230505.pdf', '{"customer_type": "all", "period": "monthly"}'),
+(1, '2023-05-10', 1, '/reports/sales_20230510.pdf', '{"date_from": "2023-05-01", "date_to": "2023-05-10"}'),
+(2, '2023-05-15', 1, '/reports/inventory_20230515.pdf', '{"category": "Footwear", "stock_level": "all"}');
 -- Triggers:
 
 -- Trigger para User
