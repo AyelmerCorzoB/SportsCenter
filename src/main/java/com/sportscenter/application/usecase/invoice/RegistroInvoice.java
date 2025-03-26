@@ -1,42 +1,39 @@
 package com.sportscenter.application.usecase.invoice;
 
+import java.time.LocalDate;
 import java.util.Scanner;
-
 import com.sportscenter.adapter.validations.ValidationInt;
-import com.sportscenter.application.usecase.orderstatus.OrderStatusUseCase;
+import com.sportscenter.adapter.validations.ValidationString;
 
 public class RegistroInvoice {
 
-    public void registro(Scanner sc, OrderStatusUseCase orderStatusUseCase) {
-        System.out.println("\n=== REGISTRO DE ESTADO DE PEDIDO ===");
+    public void registro(Scanner sc, InvoiceUseCase invoiceUseCase) {
+        System.out.println("\n=== REGISTRO DE FACTURA ===");
 
-        System.out.println("Opciones: \n1. IN PROCESS \n2. DELIVERED \n3. CANCELED");
-        System.out.print("Estado: ");
-        
+        System.out.print("ID de la venta: ");
         ValidationInt.validate(sc);
-        int statusNameOption = sc.nextInt();
-        sc.nextLine(); // Limpiar buffer
+        int saleId = sc.nextInt();
+        sc.nextLine();
 
-        String statusName = null;
-        switch (statusNameOption) {
-            case 1:
-                statusName = "IN PROCESS";
-                break;
-            case 2:
-                statusName = "DELIVERED";
-                break;
-            case 3:
-                statusName = "CANCELED";
-                break;
-            default:
-                System.out.println("❌ Opción inválida. Debe ser 1, 2 o 3.");
-                return;
+        System.out.print("Número de factura: ");
+        String invoiceNumber = ValidationString.validate(sc);
+
+        System.out.print("Fecha de emisión (AAAA-MM-DD): ");
+        LocalDate issueDate = LocalDate.parse(sc.nextLine());
+
+        System.out.print("Monto total: ");
+        double totalAmount = sc.nextDouble();
+        sc.nextLine();
+
+        System.out.print("Impuestos: ");
+        double taxes = sc.nextDouble();
+        sc.nextLine();
+
+        try {
+            invoiceUseCase.registerInvoice(saleId, invoiceNumber, issueDate, totalAmount, taxes);
+            System.out.println("✅ Factura registrada exitosamente.");
+        } catch (Exception e) {
+            System.out.println("❌ Error al registrar factura: " + e.getMessage());
         }
-
-        System.out.print("Descripción (opcional): ");
-        String description = sc.nextLine();
-
-        orderStatusUseCase.registerOrderStatus(statusName, description.isEmpty() ? null : description);
-        System.out.println("✅ Estado de pedido registrado exitosamente.");
     }
 }

@@ -12,8 +12,36 @@ public class CustomerOrder {
     private int userId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String customerName;
+    private String statusName;
+    private String userName;
 
-    public CustomerOrder() {}
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public CustomerOrder() {
+    }
 
     public CustomerOrder(int id) {
         this.id = id;
@@ -30,48 +58,63 @@ public class CustomerOrder {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public int getCustomerId() {
         return customerId;
     }
+
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
+
     public LocalDate getOrderDate() {
         return orderDate;
     }
+
     public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
+
     public int getStatusId() {
         return statusId;
     }
+
     public void setStatusId(int statusId) {
         this.statusId = statusId;
     }
+
     public double getTotal() {
         return total;
     }
+
     public void setTotal(double total) {
         this.total = total;
     }
+
     public int getUserId() {
         return userId;
     }
+
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
+
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }

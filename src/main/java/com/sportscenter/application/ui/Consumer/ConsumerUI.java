@@ -34,10 +34,10 @@ public class ConsumerUI {
                     ConsoleUtils.pressEnterToContinue(scanner);
                     break;
                 case 2:
-                    mostrarHistorialCompras();
+                    //mostrarHistorialCompras();
                     break;
                 case 3:
-                    mostrarFacturacion();
+                    //mostrarFacturacion();
                     break;
                 case 4:
                     mostrarPerfil();

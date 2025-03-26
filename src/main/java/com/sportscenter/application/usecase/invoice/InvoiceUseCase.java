@@ -12,8 +12,21 @@ public class InvoiceUseCase {
         this.repository = repository;
     }
 
-    public void registerInvoice(int saleId, String invoiceNumber, LocalDate issueDate, 
-                              double totalAmount, double taxes) {
+    public void registerInvoice(int saleId, String invoiceNumber, LocalDate issueDate,
+            double totalAmount, double taxes) {
+        if (invoiceNumber == null || invoiceNumber.trim().isEmpty()) {
+            throw new IllegalArgumentException("El número de factura no puede estar vacío");
+        }
+        if (issueDate == null) {
+            throw new IllegalArgumentException("La fecha de emisión es requerida");
+        }
+        if (totalAmount <= 0) {
+            throw new IllegalArgumentException("El monto total debe ser positivo");
+        }
+        if (taxes < 0) {
+            throw new IllegalArgumentException("Los impuestos no pueden ser negativos");
+        }
+
         Invoice invoice = new Invoice();
         invoice.setSaleId(saleId);
         invoice.setInvoiceNumber(invoiceNumber);
@@ -31,8 +44,8 @@ public class InvoiceUseCase {
         return repository.listAll();
     }
 
-    public void updateInvoice(int id, int saleId, String invoiceNumber, LocalDate issueDate, 
-                            double totalAmount, double taxes) {
+    public void updateInvoice(int id, int saleId, String invoiceNumber, LocalDate issueDate,
+            double totalAmount, double taxes) {
         Invoice invoice = new Invoice();
         invoice.setId(id);
         invoice.setSaleId(saleId);

@@ -6,8 +6,7 @@ import com.sportscenter.adapter.validations.ValidationString;
 public class RegistroCategory {
     public void registro(Scanner sc, CategoryUseCase categoryUseCase) {
         System.out.print("Ingrese el nombre de la categoría: ");
-        ValidationString.validate(sc);
-        String name = sc.nextLine();
+        String name = ValidationString.validate(sc);
         
         System.out.print("Ingrese la descripción (opcional): ");
         String description = sc.nextLine();

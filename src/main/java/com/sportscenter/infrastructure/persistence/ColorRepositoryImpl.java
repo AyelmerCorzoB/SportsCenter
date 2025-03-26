@@ -74,9 +74,15 @@ public class ColorRepositoryImpl implements ColorRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        for (Color color : colors) {
+            System.out.println("|-------------------------------------------------------------------------|");
+            System.out.println(" Nombre: " + color.getName() + " \n" +
+                    "| Codigo de color(Hex): " + color.getHexCode());
+            System.out.println("|-------------------------------------------------------------------------|");
+        }
         return colors;
     }
-
+    
     @Override
     public void update(Color color) {
         String sql = "UPDATE Color SET name = ?, hex_code = ? WHERE id = ?";

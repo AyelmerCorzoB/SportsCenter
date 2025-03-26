@@ -52,6 +52,8 @@ public class LoginPrimeraPropuesta {
         }
     }
 
+    //Usamos este método para obtener una opción válida del menú ya qye la validacion de la carpeta adapter validations
+    //me causaba problemas al momento de validar el ingreso de los enteros
     private int obtenerOpcionValida() {
         while (!scanner.hasNextInt()) {
             System.out.println("Por favor, ingrese un número válido.");

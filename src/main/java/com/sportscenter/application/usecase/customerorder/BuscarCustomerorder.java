@@ -13,7 +13,7 @@ public class BuscarCustomerorder {
         System.out.print("ID de la orden: ");
         ValidationInt.validate(sc);
         int id = sc.nextInt();
-        sc.nextLine(); // limpiar buffer
+        sc.nextLine(); 
 
         CustomerOrder order = customerOrderUseCase.getCustomerOrderById(id);
         if (order != null) {

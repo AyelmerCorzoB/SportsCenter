@@ -19,13 +19,13 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public void save(Category category) {
         String sql = "INSERT INTO Category (name, description) VALUES (?, ?)";
-        
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, category.getName());
             stmt.setString(2, category.getDescription());
-            
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,13 +35,13 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public Category findById(int id) {
         String sql = "SELECT * FROM Category WHERE id = ?";
-        
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            
+
             if (rs.next()) {
                 Category category = new Category();
                 category.setId(rs.getInt("id"));
@@ -74,20 +74,27 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        for (Category category : categories) {
+            System.out.println("|-------------------------------------------------------------------------|");
+            System.out.println("| ID: " + category.getId() + "\n"+ 
+            "| Nombre: " + category.getName() + " \n" +
+                    "| Descripcion: " + category.getDescription());
+            System.out.println("|-------------------------------------------------------------------------|");
+        }
         return categories;
     }
 
     @Override
     public void update(Category category) {
         String sql = "UPDATE Category SET name = ?, description = ? WHERE id = ?";
-        
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, category.getName());
             stmt.setString(2, category.getDescription());
             stmt.setInt(3, category.getId());
-            
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -97,10 +104,10 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     @Override
     public void delete(int id) {
         String sql = "DELETE FROM Category WHERE id = ?";
-        
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {

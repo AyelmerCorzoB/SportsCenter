@@ -87,6 +87,17 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        for (Customer customer : customers) {
+            System.out.println("|-------------------------------------------------------------------------|");
+            System.out.println("| ID: " + customer.getId() + "\n"+
+            "| Tipo de cliente: " + customer.getCustomerTypeId() + "\n" +
+                    "| Nombre: " + customer.getName() + "\n" +
+                    "| Documento de identidad: " + customer.getIdentityDocument() + "\n" +
+                    "| Correo: " + customer.getEmail() + "\n" +
+                    "| Telefono: " + customer.getPhone() + "\n" +
+                    "| Direccion: " + customer.getAddress());
+            System.out.println("|-------------------------------------------------------------------------|");
+        }
         return customers;
     }
 
