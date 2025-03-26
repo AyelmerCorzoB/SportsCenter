@@ -1,6 +1,5 @@
 package com.sportscenter.infrastructure.persistence;
 
-
 import com.sportscenter.domain.entities.Product;
 import com.sportscenter.domain.repository.ProductRepository;
 import com.sportscenter.infrastructure.database.ConnectionDb;
@@ -20,18 +19,18 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void save(Product product) {
         String sql = "INSERT INTO Product (name, description, unit_price, size, current_stock, category_id) " +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
-        
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, product.getName());
             stmt.setString(2, product.getDescription());
             stmt.setDouble(3, product.getUnitPrice());
             stmt.setString(4, product.getSize());
             stmt.setInt(5, product.getCurrentStock());
             stmt.setInt(6, product.getCategoryId());
-            
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,13 +40,13 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Product findById(int id) {
         String sql = "SELECT * FROM Product WHERE id = ?";
-        
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            
+
             if (rs.next()) {
                 Product product = new Product();
                 product.setId(rs.getInt("id"));
@@ -69,11 +68,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM Product";
-        
+
         try (Connection conn = connection.getConexion();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
                 Product product = new Product();
                 product.setId(rs.getInt("id"));
@@ -94,11 +93,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void update(Product product) {
         String sql = "UPDATE Product SET name = ?, description = ?, unit_price = ?, " +
-                     "size = ?, current_stock = ?, category_id = ? WHERE id = ?";
-        
+                "size = ?, current_stock = ?, category_id = ? WHERE id = ?";
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, product.getName());
             stmt.setString(2, product.getDescription());
             stmt.setDouble(3, product.getUnitPrice());
@@ -106,7 +105,7 @@ public class ProductRepositoryImpl implements ProductRepository {
             stmt.setInt(5, product.getCurrentStock());
             stmt.setInt(6, product.getCategoryId());
             stmt.setInt(7, product.getId());
-            
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,10 +115,10 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void delete(int id) {
         String sql = "DELETE FROM Product WHERE id = ?";
-        
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
