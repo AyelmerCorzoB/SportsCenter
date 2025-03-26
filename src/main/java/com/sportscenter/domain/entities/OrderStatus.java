@@ -40,4 +40,9 @@ public class OrderStatus {
     public String toString() {
         return "OrderStatus [id=" + id + ", statusName=" + statusName + "]";
     }
+
+    public static OrderStatus valueOf(String upperCase) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'valueOf'");
+    }
 }

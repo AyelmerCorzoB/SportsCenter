@@ -20,4 +20,9 @@ public class ListarInvoice {
             );
         }
     }
+
+    public void mostrarFacturasPorUsuario(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mostrarFacturasPorUsuario'");
+    }
 }

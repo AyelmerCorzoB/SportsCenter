@@ -11,4 +11,5 @@ void save(Invoice invoInvoice);
     List<Invoice> listAll();
     void update(Invoice invoInvoice);
     void delete(int id);
+    
 }
