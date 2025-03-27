@@ -1,6 +1,5 @@
 package com.sportscenter.application;
 
-
 import com.sportscenter.application.usecase.invoice.ListarInvoice;
 import com.sportscenter.application.usecase.product.ListarProducts;
 import com.sportscenter.application.usecase.product.ProductUseCase;
@@ -9,10 +8,13 @@ import com.sportscenter.application.ui.Consumer.ActualizarPassword;
 import com.sportscenter.application.ui.Consumer.ConsumerUI;
 import com.sportscenter.application.ui.Consumer.ListarOrdersPorUsuario;
 import com.sportscenter.domain.entities.User;
+import com.sportscenter.domain.repository.OrderRepository;
 import com.sportscenter.domain.repository.ProductRepository;
+import com.sportscenter.domain.repository.UserRepository;
 import com.sportscenter.domain.service.UserService;
 import com.sportscenter.infrastructure.database.ConnectionDb;
 import com.sportscenter.infrastructure.database.ConnectionFactory;
+import com.sportscenter.infrastructure.persistence.OrderRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.ProductRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.UserRepositoryImpl;
 
@@ -92,20 +94,23 @@ public class LoginPrimeraPropuesta {
     private void redirigirSegunRol() {
         ConnectionDb connection = ConnectionFactory.crearConexion();
         ProductRepository productRepository = new ProductRepositoryImpl(connection);
+        UserRepository userRepository = new UserRepositoryImpl(connection);
+        OrderRepository orderRepository = new OrderRepositoryImpl(connection);
+
         ProductUseCase productUseCase = new ProductUseCase(productRepository);
         ListarProducts listarProducts = new ListarProducts();
-    ListarOrdersPorUsuario listarOrdersPorUsuario = new ListarOrdersPorUsuario(/* Repositorio necesario */);
-    ListarInvoice listarInvoice = new ListarInvoice(/* Repositorio necesario */);
-    ActualizarPassword actualizarPassword = new ActualizarPassword();
+        ListarOrdersPorUsuario listarOrdersPorUsuario = new ListarOrdersPorUsuario(orderRepository); // Ahora con repositorio
+        ListarInvoice listarInvoice = new ListarInvoice(/* Repositorio necesario */); // Completa con el repositorio que necesites
+        ActualizarPassword actualizarPassword = new ActualizarPassword(userRepository); // Ahora con repositorio
 
         switch (currentUser.getRole()) {
             case "ADMIN" -> new AdminUI(scanner, userService, currentUser).mostrarMenu();
             case "CASHIER" -> System.out.println("Panel de Cajero no implementado aún");
             case "INVENTORY" -> System.out.println("Panel de Inventario no implementado aún");
             case "CONSUMER" -> new ConsumerUI(scanner, productUseCase, currentUser,
-                                          listarProducts, listarOrdersPorUsuario,
-                                          listarInvoice, actualizarPassword).mostrarMenuPrincipal();
-    }
+                                              listarProducts, listarOrdersPorUsuario,
+                                              listarInvoice, actualizarPassword).mostrarMenuPrincipal();
+        }
     }
 
     private void handleRegister() {
