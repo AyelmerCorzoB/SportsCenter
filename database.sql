@@ -1,13 +1,12 @@
--- Tablas principales normalizadas:
+-- Tablas principales normalizadas sin email:
 
 CREATE DATABASE IF NOT EXISTS sportscenter;
 USE sportscenter;
 
--- Tabla User (primero por dependencias)
+-- Tabla User (sin email)
 CREATE TABLE User (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
-    email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     role ENUM('ADMIN', 'CASHIER', 'INVENTORY','CONSUMER') NOT NULL,
     active BOOLEAN DEFAULT TRUE,
@@ -29,7 +28,7 @@ CREATE TABLE Category (
     CHECK (LENGTH(name) > 0)
 );
 
--- Tabla Color (normalizada desde el campo color en Product)
+-- Tabla Color
 CREATE TABLE Color (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL UNIQUE,
@@ -42,7 +41,6 @@ CREATE TABLE Supplier (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     phone VARCHAR(20) NOT NULL,
-    email VARCHAR(100) NOT NULL,
     address VARCHAR(255) NOT NULL,
     tax_id VARCHAR(20) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -76,20 +74,19 @@ CREATE TABLE Product (
     CHECK (LENGTH(name) > 0)
 );
 
--- Tabla CustomerType (normalizada desde customer_type)
+-- Tabla CustomerType
 CREATE TABLE CustomerType (
     id INT PRIMARY KEY AUTO_INCREMENT,
     type_name ENUM('INDIVIDUAL', 'COMPANY') NOT NULL UNIQUE,
     description TEXT
 );
 
--- Tabla Customer
+-- Tabla Customer (sin email)
 CREATE TABLE Customer (
     id INT PRIMARY KEY AUTO_INCREMENT,
     customer_type_id INT NOT NULL,
     name VARCHAR(100) NOT NULL,
     identity_document VARCHAR(20) NOT NULL UNIQUE,
-    email VARCHAR(100) NOT NULL,
     phone VARCHAR(20) NOT NULL,
     address VARCHAR(255) NOT NULL,
     registration_date DATE NOT NULL,
@@ -108,7 +105,6 @@ CREATE TABLE Employee (
     name VARCHAR(100) NOT NULL,
     position ENUM('ADMINISTRATOR', 'CASHIER', 'INVENTORY') NOT NULL,
     phone VARCHAR(20) NOT NULL,
-    email VARCHAR(100) NOT NULL,
     user_id INT UNIQUE,
     hire_date DATE NOT NULL,
     created_by INT,
@@ -119,7 +115,7 @@ CREATE TABLE Employee (
     CHECK (LENGTH(name) > 0)
 );
 
--- Tabla PurchaseStatus (normalizada desde status)
+-- Tabla PurchaseStatus
 CREATE TABLE PurchaseStatus (
     id INT PRIMARY KEY AUTO_INCREMENT,
     status_name ENUM('PENDING', 'RECEIVED', 'CANCELED') NOT NULL UNIQUE,
@@ -153,7 +149,7 @@ CREATE TABLE PurchaseDetail (
     FOREIGN KEY (product_id) REFERENCES Product(id) ON DELETE CASCADE
 );
 
--- Tabla PaymentMethod (normalizada desde payment_method)
+-- Tabla PaymentMethod
 CREATE TABLE PaymentMethod (
     id INT PRIMARY KEY AUTO_INCREMENT,
     method_name ENUM('CASH', 'CARD', 'TRANSFER') NOT NULL UNIQUE,
@@ -189,14 +185,14 @@ CREATE TABLE SaleDetail (
     FOREIGN KEY (product_id) REFERENCES Product(id) ON DELETE CASCADE
 );
 
--- Tabla OrderStatus (normalizada desde status)
+-- Tabla OrderStatus
 CREATE TABLE OrderStatus (
     id INT PRIMARY KEY AUTO_INCREMENT,
     status_name ENUM('IN PROCESS', 'DELIVERED', 'CANCELED') NOT NULL UNIQUE,
     description TEXT
 );
 
--- Tabla CustomerOrder (renombrada de Order)
+-- Tabla CustomerOrder
 CREATE TABLE CustomerOrder (
     id INT PRIMARY KEY AUTO_INCREMENT,
     customer_id INT NOT NULL,
@@ -223,7 +219,7 @@ CREATE TABLE Invoice (
     FOREIGN KEY (sale_id) REFERENCES Sale(id) ON DELETE CASCADE
 );
 
--- Tabla ReportType (normalizada desde type)
+-- Tabla ReportType
 CREATE TABLE ReportType (
     id INT PRIMARY KEY AUTO_INCREMENT,
     type_name ENUM('SALES', 'INVENTORY', 'CUSTOMERS') NOT NULL UNIQUE,
@@ -243,7 +239,7 @@ CREATE TABLE Report (
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
 
--- Tabla para todas las auditorias de cada tabla
+-- Tabla AuditLog
 CREATE TABLE AuditLog (
     id INT PRIMARY KEY AUTO_INCREMENT,
     table_name VARCHAR(50) NOT NULL,
@@ -255,302 +251,424 @@ CREATE TABLE AuditLog (
     changed_by INT,
     FOREIGN KEY (changed_by) REFERENCES User(id) ON DELETE SET NULL
 );
+
+
+
 -- Inserccion de datos de prueba
 
-INSERT INTO User (username, email, password, role, active, last_login) VALUES 
-('admin1', 'admin1@sportscenter.com', 'admin', 'ADMIN', TRUE, '2023-05-15 09:30:00'),
-('cashier1', 'cashier1@sportscenter.com', 'cashier', 'CASHIER', TRUE, '2023-05-15 10:15:00'),
-('inventory1', 'inventory1@sportscenter.com', 'inventory', 'INVENTORY', TRUE, '2023-05-14 14:20:00'),
-('consumer1', 'consumer1@sportscenter.com', 'consumer', 'CONSUMER', TRUE, '2023-05-15 11:45:00'),
-('consumer2', 'consumer2@sportscenter.com', 'consumer', 'CONSUMER', FALSE, '2023-05-10 16:30:00');
+-- Insertar tipos de cliente
+INSERT INTO CustomerType (type_name, description) VALUES 
+('INDIVIDUAL', 'Clientes individuales o personas naturales'),
+('COMPANY', 'Empresas u organizaciones');
 
+-- Insertar métodos de pago
+INSERT INTO PaymentMethod (method_name, description) VALUES 
+('CASH', 'Pago en efectivo'),
+('CARD', 'Pago con tarjeta de crédito/débito'),
+('TRANSFER', 'Transferencia bancaria');
 
-INSERT INTO Category (name, description, created_by) VALUES 
-('Footwear', 'Sports shoes for various activities', 1),
-('Apparel', 'Clothing for sports and exercise', 1),
-('Equipment', 'Sports gear and equipment', 1),
-('Accessories', 'Sports-related accessories', 1),
-('Team Sports', 'Equipment for team sports', 1);
+-- Insertar estados de compra
+INSERT INTO PurchaseStatus (status_name, description) VALUES 
+('PENDING', 'Compra pendiente de recepción'),
+('RECEIVED', 'Compra recibida completamente'),
+('CANCELED', 'Compra cancelada');
 
+-- Insertar estados de pedido
+INSERT INTO OrderStatus (status_name, description) VALUES 
+('IN PROCESS', 'Pedido en proceso'),
+('DELIVERED', 'Pedido entregado'),
+('CANCELED', 'Pedido cancelado');
 
+-- Insertar tipos de reporte
+INSERT INTO ReportType (type_name, description) VALUES 
+('SALES', 'Reportes de ventas'),
+('INVENTORY', 'Reportes de inventario'),
+('CUSTOMERS', 'Reportes de clientes');
+
+-- Insertar colores
 INSERT INTO Color (name, hex_code) VALUES 
-('Red', '#FF0000'),
-('Blue', '#0000FF'),
-('Black', '#000000'),
-('White', '#FFFFFF'),
-('Green', '#00FF00');
+('Rojo', '#FF0000'),
+('Azul', '#0000FF'),
+('Verde', '#00FF00'),
+('Negro', '#000000'),
+('Blanco', '#FFFFFF'),
+('Gris', '#808080'),
+('Amarillo', '#FFFF00'),
+('Morado', '#800080');
 
+-- Insertar categorías
+INSERT INTO Category (name, description, created_by) VALUES 
+('Ropa', 'Artículos de vestir deportivos', NULL),
+('Calzado', 'Zapatos y zapatillas deportivas', NULL),
+('Equipamiento', 'Equipo deportivo variado', NULL),
+('Accesorios', 'Accesorios para deportes', NULL);
 
-INSERT INTO Supplier (name, phone, email, address, tax_id, created_by) VALUES 
-('SportsGear Inc.', '555-100-2000', 'contact@sportsgear.com', '123 Industrial Park, City', 'TAX123456', 1),
-('ActiveWear Ltd.', '555-200-3000', 'sales@activewear.com', '456 Commerce St, Town', 'TAX654321', 1),
-('ProEquipment Co.', '555-300-4000', 'info@proequipment.com', '789 Business Ave, Village', 'TAX987654', 1),
-('TeamSports Supply', '555-400-5000', 'orders@teamsports.com', '321 Athletic Blvd, District', 'TAX456789', 1),
-('Outdoor Adventures', '555-500-6000', 'support@outdoor.com', '654 Nature Trail, County', 'TAX789123', 1);
+-- Insertar usuarios administradores
+INSERT INTO User (username, password, role, active) VALUES 
+('admin1', '12345678', 'ADMIN', TRUE),
+('admin2', '12345678', 'ADMIN', TRUE),
+('cajero1', '12345678', 'CASHIER', TRUE),
+('inventario1', '12345678', 'INVENTORY', TRUE),
+('cliente1', '12345678', 'CONSUMER', TRUE),
+('cliente2', '12345678', 'CONSUMER', TRUE),
+('cliente3', '12345678', 'CONSUMER', TRUE);
 
+-- Insertar empleados (asociados a usuarios)
+INSERT INTO Employee (name, position, phone, user_id, hire_date, created_by) VALUES 
+('Juan Pérez', 'ADMINISTRATOR', '555-1234', 1, '2022-01-15', 1),
+('María García', 'CASHIER', '555-5678', 3, '2022-02-20', 1),
+('Carlos López', 'INVENTORY', '555-9012', 4, '2022-03-10', 1);
+
+INSERT INTO Supplier (name, phone, address, tax_id, created_by) VALUES 
+('Deportes S.A.', '555-1001', 'Calle Principal 123', 'SA12345678', 1),
+('Equipamiento Plus', '555-2002', 'Avenida Central 456', 'EP87654321', 1),
+('Ropa Deportiva VIP', '555-3003', 'Boulevard Deportivo 789', 'RDV45678912', 1);
 
 INSERT INTO Product (name, description, unit_price, size, current_stock, minimum_stock, entry_date, category_id, supplier_id, color_id, created_by) VALUES 
-('Running Shoes', 'Lightweight running shoes with cushioning', 89.99, 'M', 50, 10, '2023-01-15', 1, 1, 3, 3),
-('Basketball Jersey', 'Breathable mesh basketball jersey', 29.99, 'L', 30, 5, '2023-02-20', 2, 2, 1, 3),
-('Yoga Mat', 'Non-slip yoga mat with carrying strap', 24.99, NULL, 40, 8, '2023-03-10', 3, 3, 4, 3),
-('Tennis Racket', 'Professional grade tennis racket', 129.99, NULL, 15, 3, '2023-04-05', 3, 4, 2, 3),
-('Soccer Ball', 'FIFA approved soccer ball', 39.99, NULL, 25, 5, '2023-05-01', 5, 5, 5, 3);
+('Camiseta Deportiva', 'Camiseta de algodón para entrenamiento', 25.99, 'M', 50, 10, '2023-01-10', 1, 1, 1, 1),
+('Short Running', 'Short ligero para correr', 19.99, 'L', 30, 5, '2023-01-15', 1, 1, 4, 1),
+('Zapatillas Running', 'Zapatillas para correr con amortiguación', 89.99, '42', 20, 5, '2023-02-01', 2, 2, 3, 1),
+('Raqueta Tenis', 'Raqueta profesional de tenis', 120.00, NULL, 15, 3, '2023-02-10', 3, 3, 5, 1),
+('Balón Fútbol', 'Balón oficial tamaño 5', 29.99, NULL, 40, 8, '2023-03-05', 3, 2, 1, 1),
+('Gorra Deportiva', 'Gorra ajustable con protección UV', 15.99, 'Única', 60, 15, '2023-03-15', 4, 1, 4, 1);
 
-INSERT INTO CustomerType (type_name, description) VALUES 
-('INDIVIDUAL', 'Individual customers purchasing for personal use'),
-('COMPANY', 'Business entities purchasing for their organizations');
-
-INSERT INTO Customer (customer_type_id, name, identity_document, email, phone, address, registration_date, created_by) VALUES 
-(1, 'John Smith', 'ID123456789', 'john.smith@email.com', '555-111-2222', '123 Main St, City', '2023-01-10', 1),
-(1, 'Maria Garcia', 'ID987654321', 'maria.garcia@email.com', '555-222-3333', '456 Oak Ave, Town', '2023-02-15', 1),
-(2, 'ABC Corporation', 'TAXCORP123', 'purchasing@abc.com', '555-333-4444', '789 Business Park, District', '2023-03-20', 1),
-(1, 'Robert Johnson', 'ID456123789', 'robert.j@email.com', '555-444-5555', '321 Pine Rd, Village', '2023-04-05', 1),
-(2, 'XYZ Sports Club', 'TAXCLUB456', 'manager@xyzclub.com', '555-555-6666', '654 Stadium Blvd, County', '2023-05-01', 1);
-
-
-INSERT INTO Employee (name, position, phone, email, user_id, hire_date, created_by) VALUES 
-('Alice Johnson', 'ADMINISTRATOR', '555-111-0001', 'alice.j@sportscenter.com', 1, '2022-01-15', 1),
-('Bob Williams', 'CASHIER', '555-111-0002', 'bob.w@sportscenter.com', 2, '2022-03-20', 1),
-('Charlie Brown', 'INVENTORY', '555-111-0003', 'charlie.b@sportscenter.com', 3, '2022-05-10', 1),
-('Diana Prince', 'CASHIER', '555-111-0004', 'diana.p@sportscenter.com', NULL, '2022-07-15', 1),
-('Ethan Hunt', 'INVENTORY', '555-111-0005', 'ethan.h@sportscenter.com', NULL, '2022-09-20', 1);
-
-
-INSERT INTO PurchaseStatus (status_name, description) VALUES 
-('PENDING', 'Order placed but not yet received'),
-('RECEIVED', 'Order has been received and processed'),
-('CANCELED', 'Order was canceled');
-
+-- Insertar clientes adicionales
+INSERT INTO Customer (customer_type_id, name, identity_document, phone, address, registration_date, created_by) VALUES 
+(2, 'Empresa Deportes XYZ', 'J-123456789', '555-4004', 'Avenida Comercial 321', '2023-01-05', 1),
+(1, 'Ana Rodríguez', 'V-98765432', '555-5005', 'Calle Secundaria 654', '2023-02-15', 1);
 
 INSERT INTO Purchase (date, supplier_id, status_id, employee_id) VALUES 
-('2023-04-01', 1, 2, 3),
-('2023-04-15', 2, 2, 3),
-('2023-05-01', 3, 1, 3),
-('2023-05-10', 4, 3, 5),
-('2023-05-12', 5, 2, 5);
+('2023-03-01', 1, 2, 3);
 
+SET @purchase_id = LAST_INSERT_ID();
 
 INSERT INTO PurchaseDetail (purchase_id, product_id, quantity, unit_price) VALUES 
-(1, 1, 20, 60.00),
-(1, 2, 15, 18.00),
-(2, 3, 30, 15.00),
-(3, 4, 10, 90.00),
-(4, 5, 20, 25.00);
+(@purchase_id, 1, 30, 18.50),
+(@purchase_id, 2, 20, 14.75);
 
+-- Compra 2
+INSERT INTO Purchase (date, supplier_id, status_id, employee_id) VALUES 
+('2023-03-15', 2, 1, 3);
 
-INSERT INTO PaymentMethod (method_name, description) VALUES 
-('CASH', 'Payment with physical currency'),
-('CARD', 'Payment with credit/debit card'),
-('TRANSFER', 'Electronic bank transfer');
+SET @purchase_id = LAST_INSERT_ID();
 
+INSERT INTO PurchaseDetail (purchase_id, product_id, quantity, unit_price) VALUES 
+(@purchase_id, 3, 10, 65.00),
+(@purchase_id, 5, 15, 20.00);
 
+-- Venta 1
 INSERT INTO Sale (customer_id, sale_date, payment_method_id, discount, total, user_id) VALUES 
-(1, '2023-05-01', 2, 5.00, 84.99, 2),
-(2, '2023-05-02', 1, 0.00, 59.98, 2),
-(3, '2023-05-05', 3, 10.00, 224.97, 4),
-(4, '2023-05-08', 2, 0.00, 129.99, 2),
-(5, '2023-05-10', 2, 15.00, 169.96, 4);
+(1, '2023-03-10', 1, 5.00, 120.95, 3);
 
+SET @sale_id = LAST_INSERT_ID();
 
 INSERT INTO SaleDetail (sale_id, product_id, quantity, unit_price) VALUES 
-(1, 1, 1, 89.99),
-(2, 2, 2, 29.99),
-(3, 3, 3, 24.99),
-(3, 4, 1, 129.99),
-(4, 4, 1, 129.99),
-(5, 5, 4, 39.99);
+(@sale_id, 1, 2, 25.99),
+(@sale_id, 2, 1, 19.99),
+(@sale_id, 6, 3, 15.99);
 
+-- Venta 2
+INSERT INTO Sale (customer_id, sale_date, payment_method_id, discount, 0, 89.99, user_id) VALUES 
+(2, '2023-03-12', 2, 0, 89.99, 3);
 
-INSERT INTO OrderStatus (status_name, description) VALUES 
-('IN PROCESS', 'Order is being prepared'),
-('DELIVERED', 'Order has been delivered'),
-('CANCELED', 'Order was canceled');
+SET @sale_id = LAST_INSERT_ID();
 
+INSERT INTO SaleDetail (sale_id, product_id, quantity, unit_price) VALUES 
+(@sale_id, 3, 1, 89.99);
 
+-- Pedido 1
 INSERT INTO CustomerOrder (customer_id, order_date, status_id, total, user_id) VALUES 
-(1, '2023-05-01', 2, 89.99, 2),
-(2, '2023-05-03', 1, 59.98, 2),
-(3, '2023-05-05', 1, 224.97, 4),
-(4, '2023-05-08', 3, 129.99, 2),
-(5, '2023-05-10', 2, 159.96, 4);
+(3, '2023-03-05', 1, 240.00, 3);
 
+SET @order_id = LAST_INSERT_ID();
 
-INSERT INTO Invoice (sale_id, invoice_number, issue_date, total_amount, taxes) VALUES 
-(1, 'INV-2023-001', '2023-05-01', 84.99, 12.74),
-(2, 'INV-2023-002', '2023-05-02', 59.98, 8.99),
-(3, 'INV-2023-003', '2023-05-05', 224.97, 33.74),
-(4, 'INV-2023-004', '2023-05-08', 129.99, 19.49),
-(5, 'INV-2023-005', '2023-05-10', 169.96, 25.49);
-
-
-INSERT INTO ReportType (type_name, description) VALUES 
-('SALES', 'Reports related to sales data'),
-('INVENTORY', 'Reports about stock levels and inventory'),
-('CUSTOMERS', 'Reports on customer activities and trends');
-
+-- Pedido 2
+INSERT INTO CustomerOrder (customer_id, order_date, status_id, total, user_id) VALUES 
+(4, '2023-03-08', 3, 120.00, 3);
 
 INSERT INTO Report (report_type_id, generation_date, user_id, file_path, parameters) VALUES 
-(1, '2023-05-01', 1, '/reports/sales_20230501.pdf', '{"date_from": "2023-04-01", "date_to": "2023-04-30"}'),
-(2, '2023-05-02', 1, '/reports/inventory_20230502.pdf', '{"category": "all", "stock_level": "low"}'),
-(3, '2023-05-05', 1, '/reports/customers_20230505.pdf', '{"customer_type": "all", "period": "monthly"}'),
-(1, '2023-05-10', 1, '/reports/sales_20230510.pdf', '{"date_from": "2023-05-01", "date_to": "2023-05-10"}'),
-(2, '2023-05-15', 1, '/reports/inventory_20230515.pdf', '{"category": "Footwear", "stock_level": "all"}');
+(1, '2023-03-01', 1, '/reports/sales_20230301.pdf', '{"start_date":"2023-01-01","end_date":"2023-03-01"}'),
+(2, '2023-03-15', 1, '/reports/inventory_20230315.pdf', '{"threshold":"minimum_stock"}');
+
 -- Triggers:
 
--- Trigger para User
 DELIMITER //
-CREATE TRIGGER after_user_insert
-AFTER INSERT ON User FOR EACH ROW
+CREATE TRIGGER after_user_insert_consumer
+AFTER INSERT ON User
+FOR EACH ROW
 BEGIN
-    INSERT INTO AuditLog (table_name, record_id, action, new_values, changed_by)
-    VALUES ('User', NEW.id, 'INSERT', 
-            JSON_OBJECT('username', NEW.username, 'email', NEW.email, 'role', NEW.role, 'active', NEW.active),
-            NEW.id);
-END //
-
-CREATE TRIGGER after_user_update
-AFTER UPDATE ON User FOR EACH ROW
-BEGIN
-    INSERT INTO AuditLog (table_name, record_id, action, old_values, new_values, changed_by)
-    VALUES ('User', NEW.id, 'UPDATE', 
-            JSON_OBJECT('username', OLD.username, 'email', OLD.email, 'role', OLD.role, 'active', OLD.active),
-            JSON_OBJECT('username', NEW.username, 'email', NEW.email, 'role', NEW.role, 'active', NEW.active),
-            NEW.id);
-END //
-
-CREATE TRIGGER before_user_delete
-BEFORE DELETE ON User FOR EACH ROW
-BEGIN
-    INSERT INTO AuditLog (table_name, record_id, action, old_values, changed_by)
-    VALUES ('User', OLD.id, 'DELETE', 
-            JSON_OBJECT('username', OLD.username, 'email', OLD.email, 'role', OLD.role, 'active', OLD.active),
-            OLD.id);
-END //
-DELIMITER ;
-
--- Trigger para Product (ejemplo similar para otras tablas)
-DELIMITER //
-CREATE TRIGGER after_product_insert
-AFTER INSERT ON Product FOR EACH ROW
-BEGIN
-    INSERT INTO AuditLog (table_name, record_id, action, new_values, changed_by)
-    VALUES ('Product', NEW.id, 'INSERT', 
-            JSON_OBJECT('name', NEW.name, 'unit_price', NEW.unit_price, 'current_stock', NEW.current_stock),
-            NEW.created_by);
-END //
-
-CREATE TRIGGER after_product_update
-AFTER UPDATE ON Product FOR EACH ROW
-BEGIN
-    IF OLD.unit_price != NEW.unit_price OR OLD.current_stock != NEW.current_stock THEN
-        INSERT INTO AuditLog (table_name, record_id, action, old_values, new_values, changed_by)
-        VALUES ('Product', NEW.id, 'UPDATE', 
-                JSON_OBJECT('name', OLD.name, 'unit_price', OLD.unit_price, 'current_stock', OLD.current_stock),
-                JSON_OBJECT('name', NEW.name, 'unit_price', NEW.unit_price, 'current_stock', NEW.current_stock),
-                NEW.created_by);
-    END IF;
-END //
-
-CREATE TRIGGER before_product_delete
-BEFORE DELETE ON Product FOR EACH ROW
-BEGIN
-    INSERT INTO AuditLog (table_name, record_id, action, old_values, changed_by)
-    VALUES ('Product', OLD.id, 'DELETE', 
-            JSON_OBJECT('name', OLD.name, 'unit_price', OLD.unit_price, 'current_stock', OLD.current_stock),
-            OLD.created_by);
-END //
-DELIMITER ;
-
--- Triggers para actualización de stock automática
-DELIMITER //
-CREATE TRIGGER after_purchase_detail_insert
-AFTER INSERT ON PurchaseDetail FOR EACH ROW
-BEGIN
-    -- Actualizar stock del producto
-    UPDATE Product SET current_stock = current_stock + NEW.quantity 
-    WHERE id = NEW.product_id;
+    DECLARE default_customer_type INT;
     
-    -- Registrar en auditoría
-    INSERT INTO AuditLog (table_name, record_id, action, new_values, changed_by)
-    SELECT 'Product', NEW.product_id, 'UPDATE', 
-           JSON_OBJECT('stock_added', NEW.quantity, 'reason', 'Purchase'),
-           p.created_by
-    FROM Product p WHERE p.id = NEW.product_id;
-END //
-
-CREATE TRIGGER after_sale_detail_insert
-AFTER INSERT ON SaleDetail FOR EACH ROW
-BEGIN
-    -- Actualizar stock del producto
-    UPDATE Product SET current_stock = current_stock - NEW.quantity 
-    WHERE id = NEW.product_id;
+    -- Obtener el ID del tipo de cliente INDIVIDUAL
+    SELECT id INTO default_customer_type FROM CustomerType WHERE type_name = 'INDIVIDUAL' LIMIT 1;
     
-    -- Registrar en auditoría
-    INSERT INTO AuditLog (table_name, record_id, action, new_values, changed_by)
-    SELECT 'Product', NEW.product_id, 'UPDATE', 
-           JSON_OBJECT('stock_removed', NEW.quantity, 'reason', 'Sale'),
-           s.user_id
-    FROM Sale s WHERE s.id = NEW.sale_id;
-END //
-
-CREATE TRIGGER before_sale_detail_insert
-BEFORE INSERT ON SaleDetail FOR EACH ROW
-BEGIN
-    DECLARE available_stock INT;
-    
-    SELECT current_stock INTO available_stock 
-    FROM Product WHERE id = NEW.product_id;
-    
-    IF available_stock < NEW.quantity THEN
-        SIGNAL SQLSTATE '45000' 
-        SET MESSAGE_TEXT = 'Insufficient stock for this product';
-    END IF;
-END //
-DELIMITER ;
-DELIMITER //
-CREATE TRIGGER after_user_insert_customer
-AFTER INSERT ON User FOR EACH ROW
-BEGIN
-    -- Solo actuar si el nuevo usuario es CONSUMER
+    -- Si el nuevo usuario es CONSUMER, crear automáticamente un cliente asociado
     IF NEW.role = 'CONSUMER' THEN
-        -- Verificar si ya existe un customer para este usuario
-        IF NOT EXISTS (SELECT 1 FROM Customer WHERE created_by = NEW.id) THEN
-            -- Insertar en la tabla Customer con valores por defecto
-            INSERT INTO Customer (
-                customer_type_id,
-                name,
-                identity_document,
-                email,
-                phone,
-                address,
-                registration_date,
-                created_by
-            ) VALUES (
-                1,
-                NEW.username,
-                'PENDIENTE',
-                NEW.email,
-                'PENDIENTE',
-                'PENDIENTE',
-                CURDATE(),
-                NEW.id
-            );
-        END IF;
+        INSERT INTO Customer (
+            customer_type_id,
+            name,
+            identity_document,
+            phone,
+            address,
+            registration_date,
+            created_by
+        ) VALUES (
+            default_customer_type,
+            NEW.username, -- Usamos el username como nombre inicial
+            CONCAT('USER-', NEW.id), -- Documento de identidad generado
+            '000-000-0000', -- Teléfono por defecto
+            'Dirección no especificada', -- Dirección por defecto
+            CURDATE(), -- Fecha de registro actual
+            NEW.id -- El propio usuario como creador
+        );
     END IF;
-END //
+END//
 DELIMITER ;
 
 DELIMITER //
-CREATE TRIGGER after_user_update_customer
-AFTER UPDATE ON User FOR EACH ROW
+CREATE TRIGGER after_saledetail_insert
+AFTER INSERT ON SaleDetail
+FOR EACH ROW
 BEGIN
+    -- Reducir el stock del producto vendido
+    UPDATE Product 
+    SET current_stock = current_stock - NEW.quantity,
+        updated_at = CURRENT_TIMESTAMP
+    WHERE id = NEW.product_id;
+END//
+DELIMITER ;
+3. Trigger para Actualizar Stock al Cancelar una Venta
+
+DELIMITER //
+CREATE TRIGGER before_sale_delete
+BEFORE DELETE ON Sale
+FOR EACH ROW
+BEGIN
+    -- Devolver los productos al stock si se cancela una venta
+    UPDATE Product p
+    JOIN SaleDetail sd ON p.id = sd.product_id
+    SET p.current_stock = p.current_stock + sd.quantity,
+        p.updated_at = CURRENT_TIMESTAMP
+    WHERE sd.sale_id = OLD.id;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER after_purchase_status_update
+AFTER UPDATE ON Purchase
+FOR EACH ROW
+BEGIN
+    DECLARE received_status_id INT;
     
-    IF NEW.role = 'CONSUMER' AND (OLD.email != NEW.email OR OLD.username != NEW.username) THEN
-        UPDATE Customer
-        SET
-            email = NEW.email,
-            name = CASE WHEN name = OLD.username THEN NEW.username ELSE name END
-        WHERE created_by = NEW.id;
+    -- Obtener el ID del estado RECEIVED
+    SELECT id INTO received_status_id FROM PurchaseStatus WHERE status_name = 'RECEIVED' LIMIT 1;
+    
+    -- Si el estado cambió a RECEIVED, aumentar el stock
+    IF NEW.status_id = received_status_id AND OLD.status_id != received_status_id THEN
+        UPDATE Product p
+        JOIN PurchaseDetail pd ON p.id = pd.product_id
+        SET p.current_stock = p.current_stock + pd.quantity,
+            p.updated_at = CURRENT_TIMESTAMP
+        WHERE pd.purchase_id = NEW.id;
     END IF;
-END //
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER after_product_stock_update
+AFTER UPDATE ON Product
+FOR EACH ROW
+BEGIN
+    -- Verificar si el stock actual cayó por debajo del mínimo
+    IF NEW.current_stock < NEW.minimum_stock AND OLD.current_stock >= OLD.minimum_stock THEN
+        -- Aquí podrías insertar en una tabla de notificaciones o alertas
+        -- Por ejemplo:
+        INSERT INTO AuditLog (
+            table_name,
+            record_id,
+            action,
+            old_values,
+            new_values,
+            changed_by
+        ) VALUES (
+            'Product',
+            NEW.id,
+            'UPDATE',
+            JSON_OBJECT('current_stock', OLD.current_stock, 'minimum_stock', OLD.minimum_stock),
+            JSON_OBJECT('current_stock', NEW.current_stock, 'minimum_stock', NEW.minimum_stock),
+            NULL -- O el ID del usuario si está disponible en el contexto
+        );
+    END IF;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER before_product_update
+BEFORE UPDATE ON Product
+FOR EACH ROW
+BEGIN
+    -- Registrar cambios importantes en el producto
+    IF NEW.unit_price != OLD.unit_price OR NEW.current_stock != OLD.current_stock THEN
+        INSERT INTO AuditLog (
+            table_name,
+            record_id,
+            action,
+            old_values,
+            new_values,
+            changed_by
+        ) VALUES (
+            'Product',
+            NEW.id,
+            'UPDATE',
+            JSON_OBJECT(
+                'unit_price', OLD.unit_price,
+                'current_stock', OLD.current_stock,
+                'name', OLD.name
+            ),
+            JSON_OBJECT(
+                'unit_price', NEW.unit_price,
+                'current_stock', NEW.current_stock,
+                'name', NEW.name
+            ),
+            NEW.created_by
+        );
+    END IF;
+END//
+
+DELIMITER //
+CREATE TRIGGER after_sale_insert
+AFTER INSERT ON Sale
+FOR EACH ROW
+BEGIN
+    DECLARE v_tax_rate DECIMAL(5,2) DEFAULT 0.15; -- Suponiendo un 15% de impuestos
+    
+    -- Crear factura automáticamente para cada venta
+    INSERT INTO Invoice (
+        sale_id,
+        invoice_number,
+        issue_date,
+        total_amount,
+        taxes,
+        created_at
+    ) VALUES (
+        NEW.id,
+        CONCAT('FAC-', DATE_FORMAT(NEW.sale_date, '%Y%m%d-'), NEW.id),
+        NEW.sale_date,
+        NEW.total,
+        NEW.total * v_tax_rate,
+        CURRENT_TIMESTAMP
+    );
+END//
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER audit_user_insert
+AFTER INSERT ON User
+FOR EACH ROW
+BEGIN
+    INSERT INTO AuditLog (
+        table_name,
+        record_id,
+        action,
+        new_values,
+        changed_by
+    ) VALUES (
+        'User',
+        NEW.id,
+        'INSERT',
+        JSON_OBJECT(
+            'username', NEW.username,
+            'role', NEW.role,
+            'active', NEW.active
+        ),
+        NEW.created_by
+    );
+END//
+
+CREATE TRIGGER audit_user_update
+AFTER UPDATE ON User
+FOR EACH ROW
+BEGIN
+    IF NEW.username != OLD.username OR NEW.role != OLD.role OR NEW.active != OLD.active THEN
+        INSERT INTO AuditLog (
+            table_name,
+            record_id,
+            action,
+            old_values,
+            new_values,
+            changed_by
+        ) VALUES (
+            'User',
+            NEW.id,
+            'UPDATE',
+            JSON_OBJECT(
+                'username', OLD.username,
+                'role', OLD.role,
+                'active', OLD.active
+            ),
+            JSON_OBJECT(
+                'username', NEW.username,
+                'role', NEW.role,
+                'active', NEW.active
+            ),
+            NEW.created_by
+        );
+    END IF;
+END//
+
+CREATE TRIGGER audit_user_delete
+AFTER DELETE ON User
+FOR EACH ROW
+BEGIN
+    INSERT INTO AuditLog (
+        table_name,
+        record_id,
+        action,
+        old_values,
+        changed_by
+    ) VALUES (
+        'User',
+        OLD.id,
+        'DELETE',
+        JSON_OBJECT(
+            'username', OLD.username,
+            'role', OLD.role,
+            'active', OLD.active
+        ),
+        NULL -- No sabemos quién lo eliminó
+    );
+END//
+
+CREATE TRIGGER audit_product_changes
+AFTER UPDATE ON Product
+FOR EACH ROW
+BEGIN
+    IF NEW.name != OLD.name OR NEW.unit_price != OLD.unit_price OR NEW.current_stock != OLD.current_stock THEN
+        INSERT INTO AuditLog (
+            table_name,
+            record_id,
+            action,
+            old_values,
+            new_values,
+            changed_by
+        ) VALUES (
+            'Product',
+            NEW.id,
+            'UPDATE',
+            JSON_OBJECT(
+                'name', OLD.name,
+                'unit_price', OLD.unit_price,
+                'current_stock', OLD.current_stock
+            ),
+            JSON_OBJECT(
+                'name', NEW.name,
+                'unit_price', NEW.unit_price,
+                'current_stock', NEW.current_stock
+            ),
+            NEW.created_by
+        );
+    END IF;
+END//
+
 DELIMITER ;

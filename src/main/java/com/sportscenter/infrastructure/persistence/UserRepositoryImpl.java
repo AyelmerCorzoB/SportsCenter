@@ -18,7 +18,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User user) {
-        String sql = "INSERT INTO User (username, password, role, active) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO User (username, password, role, active, created_at) VALUES (?, ?, ?, ?, ?)";
         
         try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -27,6 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getRole());
             stmt.setBoolean(4, user.isActive());
+            stmt.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
             
             int affectedRows = stmt.executeUpdate();
             
@@ -52,24 +53,18 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "SELECT * FROM User WHERE id = ?";
 
         try (Connection conn = connection.getConexion();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                user.setRole(rs.getString("role"));
-                user.setActive(rs.getBoolean("active"));
-                return user;
+                return mapResultSetToUser(rs);
             }
+            return null;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error finding user by id: " + e.getMessage(), e);
         }
-        return null;
     }
 
     @Override
@@ -78,51 +73,39 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "SELECT * FROM User";
 
         try (Connection conn = connection.getConexion();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                user.setRole(rs.getString("role"));
-                user.setActive(rs.getBoolean("active"));
-                users.add(user);
+                users.add(mapResultSetToUser(rs));
             }
+            return users;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error finding all users: " + e.getMessage(), e);
         }
-        for (User user : users) {
-            System.out.println("|-------------------------------------------------------------------------|");
-            System.out.println("| ID: " + user.getId() + "\n" +
-                    "| Username: " + user.getUsername() + "\n" +
-                    "| Password: " + user.getPassword() + "\n" +
-                    "| Role: " + user.getRole() + "\n" +
-                    "| Active: " + user.isActive() + "\n" +
-                    "| Created_at: " + user.getCreated_at() + "\n" +
-                    "| Last_login: " + user.getLast_login() + "\n" +
-                    "|-------------------------------------------------------------------------|");
-        }
-        return users;
     }
 
     @Override
     public void update(User user) {
-        String sql = "UPDATE User SET username = ?, password = ?, role = ?, active = ? WHERE id = ?";
+        String sql = "UPDATE User SET username = ?, password = ?, role = ?, active = ?, last_login = ? WHERE id = ?";
 
         try (Connection conn = connection.getConexion();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, user.getUsername());
-            stmt.setString(3, user.getPassword());
-            stmt.setString(4, user.getRole());
-            stmt.setBoolean(5, user.isActive());
+            stmt.setString(2, user.getPassword());
+            stmt.setString(3, user.getRole());
+            stmt.setBoolean(4, user.isActive());
+            stmt.setTimestamp(5, user.getLast_login());
             stmt.setInt(6, user.getId());
 
-            stmt.executeUpdate();
+            int affectedRows = stmt.executeUpdate();
+            
+            if (affectedRows == 0) {
+                throw new SQLException("Updating user failed, no rows affected.");
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error updating user: " + e.getMessage(), e);
         }
     }
 
@@ -131,12 +114,16 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "DELETE FROM User WHERE id = ?";
 
         try (Connection conn = connection.getConexion();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
-            stmt.executeUpdate();
+            int affectedRows = stmt.executeUpdate();
+            
+            if (affectedRows == 0) {
+                throw new SQLException("Deleting user failed, no rows affected.");
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error deleting user: " + e.getMessage(), e);
         }
     }
 
@@ -145,26 +132,29 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "SELECT * FROM User WHERE username = ?";
 
         try (Connection conn = connection.getConexion();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
-                user.setRole(rs.getString("role"));
-                user.setActive(rs.getBoolean("active"));
-                user.setCreated_at(rs.getTimestamp("created_at"));
-                user.setLast_login(rs.getTimestamp("last_login"));
-                return user;
+                return mapResultSetToUser(rs);
             }
+            return null;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error finding user by username: " + e.getMessage(), e);
         }
-        return null;
     }
 
+    private User mapResultSetToUser(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setId(rs.getInt("id"));
+        user.setUsername(rs.getString("username"));
+        user.setPassword(rs.getString("password"));
+        user.setRole(rs.getString("role"));
+        user.setActive(rs.getBoolean("active"));
+        user.setCreated_at(rs.getTimestamp("created_at"));
+        user.setLast_login(rs.getTimestamp("last_login"));
+        return user;
+    }
 }

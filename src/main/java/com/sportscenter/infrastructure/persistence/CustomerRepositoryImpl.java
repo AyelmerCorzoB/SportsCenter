@@ -125,39 +125,40 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public void guardarCliente(int customerTypeId, String name, String identityDocument, String phone, String address,
-            LocalDate registrationDate, int createdBy) {
-        String sql = "INSERT INTO Customer (customer_type_id, name, identity_document, " +
-                "phone, address, registration_date, created_by) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+public void guardarCliente(int customerTypeId, String name, String identityDocument, String phone, String address,
+        LocalDate registrationDate, int createdBy) {
+    String sql = "INSERT INTO Customer (customer_type_id, name, identity_document, " +
+            "phone, address, registration_date, created_by) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = connection.getConexion();
-                PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    try (Connection conn = connection.getConexion();
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setInt(1, customerTypeId);
-            stmt.setString(2, name);
-            stmt.setString(3, identityDocument);
-            stmt.setString(4, phone);
-            stmt.setString(5, address);
-            stmt.setDate(6, Date.valueOf(registrationDate));
-            stmt.setInt(7, createdBy);
+        stmt.setInt(1, customerTypeId);
+        stmt.setString(2, name);
+        stmt.setString(3, identityDocument);
+        stmt.setString(4, phone);
+        stmt.setString(5, address);
+        stmt.setDate(6, Date.valueOf(registrationDate));
+        stmt.setInt(7, createdBy);
 
-            int affectedRows = stmt.executeUpdate();
+        int affectedRows = stmt.executeUpdate();
 
-            if (affectedRows == 0) {
-                throw new SQLException("No se pudo guardar el cliente, ninguna fila afectada.");
-            }
-
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    // Si necesitas el ID generado, puedes obtenerlo aquí
-                    // int id = generatedKeys.getInt(1);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al guardar cliente: " + e.getMessage(), e);
+        if (affectedRows == 0) {
+            throw new SQLException("No se pudo guardar el cliente, ninguna fila afectada.");
         }
+
+        try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                int id = generatedKeys.getInt(1);
+                System.out.println("Cliente registrado con ID: " + id);
+            }
+        }
+
+    } catch (SQLException e) {
+        throw new RuntimeException("Error al guardar cliente: " + e.getMessage(), e);
     }
+}
 
     @Override
     public void delete(int id) {

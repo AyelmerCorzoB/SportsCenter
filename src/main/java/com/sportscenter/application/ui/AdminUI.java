@@ -4,6 +4,7 @@ import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.domain.entities.User;
 import com.sportscenter.domain.service.UserService;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -22,6 +23,7 @@ public class AdminUI {
         while (true) {
             ConsoleUtils.clear();
             System.out.println("\n--- Panel de Administración ---");
+            System.out.println("Usuario actual: " + currentUser.getUsername() + " (" + currentUser.getRole() + ")");
             System.out.println("1. Registrar nuevo usuario administrativo");
             System.out.println("2. Listar todos los usuarios");
             System.out.println("3. Panel de control");
@@ -39,6 +41,8 @@ public class AdminUI {
                 }
                 default -> System.out.println("Opción inválida.");
             }
+            
+            ConsoleUtils.pressEnterToContinue(scanner);
         }
     }
 
@@ -63,37 +67,38 @@ public class AdminUI {
     }
 
     private void registrarAdminUser() {
+        ConsoleUtils.clear();
         System.out.println("\n--- Registro de usuario administrativo ---");
-        User adminUser = solicitarDatosAdmin();
         
         try {
+            User adminUser = solicitarDatosAdmin();
             User registeredUser = userService.register(adminUser, true);
-        
+            
             if (registeredUser != null) {
-                System.out.println("\nUsuario administrativo registrado con éxito!");
-                System.out.println("Nombre de usuario: " + registeredUser.getUsername());
-                System.out.println("Rol asignado: " + registeredUser.getRole());
-                System.out.println("ID de usuario: " + registeredUser.getId());
-            } else {
-                System.out.println("\nError al registrar usuario administrativo.");
-                System.out.println("Posibles causas:");
-                System.out.println("- El nombre de usuario ya existe");
-                System.out.println("- Error en la base de datos");
+                System.out.println("\n✅ Usuario administrativo registrado con éxito!");
+                System.out.println("┌──────────────────────────────┐");
+                System.out.printf("│ %-15s: %-10s │\n", "ID", registeredUser.getId());
+                System.out.printf("│ %-15s: %-10s │\n", "Usuario", registeredUser.getUsername());
+                System.out.printf("│ %-15s: %-10s │\n", "Rol", registeredUser.getRole());
+                System.out.println("└──────────────────────────────┘");
             }
         } catch (Exception e) {
-            System.out.println("\nError durante el registro: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("\n❌ Error durante el registro: " + e.getMessage());
         }
-        
-        ConsoleUtils.pressEnterToContinue(scanner);
     }
 
     private User solicitarDatosAdmin() {
-        System.out.print("Username: ");
-        String username = scanner.nextLine();
+        String username;
+        do {
+            System.out.print("Username (mín. 3 caracteres): ");
+            username = scanner.nextLine().trim();
+        } while (username.length() < 3);
         
-        System.out.print("Password: ");
-        String password = scanner.nextLine();
+        String password;
+        do {
+            System.out.print("Password (mín. 8 caracteres): ");
+            password = scanner.nextLine().trim();
+        } while (password.length() < 8);
         
         String role = seleccionarRol();
         
@@ -101,7 +106,7 @@ public class AdminUI {
     }
     
     private String seleccionarRol() {
-        System.out.println("Seleccione el rol:");
+        System.out.println("\nSeleccione el rol:");
         System.out.println("1. ADMIN");
         System.out.println("2. CASHIER");
         System.out.println("3. INVENTORY");
@@ -121,7 +126,34 @@ public class AdminUI {
     }
 
     private void listarUsuarios() {
+        ConsoleUtils.clear();
         System.out.println("\n--- Listado de Usuarios ---");
-        System.out.println("Funcionalidad de listado pendiente de implementar.");
+        
+        try {
+            List<User> users = userService.getAllUsers();
+            
+            if (users.isEmpty()) {
+                System.out.println("No hay usuarios registrados.");
+                return;
+            }
+            
+            System.out.println("|------------------------------------------------------------------------|");
+            System.out.println("| ID  │ Username           │ Fecha Creación     │ Rol      │ Activo      │");
+            System.out.println("|------------------------------------------------------------------------|");
+            
+            for (User user : users) {
+                System.out.printf("│ %-3d │ %-18s │ %-18s │ %-8s │ %-12s │\n",
+                    user.getId(),
+                    user.getUsername(),
+                    user.getCreated_at().toString().substring(0, 16),
+                    user.getRole(),
+                    user.isActive() ? "Sí" : "No");
+            }
+            
+            System.out.println("|-------------------------------------------------------------------------|");
+            System.out.println("\nTotal de usuarios: " + users.size());
+        } catch (Exception e) {
+            System.out.println("❌ Error al obtener la lista de usuarios: " + e.getMessage());
+        }
     }
 }
