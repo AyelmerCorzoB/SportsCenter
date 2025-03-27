@@ -1,9 +1,6 @@
 package com.sportscenter.domain.entities;
 
-
-
 import java.time.LocalDate;
-
 
 public class Order {
     private int id;
@@ -51,6 +48,21 @@ public class Order {
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
+
+    // Métodos auxiliares para compatibilidad con tu UI
+    public LocalDate getFecha() {
+        return orderDate;
+    }
+
+    public OrderStatus getEstado() {
+        return status;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id +
+               "\nFecha: " + orderDate +
+               "\nEstado: " + status +
+               "\n-------------------------";
+    }
 }
-
-
