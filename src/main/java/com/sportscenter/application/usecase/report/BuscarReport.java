@@ -3,26 +3,31 @@ package com.sportscenter.application.usecase.report;
 import java.util.Scanner;
 
 import com.sportscenter.adapter.validations.ValidationInt;
-import com.sportscenter.application.usecase.reporttype.ReportTypeUseCase;
-import com.sportscenter.domain.entities.ReportType;
+import com.sportscenter.domain.entities.Report;
 
 public class BuscarReport {
-    public void buscar(Scanner sc, ReportTypeUseCase reportTypeUseCase) {
-        System.out.println("\n=== BUSCAR TIPO DE REPORTE ===");
-        
-        System.out.print("ID del tipo: ");
+    public static void buscar(Scanner sc, ReportUseCase reportUseCase) {
+        System.out.println("\n=== BUSCAR REPORTE ===");
+
+        System.out.print("ID del reporte: ");
         ValidationInt.validate(sc);
         int id = sc.nextInt();
         sc.nextLine();
-        
-        ReportType type = reportTypeUseCase.getReportTypeById(id);
-        if (type != null) {
-            System.out.println("\nInformación del tipo:");
-            System.out.println("ID: " + type.getId());
-            System.out.println("Tipo: " + type.getTypeName());
-            System.out.println("Descripción: " + (type.getDescription() != null ? type.getDescription() : "N/A"));
+
+        Report reporte = reportUseCase.getReportById(id);
+        if (reporte != null) {
+            System.out.println("\n📋 Información del Reporte:");
+            System.out.println("ID: " + reporte.getId());
+            System.out.println("Tipo de Reporte ID: " + reporte.getReportTypeId());
+            System.out.println("Fecha de Generación: " +
+                    (reporte.getGenerationDate() != null ? reporte.getGenerationDate() : "N/A"));
+            System.out.println("Usuario ID: " + reporte.getUserId());
+            System.out.println("Ruta del Archivo: " + reporte.getFilePath());
+            System.out.println("Parámetros: " +
+                    (reporte.getParameters() != null ? reporte.getParameters() : "Ninguno"));
+            System.out.println("Fecha de Creación: " + reporte.getCreatedAt());
         } else {
-            System.out.println("❌ No se encontró el tipo con ID: " + id);
+            System.out.println("❌ No se encontró un reporte con ID: " + id);
         }
     }
 }

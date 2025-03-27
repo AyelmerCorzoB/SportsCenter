@@ -18,7 +18,33 @@ public class Product {
     private int createdBy;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String categoryName;
+    private String supplierName;
+    private String colorName;
 
+    public String getCategoryName() {
+        return categoryName;
+    }
+    
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+    
+    public String getSupplierName() {
+        return supplierName;
+    }
+    
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+    
+    public String getColorName() {
+        return colorName;
+    }
+    
+    public void setColorName(String colorName) {
+        this.colorName = colorName;
+    }
     public Product() {}
 
     public Product(int id) {

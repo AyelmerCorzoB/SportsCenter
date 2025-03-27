@@ -15,7 +15,6 @@ public class ListarEmployee {
                 employee.getName(),
                 employee.getPosition(),
                 employee.getPhone(),
-                employee.getEmail(),
                 employee.getUserId()
             );
         }

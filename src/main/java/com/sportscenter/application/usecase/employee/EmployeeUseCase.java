@@ -11,13 +11,11 @@ public class EmployeeUseCase {
         this.repository = repository;
     }
 
-    public void registerEmployee(String name, String position, String phone,
-                               String email, int userId) {
+    public void registerEmployee(String name, String position, String phone, int userId) {
         Employee employee = new Employee();
         employee.setName(name);
         employee.setPosition(position);
         employee.setPhone(phone);
-        employee.setEmail(email);
         employee.setUserId(userId);
         repository.save(employee);
     }
@@ -30,14 +28,12 @@ public class EmployeeUseCase {
         return repository.listAll();
     }
 
-    public void updateEmployee(int id, String name, String position, String phone,
-                             String email, int userId) {
+    public void updateEmployee(int id, String name, String position, String phone, int userId) {
         Employee employee = new Employee();
         employee.setId(id);
         employee.setName(name);
         employee.setPosition(position);
         employee.setPhone(phone);
-        employee.setEmail(email);
         employee.setUserId(userId);
         repository.update(employee);
     }

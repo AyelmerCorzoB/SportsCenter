@@ -507,3 +507,50 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
+DELIMITER //
+CREATE TRIGGER after_user_insert_customer
+AFTER INSERT ON User FOR EACH ROW
+BEGIN
+    -- Solo actuar si el nuevo usuario es CONSUMER
+    IF NEW.role = 'CONSUMER' THEN
+        -- Verificar si ya existe un customer para este usuario
+        IF NOT EXISTS (SELECT 1 FROM Customer WHERE created_by = NEW.id) THEN
+            -- Insertar en la tabla Customer con valores por defecto
+            INSERT INTO Customer (
+                customer_type_id,
+                name,
+                identity_document,
+                email,
+                phone,
+                address,
+                registration_date,
+                created_by
+            ) VALUES (
+                1,
+                NEW.username,
+                'PENDIENTE',
+                NEW.email,
+                'PENDIENTE',
+                'PENDIENTE',
+                CURDATE(),
+                NEW.id
+            );
+        END IF;
+    END IF;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER after_user_update_customer
+AFTER UPDATE ON User FOR EACH ROW
+BEGIN
+    
+    IF NEW.role = 'CONSUMER' AND (OLD.email != NEW.email OR OLD.username != NEW.username) THEN
+        UPDATE Customer
+        SET
+            email = NEW.email,
+            name = CASE WHEN name = OLD.username THEN NEW.username ELSE name END
+        WHERE created_by = NEW.id;
+    END IF;
+END //
+DELIMITER ;

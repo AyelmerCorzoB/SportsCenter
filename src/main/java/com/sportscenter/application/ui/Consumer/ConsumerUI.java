@@ -87,7 +87,6 @@ public class ConsumerUI {
         do {
             System.out.println("\n--- MI PERFIL ---");
             System.out.println("Usuario: " + currentUser.getUsername());
-            System.out.println("Email: " + currentUser.getEmail());
             System.out.println("Rol: " + currentUser.getRole());
 
             System.out.println("\n1. Cambiar contraseña");

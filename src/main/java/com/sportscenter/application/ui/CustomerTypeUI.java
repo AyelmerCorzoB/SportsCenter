@@ -2,17 +2,15 @@
 
 import java.util.Scanner;
 
+import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.validations.ValidationInt;
-import com.sportscenter.application.usecase.customer_type.ActualizarCustomerType;
-import com.sportscenter.application.usecase.customer_type.BuscarCustomerType;
-import com.sportscenter.application.usecase.customer_type.CustomerTypeUseCase;
-import com.sportscenter.application.usecase.customer_type.EliminarCustomerType;
-import com.sportscenter.application.usecase.customer_type.RegistroCustomerType;
+import com.sportscenter.application.usecase.customer_type.*;
 
 public class CustomerTypeUI {
 
     public static void manejarMenuCustomerType(Scanner sc, CustomerTypeUseCase customerTypeUseCase) {
         int opcion;
+        ConsoleUtils.clear();
         do {
             String menuCustomerType = """
                     ******** CustomerType ********

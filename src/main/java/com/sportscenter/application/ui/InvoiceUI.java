@@ -1,27 +1,26 @@
 ﻿package com.sportscenter.application.ui;
 
+import java.util.List;
 import java.util.Scanner;
 
+import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.validations.ValidationInt;
-import com.sportscenter.application.usecase.invoice.ActualizarInvoice;
-import com.sportscenter.application.usecase.invoice.BuscarInvoice;
-import com.sportscenter.application.usecase.invoice.EliminarInvoice;
-import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
-import com.sportscenter.application.usecase.invoice.RegistroInvoice;
+import com.sportscenter.application.usecase.invoice.*;
+import com.sportscenter.domain.entities.Invoice;
 
 public class InvoiceUI {
     public static void manejarMenuInvoice(Scanner sc, InvoiceUseCase invoiceUseCase) {
         int opcion;
+        ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE EMPLEADOS ********");
-            System.out.println("1. Registrar empleado");
-            System.out.println("2. Buscar empleado por ID");
-            System.out.println("3. Listar todas los empleados");
-            System.out.println("4. Actualizar un empleado");
-            System.out.println("5. Eliminar una empleado");
+            System.out.println("\n******** MENÚ DE FACTURAS ********");
+            System.out.println("1. Registrar factura");
+            System.out.println("2. Buscar factura por ID");
+            System.out.println("3. Listar todas las facturas");
+            System.out.println("4. Actualizar una factura");
+            System.out.println("5. Eliminar una factura");
             System.out.println("6. Volver al menú principal");
             System.out.print("Seleccione una opción: ");
-
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
             sc.nextLine();
@@ -34,7 +33,7 @@ public class InvoiceUI {
                     new BuscarInvoice().buscar(sc, invoiceUseCase);
                     break;
                 case 3:
-                    invoiceUseCase.getAllInvoices();
+                    listarFacturas(invoiceUseCase);
                     break;
                 case 4:
                     new ActualizarInvoice().actualizar(sc, invoiceUseCase);
@@ -50,5 +49,36 @@ public class InvoiceUI {
                     break;
             }
         } while (opcion != 6);
+    }
+
+    private static void listarFacturas(InvoiceUseCase invoiceUseCase) {
+        List<Invoice> facturas = invoiceUseCase.getAllInvoices();
+
+        if (facturas.isEmpty()) {
+            System.out.println("\nNo hay facturas registradas.");
+            return;
+        }
+
+        System.out.println("\nLISTADO DE FACTURAS");
+        System.out.println(
+                "+-------------------------------------------------------------------------------------------------------+");
+        System.out.printf("| %-10s | %-15s | %-20s | %-15s | %-15s | %-10s | %-8s |\n",
+                "ID", "N° Factura", "Cliente", "Documento", "Método Pago", "Total", "Items");
+        System.out.println(
+                "+-------------------------------------------------------------------------------------------------------+");
+
+        for (Invoice factura : facturas) {
+            System.out.printf("| %-10d | %-15s | %-20s | %-15s | %-15s | $%-9.2f | %-8d |\n",
+                    factura.getId(),
+                    factura.getInvoiceNumber(),
+                    factura.getCustomerName(),
+                    factura.getCustomerDocument(),
+                    factura.getPaymentMethod(),
+                    factura.getTotalAmount(),
+                    factura.getItemsCount());
+        }
+        System.out.println(
+                "+-------------------------------------------------------------------------------------------------------+");
+        System.out.println("Total de facturas: " + facturas.size());
     }
 }

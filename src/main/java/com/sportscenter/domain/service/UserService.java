@@ -24,22 +24,25 @@ public class UserService {
         return null;
     }
 
-    public boolean register(User user, boolean isAdminRegistration) {
+    public User register(User user, boolean isAdmin) {
         try {
-            if (!isAdminRegistration) {
-                user.setRole("CONSUMER");
+            user.setRole(isAdmin ? "ADMIN" : "CONSUMER");
+            user.setActive(true);
+
+            if (user.getUsername() == null || user.getUsername().isEmpty() ||
+                    user.getPassword() == null || user.getPassword().isEmpty()) {
+                throw new IllegalArgumentException("Username y password son obligatorios");
             }
 
             if (userRepository.findByUsername(user.getUsername()) != null) {
-                System.out.println("El nombre de usuario ya existe");
-                return false;
+                System.out.println("Error: El nombre de usuario ya existe");
+                return null;
             }
 
-            userRepository.save(user);
-            return true;
+            return userRepository.save(user);
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            System.err.println("Error en UserService.register(): " + e.getMessage());
+            return null;
         }
     }
 }

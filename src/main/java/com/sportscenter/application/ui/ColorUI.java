@@ -2,16 +2,14 @@
 
 import java.util.Scanner;
 
+import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.validations.ValidationInt;
-import com.sportscenter.application.usecase.color.ActualizarColor;
-import com.sportscenter.application.usecase.color.BuscarColor;
-import com.sportscenter.application.usecase.color.ColorUseCase;
-import com.sportscenter.application.usecase.color.EliminarColor;
-import com.sportscenter.application.usecase.color.RegistroColor;
+import com.sportscenter.application.usecase.color.*;
 
 public class ColorUI {
     public static void manejarMenuColor(Scanner sc, ColorUseCase colorUseCase) {
         int opcion;
+        ConsoleUtils.clear();
         do {
             String menuColor = """
                     ******** Color ********

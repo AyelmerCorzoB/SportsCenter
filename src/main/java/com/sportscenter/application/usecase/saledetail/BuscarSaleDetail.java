@@ -1,31 +1,33 @@
 package com.sportscenter.application.usecase.saledetail;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.sportscenter.adapter.validations.ValidationInt;
-import com.sportscenter.application.usecase.Sale.SaleUseCase;
-import com.sportscenter.domain.entities.Sale;
+import com.sportscenter.domain.entities.SaleDetail;
 
 public class BuscarSaleDetail {
-    public void buscar(Scanner sc, SaleUseCase saleUseCase) {
-        System.out.println("\n=== BUSCAR VENTA POR ID ===");
+    public static void buscarPorVenta(Scanner sc, SaleDetailUseCase saleDetailUseCase) {
+        System.out.println("\n=== BUSCAR DETALLES DE VENTA ===");
 
         System.out.print("ID de la venta: ");
         ValidationInt.validate(sc);
-        int id = sc.nextInt();
+        int saleId = sc.nextInt();
         sc.nextLine();
 
-        Sale sale = saleUseCase.getSaleById(id);
-        if (sale != null) {
-            System.out.println("\n📄 Información de la venta:");
-            System.out.println("🆔 ID: " + sale.getId());
-            System.out.println("👤 ID Cliente: " + sale.getCustomerId());
-            System.out.println("📅 Fecha de venta: " + sale.getSaleDate());
-            System.out.println("💳 Método de pago ID: " + sale.getPaymentMethodId());
-            System.out.println("💰 Total: $" + sale.getTotal());
-            System.out.println("👨‍💼 ID Usuario: " + sale.getUserId());
-        } else {
-            System.out.println("❌ No se encontró ninguna venta con ID: " + id);
+        List<SaleDetail> detalles = saleDetailUseCase.getDetailsBySaleId(saleId);
+        if (detalles.isEmpty()) {
+            System.out.println("❌ No se encontraron detalles para la venta con ID: " + saleId);
+            return;
         }
+
+        System.out.println("\n📋 Detalles de la venta " + saleId + ":");
+        detalles.forEach(detalle -> {
+            System.out.println("\n🆔 ID Detalle: " + detalle.getId());
+            System.out.println("📦 Producto ID: " + detalle.getProductId());
+            System.out.println("🔢 Cantidad: " + detalle.getQuantity());
+            System.out.println("💰 Precio Unitario: $" + detalle.getUnitPrice());
+            System.out.println("🧮 Subtotal: $" + detalle.getSubtotal());
+        });
     }
 }

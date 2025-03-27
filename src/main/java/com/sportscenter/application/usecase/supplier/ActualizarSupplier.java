@@ -6,7 +6,7 @@ import com.sportscenter.adapter.validations.ValidationInt;
 import com.sportscenter.adapter.validations.ValidationString;
 
 public class ActualizarSupplier {
-    public void actualizar(Scanner sc, SupplierUseCase supplierUseCase) {
+    public static void actualizar(Scanner sc, SupplierUseCase supplierUseCase) {
         System.out.println("\n=== ACTUALIZAR PROVEEDOR ===");
         
         System.out.print("ID del proveedor a actualizar: ");

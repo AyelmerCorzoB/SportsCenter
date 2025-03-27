@@ -5,7 +5,7 @@ import java.util.Scanner;
 import com.sportscenter.adapter.validations.ValidationString;
 
 public class RegistroSupplier {
-    public void registro(Scanner sc, SupplierUseCase supplierUseCase) {
+    public static void registro(Scanner sc, SupplierUseCase supplierUseCase) {
         System.out.println("\n=== REGISTRO DE PROVEEDOR ===");
 
         System.out.print("Nombre: ");

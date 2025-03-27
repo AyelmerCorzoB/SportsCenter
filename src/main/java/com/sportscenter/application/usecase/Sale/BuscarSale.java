@@ -7,7 +7,7 @@ import com.sportscenter.domain.entities.Sale;
 
 public class BuscarSale {
 
-    public void buscar(Scanner sc, SaleUseCase saleUseCase) {
+    public static void buscar(Scanner sc, SaleUseCase saleUseCase) {
         System.out.println("\n=== BUSCAR VENTA POR ID ===");
 
         System.out.print("ID de la venta: ");

@@ -2,16 +2,14 @@
 
 import java.util.Scanner;
 
+import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.validations.ValidationInt;
-import com.sportscenter.application.usecase.employee.ActualizarEmployee;
-import com.sportscenter.application.usecase.employee.BuscarEmployee;
-import com.sportscenter.application.usecase.employee.EmployeeUseCase;
-import com.sportscenter.application.usecase.employee.EliminarEmployee;
-import com.sportscenter.application.usecase.employee.RegistroEmployee;
+import com.sportscenter.application.usecase.employee.*;
 
 public class EmployeeUI {
     public static void manejarMenuEmployee(Scanner sc, EmployeeUseCase employeeUseCase) {
         int opcion;
+        ConsoleUtils.clear();
         do {
             System.out.println("\n******** MENÚ DE EMPLEADOS ********");
             System.out.println("1. Registrar empleado");
@@ -34,7 +32,7 @@ public class EmployeeUI {
                     new BuscarEmployee().buscar(sc, employeeUseCase);
                     break;
                 case 3:
-                    employeeUseCase.getAllEmployees();
+                    listarTodosEmpleados(employeeUseCase);
                     break;
                 case 4:
                     new ActualizarEmployee().actualizar(sc, employeeUseCase);
@@ -50,5 +48,30 @@ public class EmployeeUI {
                     break;
             }
         } while (opcion != 6);
+    }
+    private static void listarTodosEmpleados(EmployeeUseCase employeeUseCase) {
+        ConsoleUtils.clear(); // Limpiar la consola antes de mostrar la lista
+        System.out.println("\n--- LISTA DE EMPLEADOS ---");
+    
+        // Obtener la lista de empleados desde el caso de uso
+        var employees = employeeUseCase.getAllEmployees();
+    
+        if (employees.isEmpty()) {
+            System.out.println("No hay empleados registrados.");
+            return;
+        }
+    
+        // Mostrar los empleados en formato tabular
+        System.out.printf("%-5s %-20s %-15s %-15s %-30s %-10s%n",
+                "ID", "Nombre", "Posición", "Teléfono", "Email", "Usuario ID");
+    
+        for (var employee : employees) {
+            System.out.printf("%-5d %-20s %-15s %-15s %-30s %-10d%n",
+                    employee.getId(),
+                    employee.getName(),
+                    employee.getPosition(),
+                    employee.getPhone(),
+                    employee.getUserId());
+        }
     }
 }

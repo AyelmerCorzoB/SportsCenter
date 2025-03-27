@@ -5,7 +5,7 @@ import java.util.Scanner;
 import com.sportscenter.adapter.validations.ValidationInt;
 
 public class EliminarReport {
-    public void eliminar(Scanner sc, ReportUseCase reportUseCase) {
+    public static void eliminar(Scanner sc, ReportUseCase reportUseCase) {
         System.out.println("\n=== ELIMINAR REPORTE ===");
 
         System.out.print("ID del reporte a eliminar: ");

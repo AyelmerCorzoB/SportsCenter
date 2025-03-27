@@ -6,7 +6,7 @@ import com.sportscenter.adapter.validations.ValidationInt;
 import com.sportscenter.domain.entities.Supplier;
 
 public class BuscarSupplier {
-    public void buscar(Scanner sc, SupplierUseCase supplierUseCase) {
+    public static void buscar(Scanner sc, SupplierUseCase supplierUseCase) {
         System.out.println("\n=== BUSCAR PROVEEDOR ===");
 
         System.out.print("ID del proveedor: ");

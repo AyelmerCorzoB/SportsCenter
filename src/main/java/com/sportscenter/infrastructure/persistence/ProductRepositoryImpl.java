@@ -65,30 +65,71 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<Product> findAll() {
-        List<Product> products = new ArrayList<>();
-        String sql = "SELECT * FROM Product";
+public List<Product> findAll() {
+    List<Product> products = new ArrayList<>();
+    String sql = """
+            SELECT p.*, 
+                   c.name AS category_name,
+                   s.name AS supplier_name,
+                   col.name AS color_name
+            FROM Product p
+            LEFT JOIN Category c ON p.category_id = c.id
+            LEFT JOIN Supplier s ON p.supplier_id = s.id
+            LEFT JOIN Color col ON p.color_id = col.id
+            ORDER BY p.name
+            """;
 
-        try (Connection conn = connection.getConexion();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
+    try (Connection conn = connection.getConexion();
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(sql)) {
 
-            while (rs.next()) {
-                Product product = new Product();
-                product.setId(rs.getInt("id"));
-                product.setName(rs.getString("name"));
-                product.setDescription(rs.getString("description"));
-                product.setUnitPrice(rs.getDouble("unit_price"));
-                product.setSize(rs.getString("size"));
-                product.setCurrentStock(rs.getInt("current_stock"));
-                product.setCategoryId(rs.getInt("category_id"));
-                products.add(product);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        while (rs.next()) {
+            Product product = new Product();
+            product.setId(rs.getInt("id"));
+            product.setName(rs.getString("name"));
+            product.setDescription(rs.getString("description"));
+            product.setUnitPrice(rs.getDouble("unit_price"));
+            product.setSize(rs.getString("size"));
+            product.setCurrentStock(rs.getInt("current_stock"));
+            product.setMinimumStock(rs.getInt("minimum_stock"));
+            product.setEntryDate(rs.getDate("entry_date").toLocalDate());
+            product.setCategoryId(rs.getInt("category_id"));
+            product.setSupplierId(rs.getInt("supplier_id"));
+            product.setColorId(rs.getInt("color_id"));
+            
+            // Campos adicionales de las relaciones
+            product.setCategoryName(rs.getString("category_name"));
+            product.setSupplierName(rs.getString("supplier_name"));
+            product.setColorName(rs.getString("color_name"));
+            
+            products.add(product);
         }
+        
+        // Mostrar en consola (para depuración)
+        System.out.println("\nListado de Productos:");
+        System.out.println("+---------------------------------------------------------------------------------------------------+");
+        System.out.printf("| %-5s | %-20s | %-15s | %-10s | %-8s | %-15s | %-15s |\n", 
+                         "ID", "Nombre", "Precio", "Tamaño", "Stock", "Categoría", "Proveedor");
+        System.out.println("+---------------------------------------------------------------------------------------------------+");
+        
+        for (Product p : products) {
+            System.out.printf("| %-5d | %-20s | $%-14.2f | %-10s | %-8d | %-15s | %-15s |\n",
+                            p.getId(),
+                            p.getName(),
+                            p.getUnitPrice(),
+                            p.getSize(),
+                            p.getCurrentStock(),
+                            p.getCategoryName(),
+                            p.getSupplierName());
+        }
+        System.out.println("+---------------------------------------------------------------------------------------------------+");
+        
         return products;
+    } catch (SQLException e) {
+        System.err.println("Error al listar productos: " + e.getMessage());
+        return new ArrayList<>();
     }
+}
 
     @Override
     public void update(Product product) {

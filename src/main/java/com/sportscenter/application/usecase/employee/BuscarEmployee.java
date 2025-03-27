@@ -20,7 +20,6 @@ public class BuscarEmployee {
             System.out.println("Nombre: " + employee.getName());
             System.out.println("Posición: " + employee.getPosition());
             System.out.println("Teléfono: " + employee.getPhone());
-            System.out.println("Email: " + employee.getEmail());
             System.out.println("ID de Usuario: " + employee.getUserId());
         } else {
             System.out.println("❌ No se encontró el empleado con ID: " + id);

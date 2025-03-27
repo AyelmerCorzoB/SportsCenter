@@ -4,7 +4,7 @@ import java.util.Scanner;
 import com.sportscenter.adapter.validations.ValidationInt;
 
 public class RegistroSaledetail {
-    public void registro(Scanner sc, SaleDetailUseCase saleDetailUseCase) {
+    public static void registro(Scanner sc, SaleDetailUseCase saleDetailUseCase) {
         System.out.println("\n=== REGISTRO DE DETALLE DE VENTA ===");
 
         System.out.print("ID de la venta (saleId): ");

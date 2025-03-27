@@ -1,9 +1,9 @@
 package com.sportscenter.application.usecase.Sale;
 
-import com.sportscenter.domain.entities.Sale;
-import com.sportscenter.domain.repository.SaleRepository;
 import java.time.LocalDate;
 import java.util.List;
+import com.sportscenter.domain.entities.Sale;
+import com.sportscenter.domain.repository.SaleRepository;
 
 public class SaleUseCase {
     private final SaleRepository repository;
@@ -12,8 +12,8 @@ public class SaleUseCase {
         this.repository = repository;
     }
 
-    public void registerSale(int customerId, LocalDate saleDate, 
-                           int paymentMethodId, double total, int userId) {
+    public void registerSale(int customerId, LocalDate saleDate,
+            int paymentMethodId, double total, int userId) {
         Sale sale = new Sale();
         sale.setCustomerId(customerId);
         sale.setSaleDate(saleDate);
@@ -31,15 +31,16 @@ public class SaleUseCase {
         return repository.findAll();
     }
 
-    public void updateSale(int id, int customerId, LocalDate saleDate, 
-                         int paymentMethodId, double total) {
-        Sale sale = new Sale();
-        sale.setId(id);
-        sale.setCustomerId(customerId);
-        sale.setSaleDate(saleDate);
-        sale.setPaymentMethodId(paymentMethodId);
-        sale.setTotal(total);
-        repository.update(sale);
+    public void updateSale(int id, int customerId, LocalDate saleDate,
+            int paymentMethodId, double total) {
+        Sale sale = repository.findById(id);
+        if (sale != null) {
+            sale.setCustomerId(customerId);
+            sale.setSaleDate(saleDate);
+            sale.setPaymentMethodId(paymentMethodId);
+            sale.setTotal(total);
+            repository.update(sale);
+        }
     }
 
     public void deleteSale(int id) {

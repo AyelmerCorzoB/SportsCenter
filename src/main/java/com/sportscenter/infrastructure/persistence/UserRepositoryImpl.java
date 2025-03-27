@@ -17,21 +17,33 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void save(User user) {
-        String sql = "INSERT INTO User (username, email, password, role, active) VALUES (?, ?, ?, ?, ?)";
-
+    public User save(User user) {
+        String sql = "INSERT INTO User (username, password, role, active) VALUES (?, ?, ?, ?)";
+        
         try (Connection conn = connection.getConexion();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            
             stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPassword());
-            stmt.setString(4, user.getRole());
-            stmt.setBoolean(5, user.isActive());
-
-            stmt.executeUpdate();
+            stmt.setString(2, user.getPassword());
+            stmt.setString(3, user.getRole());
+            stmt.setBoolean(4, user.isActive());
+            
+            int affectedRows = stmt.executeUpdate();
+            
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+            
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    user.setId(generatedKeys.getInt(1));
+                    return user;
+                } else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error saving user: " + e.getMessage(), e);
         }
     }
 
@@ -49,7 +61,6 @@ public class UserRepositoryImpl implements UserRepository {
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
-                user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setRole(rs.getString("role"));
                 user.setActive(rs.getBoolean("active"));
@@ -74,7 +85,6 @@ public class UserRepositoryImpl implements UserRepository {
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
-                user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setRole(rs.getString("role"));
                 user.setActive(rs.getBoolean("active"));
@@ -83,18 +93,28 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        for (User user : users) {
+            System.out.println("|-------------------------------------------------------------------------|");
+            System.out.println("| ID: " + user.getId() + "\n" +
+                    "| Username: " + user.getUsername() + "\n" +
+                    "| Password: " + user.getPassword() + "\n" +
+                    "| Role: " + user.getRole() + "\n" +
+                    "| Active: " + user.isActive() + "\n" +
+                    "| Created_at: " + user.getCreated_at() + "\n" +
+                    "| Last_login: " + user.getLast_login() + "\n" +
+                    "|-------------------------------------------------------------------------|");
+        }
         return users;
     }
 
     @Override
     public void update(User user) {
-        String sql = "UPDATE User SET username = ?, email = ?, password = ?, role = ?, active = ? WHERE id = ?";
+        String sql = "UPDATE User SET username = ?, password = ?, role = ?, active = ? WHERE id = ?";
 
         try (Connection conn = connection.getConexion();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
             stmt.setString(4, user.getRole());
             stmt.setBoolean(5, user.isActive());
@@ -134,7 +154,6 @@ public class UserRepositoryImpl implements UserRepository {
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
-                user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setRole(rs.getString("role"));
                 user.setActive(rs.getBoolean("active"));

@@ -11,8 +11,8 @@ public class PurchaseDetailUseCase {
         this.repository = repository;
     }
 
-    public void registerPurchaseDetail(int purchaseId, int productId, 
-                                     int quantity, double unitPrice) {
+    public void registerPurchaseDetail(int purchaseId, int productId,
+            int quantity, double unitPrice) {
         PurchaseDetail detail = new PurchaseDetail();
         detail.setPurchaseId(purchaseId);
         detail.setProductId(productId);

@@ -2,16 +2,14 @@ package com.sportscenter.application.ui;
 
 import java.util.Scanner;
 
+import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.validations.ValidationInt;
-import com.sportscenter.application.usecase.category.ActualizarCategory;
-import com.sportscenter.application.usecase.category.BuscarCategory;
-import com.sportscenter.application.usecase.category.CategoryUseCase;
-import com.sportscenter.application.usecase.category.EliminarCategory;
-import com.sportscenter.application.usecase.category.RegistroCategory;
+import com.sportscenter.application.usecase.category.*;
 
 public class CategoryUI {
     public static void manejarMenuCategory(Scanner sc, CategoryUseCase categoryUseCase) {
         int opcion;
+        ConsoleUtils.clear();
         do {
             String menuCategory = """
                     ******** Category ********

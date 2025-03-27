@@ -6,7 +6,7 @@ import java.util.Scanner;
 import com.sportscenter.adapter.validations.ValidationInt;
 
 public class RegistroSale {
-    public void registro(Scanner sc, SaleUseCase saleUseCase) {
+    public static void registro(Scanner sc, SaleUseCase saleUseCase) {
         System.out.println("\n=== REGISTRO DE VENTA ===");
 
         System.out.print("ID del cliente: ");
@@ -14,7 +14,6 @@ public class RegistroSale {
         int customerId = sc.nextInt();
         sc.nextLine();
 
-        // Fecha de la venta (por defecto, la fecha actual)
         LocalDate saleDate = LocalDate.now();
         System.out.println("Fecha de la venta (automática): " + saleDate);
 

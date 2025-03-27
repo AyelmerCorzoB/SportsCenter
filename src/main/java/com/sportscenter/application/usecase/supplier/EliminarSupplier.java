@@ -5,7 +5,7 @@ import java.util.Scanner;
 import com.sportscenter.adapter.validations.ValidationInt;
 
 public class EliminarSupplier {
-    public void eliminar(Scanner sc, SupplierUseCase supplierUseCase) {
+    public static void eliminar(Scanner sc, SupplierUseCase supplierUseCase) {
         System.out.println("\n=== ELIMINAR PROVEEDOR ===");
         
         System.out.print("ID del proveedor a eliminar: ");

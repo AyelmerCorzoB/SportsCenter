@@ -5,6 +5,7 @@ import com.sportscenter.domain.repository.CustomerRepository;
 import com.sportscenter.infrastructure.database.ConnectionDb;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,18 +20,18 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public void save(Customer customer) {
         String sql = "INSERT INTO Customer (customer_type_id, name, identity_document, email, phone, address) " +
-                   "VALUES (?, ?, ?, ?, ?, ?)";
-        
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, customer.getCustomerTypeId());
             stmt.setString(2, customer.getName());
             stmt.setString(3, customer.getIdentityDocument());
             stmt.setString(4, customer.getEmail());
             stmt.setString(5, customer.getPhone());
             stmt.setString(6, customer.getAddress());
-            
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,13 +41,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public Customer findById(int id) {
         String sql = "SELECT * FROM Customer WHERE id = ?";
-        
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            
+
             if (rs.next()) {
                 Customer customer = new Customer();
                 customer.setId(rs.getInt("id"));
@@ -68,11 +69,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public List<Customer> findAll() {
         List<Customer> customers = new ArrayList<>();
         String sql = "SELECT * FROM Customer";
-        
+
         try (Connection conn = connection.getConexion();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
                 Customer customer = new Customer();
                 customer.setId(rs.getInt("id"));
@@ -89,8 +90,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         }
         for (Customer customer : customers) {
             System.out.println("|-------------------------------------------------------------------------|");
-            System.out.println("| ID: " + customer.getId() + "\n"+
-            "| Tipo de cliente: " + customer.getCustomerTypeId() + "\n" +
+            System.out.println("| ID: " + customer.getId() + "\n" +
+                    "| Tipo de cliente: " + customer.getCustomerTypeId() + "\n" +
                     "| Nombre: " + customer.getName() + "\n" +
                     "| Documento de identidad: " + customer.getIdentityDocument() + "\n" +
                     "| Correo: " + customer.getEmail() + "\n" +
@@ -104,11 +105,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public void update(Customer customer) {
         String sql = "UPDATE Customer SET customer_type_id = ?, name = ?, identity_document = ?, " +
-                   "email = ?, phone = ?, address = ? WHERE id = ?";
-        
+                "email = ?, phone = ?, address = ? WHERE id = ?";
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, customer.getCustomerTypeId());
             stmt.setString(2, customer.getName());
             stmt.setString(3, customer.getIdentityDocument());
@@ -116,7 +117,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             stmt.setString(5, customer.getPhone());
             stmt.setString(6, customer.getAddress());
             stmt.setInt(7, customer.getId());
-            
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -124,12 +125,47 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
+    public void guardarCliente(int customerTypeId, String name, String identityDocument, String phone, String address,
+            LocalDate registrationDate, int createdBy) {
+        String sql = "INSERT INTO Customer (customer_type_id, name, identity_document, " +
+                "phone, address, registration_date, created_by) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = connection.getConexion();
+                PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setInt(1, customerTypeId);
+            stmt.setString(2, name);
+            stmt.setString(3, identityDocument);
+            stmt.setString(4, phone);
+            stmt.setString(5, address);
+            stmt.setDate(6, Date.valueOf(registrationDate));
+            stmt.setInt(7, createdBy);
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("No se pudo guardar el cliente, ninguna fila afectada.");
+            }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    // Si necesitas el ID generado, puedes obtenerlo aquí
+                    // int id = generatedKeys.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al guardar cliente: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
     public void delete(int id) {
         String sql = "DELETE FROM Customer WHERE id = ?";
-        
+
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {

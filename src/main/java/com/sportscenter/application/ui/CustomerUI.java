@@ -1,12 +1,15 @@
 ﻿package com.sportscenter.application.ui;
 
 import java.util.Scanner;
+
+import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.validations.ValidationInt;
 import com.sportscenter.application.usecase.customer.*;
 
 public class CustomerUI {
     public static void manejarMenuCustomer(Scanner sc, CustomerUseCase customerUseCase) {
         int opcion;
+        ConsoleUtils.clear();
         do {
             System.out.println("\n******** MENÚ DE CLIENTES ********");
             System.out.println("1. Registrar cliente");

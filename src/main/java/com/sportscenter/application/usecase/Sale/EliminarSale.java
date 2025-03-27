@@ -5,7 +5,7 @@ import java.util.Scanner;
 import com.sportscenter.adapter.validations.ValidationInt;
 
 public class EliminarSale {
-    public void eliminar(Scanner sc, SaleUseCase saleUseCase) {
+    public static void eliminar(Scanner sc, SaleUseCase saleUseCase) {
         System.out.println("\n=== ELIMINAR VENTA ===");
 
         System.out.print("ID de la venta a eliminar: ");

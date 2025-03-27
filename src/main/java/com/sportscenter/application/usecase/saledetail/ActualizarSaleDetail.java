@@ -1,57 +1,46 @@
 package com.sportscenter.application.usecase.saledetail;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 import com.sportscenter.adapter.validations.ValidationInt;
-import com.sportscenter.application.usecase.Sale.SaleUseCase;
+import com.sportscenter.domain.entities.SaleDetail;
 
 public class ActualizarSaleDetail {
-    public void actualizar(Scanner sc, SaleUseCase saleUseCase) {
-        System.out.println("\n=== ACTUALIZAR VENTA ===");
+    public static void actualizar(Scanner sc, SaleDetailUseCase saleDetailUseCase) {
+        System.out.println("\n=== ACTUALIZAR DETALLE DE VENTA ===");
 
-        // ID de la venta a actualizar
-        System.out.print("ID de la venta: ");
+        System.out.print("ID del detalle a actualizar: ");
         ValidationInt.validate(sc);
         int id = sc.nextInt();
         sc.nextLine();
 
-        // ID del cliente
-        System.out.print("Nuevo ID del cliente: ");
-        ValidationInt.validate(sc);
-        int customerId = sc.nextInt();
-        sc.nextLine();
-
-        // Fecha de la venta
-        LocalDate saleDate = null;
-        while (saleDate == null) {
-            System.out.print("Nueva fecha de venta (YYYY-MM-DD): ");
-            String dateInput = sc.nextLine();
-            try {
-                saleDate = LocalDate.parse(dateInput);
-            } catch (DateTimeParseException e) {
-                System.out.println("⚠️ Fecha inválida. Intenta de nuevo.");
-            }
+        SaleDetail detalle = saleDetailUseCase.getDetailById(id);
+        if (detalle == null) {
+            System.out.println("❌ No se encontró el detalle con ID: " + id);
+            return;
         }
 
-        // ID del método de pago
-        System.out.print("Nuevo ID del método de pago: ");
+        System.out.println("\nDetalle actual:");
+        mostrarDetalle(detalle);
+
+        System.out.print("\nNueva cantidad (" + detalle.getQuantity() + "): ");
         ValidationInt.validate(sc);
-        int paymentMethodId = sc.nextInt();
+        int quantity = sc.nextInt();
         sc.nextLine();
 
-        // Total
-        System.out.print("Nuevo total de la venta: ");
-        while (!sc.hasNextDouble()) {
-            System.out.print("Ingrese un número válido para el total: ");
-            sc.next();
-        }
-        double total = sc.nextDouble();
+        System.out.print("Nuevo precio unitario (" + detalle.getUnitPrice() + "): ");
+        double unitPrice = sc.nextDouble();
         sc.nextLine();
 
-        // Ejecutar actualización
-        saleUseCase.updateSale(id, customerId, saleDate, paymentMethodId, total);
-        System.out.println("✅ Venta actualizada exitosamente.");
+        saleDetailUseCase.updateSaleDetail(id, quantity, unitPrice);
+        System.out.println("✅ Detalle actualizado exitosamente.");
+    }
+
+    private static void mostrarDetalle(SaleDetail detalle) {
+        System.out.println("Venta ID: " + detalle.getSaleId());
+        System.out.println("Producto ID: " + detalle.getProductId());
+        System.out.println("Cantidad: " + detalle.getQuantity());
+        System.out.println("Precio Unitario: " + detalle.getUnitPrice());
+        System.out.println("Subtotal: " + detalle.getSubtotal());
     }
 }

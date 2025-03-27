@@ -17,15 +17,12 @@ public class RegistroEmployee {
         System.out.print("Teléfono: ");
         String phone = sc.nextLine();
 
-        System.out.print("Email: ");
-        String email = sc.nextLine();
-
         System.out.print("ID del Usuario Asociado: ");
         ValidationInt.validate(sc);
         int userId = sc.nextInt();
         sc.nextLine(); // limpiar buffer
 
-        employeeUseCase.registerEmployee(name, position, phone, email, userId);
+        employeeUseCase.registerEmployee(name, position, phone, userId);
         System.out.println("✅ Empleado registrado exitosamente.");
     }
 }

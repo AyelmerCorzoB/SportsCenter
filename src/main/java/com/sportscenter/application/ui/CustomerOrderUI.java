@@ -2,16 +2,14 @@
 
 import java.util.Scanner;
 
+import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.validations.ValidationInt;
-import com.sportscenter.application.usecase.customerorder.ActualizarCustomerorder;
-import com.sportscenter.application.usecase.customerorder.BuscarCustomerorder;
-import com.sportscenter.application.usecase.customerorder.CustomerOrderUseCase;
-import com.sportscenter.application.usecase.customerorder.EliminarCustomerOrder;
-import com.sportscenter.application.usecase.customerorder.RegistroCustomerorder;
+import com.sportscenter.application.usecase.customerorder.*;
 
 public class CustomerOrderUI {
     public static void manejarMenuCustomerOrder(Scanner sc, CustomerOrderUseCase customerOrderUseCase) {
         int opcion;
+        ConsoleUtils.clear();
         do {
             String menuCustomerOrder = """
                     ******** CustomerOrder ********

@@ -18,7 +18,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public void save(Employee employee) {
-        String sql = "INSERT INTO Employee (name, position, phone, email, user_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Employee (name, position, phone, user_id) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -26,8 +26,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
             stmt.setString(1, employee.getName());
             stmt.setString(2, employee.getPosition());
             stmt.setString(3, employee.getPhone());
-            stmt.setString(4, employee.getEmail());
-            stmt.setInt(5, employee.getUserId());
+            stmt.setInt(4, employee.getUserId());
             
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -51,7 +50,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
                 employee.setName(rs.getString("name"));
                 employee.setPosition(rs.getString("position"));
                 employee.setPhone(rs.getString("phone"));
-                employee.setEmail(rs.getString("email"));
                 employee.setUserId(rs.getInt("user_id"));
                 return employee;
             }
@@ -76,7 +74,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
                 employee.setName(rs.getString("name"));
                 employee.setPosition(rs.getString("position"));
                 employee.setPhone(rs.getString("phone"));
-                employee.setEmail(rs.getString("email"));
                 employee.setUserId(rs.getInt("user_id"));
                 employees.add(employee);
             }
@@ -88,7 +85,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public void update(Employee employee) {
-        String sql = "UPDATE Employee SET name = ?, position = ?, phone = ?, email = ?, user_id = ? WHERE id = ?";
+        String sql = "UPDATE Employee SET name = ?, position = ?, phone = ?, , user_id = ? WHERE id = ?";
         
         try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -96,9 +93,8 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
             stmt.setString(1, employee.getName());
             stmt.setString(2, employee.getPosition());
             stmt.setString(3, employee.getPhone());
-            stmt.setString(4, employee.getEmail());
-            stmt.setInt(5, employee.getUserId());
-            stmt.setInt(6, employee.getId());
+            stmt.setInt(4, employee.getUserId());
+            stmt.setInt(5, employee.getId());
             
             stmt.executeUpdate();
         } catch (SQLException e) {

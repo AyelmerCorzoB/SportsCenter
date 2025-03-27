@@ -2,33 +2,44 @@ package com.sportscenter.application.usecase.report;
 
 import java.util.Scanner;
 import com.sportscenter.adapter.validations.ValidationInt;
-import com.sportscenter.application.usecase.reporttype.ReportTypeUseCase;
 
 public class RegistroReport {
-    public void registro(Scanner sc, ReportTypeUseCase reportTypeUseCase) {
-        System.out.println("\n=== REGISTRO DE TIPO DE REPORTE ===");
-        
-        System.out.println("Opciones: \n1. SALES \n2. INVENTORY \n3. CUSTOMERS");
+    public static void registrar(Scanner sc, ReportUseCase reportUseCase) {
+        System.out.println("\n=== REGISTRO DE REPORTE ===");
+
+        // Selección del tipo de reporte
+        System.out.println("Tipos disponibles: \n1. SALES \n2. INVENTORY \n3. CUSTOMERS");
         System.out.print("Seleccione el tipo: ");
         ValidationInt.validate(sc);
-        int option = sc.nextInt();
-        sc.nextLine(); // Limpia el buffer
-        
-        String typeName = null;
-        switch (option) {
-            case 1 -> typeName = "SALES";
-            case 2 -> typeName = "INVENTORY";
-            case 3 -> typeName = "CUSTOMERS";
-            default -> {
-                System.out.println("❌ Opción inválida. Debe ser 1, 2 o 3.");
-                return; // Salir sin registrar si la opción es incorrecta
-            }
+        int tipo = sc.nextInt();
+        sc.nextLine();
+
+        if (tipo < 1 || tipo > 3) {
+            System.out.println("❌ Tipo de reporte inválido");
+            return;
         }
 
-        System.out.print("Descripción (opcional): ");
-        String description = sc.nextLine();
+        // ID del usuario que genera el reporte
+        System.out.print("ID del usuario que genera el reporte: ");
+        ValidationInt.validate(sc);
+        int userId = sc.nextInt();
+        sc.nextLine();
 
-        reportTypeUseCase.registerReportType(typeName, description.isEmpty() ? null : description);
-        System.out.println("✅ Tipo de reporte registrado exitosamente.");
+        // Ruta donde se guardará el reporte
+        System.out.print("Ruta del archivo (ej: /reportes/ventas_2023.pdf): ");
+        String filePath = sc.nextLine();
+
+        // Parámetros adicionales
+        System.out.print("Parámetros adicionales (opcional): ");
+        String parameters = sc.nextLine();
+
+        try {
+            reportUseCase.generateReport(tipo, userId, filePath,
+                    parameters.isEmpty() ? null : parameters);
+            System.out.println("✅ Reporte registrado exitosamente.");
+            System.out.println("Ubicación: " + filePath);
+        } catch (Exception e) {
+            System.out.println("❌ Error al registrar el reporte: " + e.getMessage());
+        }
     }
 }
