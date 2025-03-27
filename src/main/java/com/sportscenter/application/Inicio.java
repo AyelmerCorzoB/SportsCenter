@@ -1,5 +1,6 @@
 package com.sportscenter.application;
 
+import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
 import com.sportscenter.application.usecase.invoice.ListarInvoice;
 import com.sportscenter.application.usecase.product.ListarProducts;
 import com.sportscenter.application.usecase.product.ProductUseCase;
@@ -7,18 +8,25 @@ import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.application.ui.AdminUI;
 import com.sportscenter.application.ui.Consumer.ActualizarPassword;
 import com.sportscenter.application.ui.Consumer.ConsumerUI;
-import com.sportscenter.application.ui.Consumer.ListarOrdersPorUsuario;
+import com.sportscenter.application.ui.Consumer.ListarSalesPorUsuario;
+import com.sportscenter.domain.entities.SaleDetail;
 import com.sportscenter.domain.entities.User;
 import com.sportscenter.domain.repository.CustomerRepository;
+import com.sportscenter.domain.repository.InvoiceRepository;
 import com.sportscenter.domain.repository.OrderRepository;
 import com.sportscenter.domain.repository.ProductRepository;
+import com.sportscenter.domain.repository.SaleDetailRepository;
+import com.sportscenter.domain.repository.SaleRepository;
 import com.sportscenter.domain.repository.UserRepository;
 import com.sportscenter.domain.service.UserService;
 import com.sportscenter.infrastructure.database.ConnectionDb;
 import com.sportscenter.infrastructure.database.ConnectionFactory;
 import com.sportscenter.infrastructure.persistence.CustomerRepositoryImpl;
+import com.sportscenter.infrastructure.persistence.InvoiceRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.OrderRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.ProductRepositoryImpl;
+import com.sportscenter.infrastructure.persistence.SaleDetailRepositoryImpl;
+import com.sportscenter.infrastructure.persistence.SaleRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.UserRepositoryImpl;
 
 import java.time.LocalDate;
@@ -101,23 +109,40 @@ public class Inicio {
         ConnectionDb connection = ConnectionFactory.crearConexion();
         ProductRepository productRepository = new ProductRepositoryImpl(connection);
         UserRepository userRepository = new UserRepositoryImpl(connection);
-        OrderRepository orderRepository = new OrderRepositoryImpl(connection);
+        SaleRepository saleRepository = new SaleRepositoryImpl(connection);
+        SaleDetailRepository saleDetailRepository = new SaleDetailRepositoryImpl(connection);
+        InvoiceRepository invoiceRepository = new InvoiceRepositoryImpl(connection);
 
         ProductUseCase productUseCase = new ProductUseCase(productRepository);
+        InvoiceUseCase invoiceUseCase = new InvoiceUseCase(invoiceRepository);
         ListarProducts listarProducts = new ListarProducts();
-        ListarOrdersPorUsuario listarOrdersPorUsuario = new ListarOrdersPorUsuario(orderRepository);
+        ListarSalesPorUsuario listarSalesPorUsuario = new ListarSalesPorUsuario(
+                saleRepository,
+                saleDetailRepository);
 
         ListarInvoice listarInvoice = new ListarInvoice();
-
         ActualizarPassword actualizarPassword = new ActualizarPassword(userRepository);
 
         switch (currentUser.getRole()) {
-            case "ADMIN" -> new AdminUI(scanner, userService, currentUser).mostrarMenu();
-            case "CASHIER" -> System.out.println("Panel de Cajero no implementado aún");
-            case "INVENTORY" -> System.out.println("Panel de Inventario no implementado aún");
-            case "CONSUMER" -> new ConsumerUI(scanner, productUseCase, currentUser,
-                    listarProducts, listarOrdersPorUsuario,
-                    listarInvoice, actualizarPassword).mostrarMenuPrincipal();
+            case "ADMIN" ->
+                new AdminUI(scanner, userService, currentUser).mostrarMenu();
+
+            case "CASHIER" ->
+                System.out.println("Panel de Cajero no implementado aún");
+
+            case "INVENTORY" ->
+                System.out.println("Panel de Inventario no implementado aún");
+
+            case "CONSUMER" ->
+                new ConsumerUI(
+                        scanner,
+                        productUseCase,
+                        currentUser,
+                        listarProducts,
+                        listarSalesPorUsuario,
+                        listarInvoice,
+                        actualizarPassword,
+                        invoiceUseCase).mostrarMenuPrincipal();
         }
     }
 
@@ -125,24 +150,23 @@ public class Inicio {
         System.out.println("\n--- Registro de nuevo usuario ---");
         User newUser = solicitarDatosRegistro();
         User registeredUser = userService.register(newUser, false);
-        
+
         if (registeredUser != null) {
             System.out.println("\nRegistro de usuario exitoso! ID: " + registeredUser.getId());
-            
+
             System.out.println("Ahora complete sus datos como cliente:");
             solicitarDatosCustomer(registeredUser);
-            
+
             System.out.println("\nRegistro completo! Ahora puedes iniciar sesión como CONSUMER.");
         } else {
             System.out.println("\nRegistro fallido. El nombre de usuario ya está en uso.");
         }
         ConsoleUtils.pressEnterToContinue(scanner);
     }
-    
+
     private User solicitarDatosRegistro() {
         System.out.print("Username: ");
         String username = scanner.nextLine();
-
 
         System.out.print("Password: ");
         String password = scanner.nextLine();

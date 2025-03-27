@@ -15,7 +15,7 @@ public class ListarSuppliers {
                     s.getEmail(),
                     s.getTaxId()));
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener a los proveedores: " + e.getMessage());
+            System.out.println("X Error al obtener a los proveedores: " + e.getMessage());
         }
     }
 }

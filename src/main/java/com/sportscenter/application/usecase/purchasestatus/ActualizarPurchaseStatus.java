@@ -41,7 +41,7 @@ public class ActualizarPurchaseStatus {
             System.out.println("✅ Estado de compra actualizado exitosamente.");
 
         } catch (Exception e) {
-            System.out.println("❌ Error al actualizar el estado de venta: " + e.getMessage());
+            System.out.println("X Error al actualizar el estado de venta: " + e.getMessage());
         }
 
     }

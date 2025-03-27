@@ -32,7 +32,7 @@ public class ActualizarEmployee {
             sc.nextLine();
 
             if (opcion < 1 || opcion > 3) {
-                System.out.println("❌ Opción inválida. Por favor, seleccione una opción entre 1 y 3.");
+                System.out.println("X Opción inválida. Por favor, seleccione una opción entre 1 y 3.");
             }
         } while (opcion < 1 || opcion > 3);
 

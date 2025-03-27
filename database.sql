@@ -252,144 +252,187 @@ CREATE TABLE AuditLog (
     FOREIGN KEY (changed_by) REFERENCES User(id) ON DELETE SET NULL
 );
 
+INSERT INTO User (username, password, role, active, last_login) VALUES 
+('admin1', 'Admin1234', 'ADMIN', TRUE, '2023-01-15 09:30:00'),
+('cajero1', 'Cajero123', 'CASHIER', TRUE, '2023-01-16 10:15:00'),
+('inventario1', 'Invent123', 'INVENTORY', TRUE, '2023-01-17 11:20:00'),
+('cliente1', 'Cliente123', 'CONSUMER', TRUE, '2023-01-18 14:45:00'),
+('admin2', 'Admin5678', 'ADMIN', TRUE, '2023-01-19 08:10:00'),
+('cajero2', 'Cajero456', 'CASHIER', TRUE, '2023-01-20 13:25:00'),
+('inventario2', 'Invent456', 'INVENTORY', TRUE, '2023-01-21 16:30:00'),
+('cliente2', 'Cliente456', 'CONSUMER', TRUE, '2023-01-22 17:15:00'),
+('cajero3', 'Cajero789', 'CASHIER', FALSE, '2023-01-23 09:40:00'),
+('cliente3', 'Cliente789', 'CONSUMER', TRUE, '2023-01-24 12:50:00');
+
+INSERT INTO Category (name, description, created_by) VALUES 
+('Fútbol', 'Artículos para fútbol', 1),
+('Baloncesto', 'Artículos para baloncesto', 1),
+('Tenis', 'Artículos para tenis', 3),
+('Natación', 'Artículos para natación', 3),
+('Atletismo', 'Artículos para atletismo', 1),
+('Ciclismo', 'Artículos para ciclismo', 3),
+('Gimnasio', 'Artículos para gimnasio', 1),
+('Running', 'Artículos para correr', 3),
+('Yoga', 'Artículos para yoga', 1),
+('Senderismo', 'Artículos para senderismo', 3);
+
+INSERT INTO Color (name, hex_code) VALUES 
+('Rojo', '#FF0000'),
+('Azul', '#0000FF'),
+('Verde', '#00FF00'),
+('Amarillo', '#FFFF00'),
+('Negro', '#000000'),
+('Blanco', '#FFFFFF'),
+('Gris', '#808080'),
+('Naranja', '#FFA500'),
+('Morado', '#800080'),
+('Rosa', '#FFC0CB');
+
+INSERT INTO Supplier (name, phone, address, tax_id, created_by) VALUES 
+('Deportes S.A.', '123456789', 'Calle Falsa 123', 'SA12345678', 1),
+('Suministros Deportivos', '987654321', 'Avenida Siempre Viva 456', 'SD87654321', 3),
+('Equipamiento Plus', '555123456', 'Boulevard Deportivo 789', 'EP55512345', 1),
+('Proveedor Total', '555987654', 'Carrera Atleta 321', 'PT55598765', 3),
+('Distribuidora Sport', '222333444', 'Calle Campeón 654', 'DS22233344', 1),
+('Suministros Elite', '666777888', 'Avenida Olimpia 987', 'SE66677788', 3),
+('Deportes Unidos', '111222333', 'Boulevard Victoria 159', 'DU11122233', 1),
+('Proveedora Activa', '444555666', 'Calle Resistencia 753', 'PA44455566', 3),
+('Suministros Rápidos', '777888999', 'Avenida Velocidad 951', 'SR77788899', 1),
+('Equipo Total', '333444555', 'Carrera Fuerza 357', 'ET33344455', 3);
 
 
--- Inserccion de datos de prueba
-
--- Insertar tipos de cliente
 INSERT INTO CustomerType (type_name, description) VALUES 
-('INDIVIDUAL', 'Clientes individuales o personas naturales'),
-('COMPANY', 'Empresas u organizaciones');
+('INDIVIDUAL', 'Clientes particulares'),
+('COMPANY', 'Empresas o organizaciones');
 
--- Insertar métodos de pago
+INSERT INTO Product (name, description, unit_price, size, current_stock, minimum_stock, entry_date, category_id, supplier_id, color_id, created_by) VALUES 
+('Balón de Fútbol', 'Balón oficial tamaño 5', 29.99, 'M', 50, 10, '2023-01-10', 1, 1, 1, 3),
+('Camiseta de Baloncesto', 'Camiseta de algodón para baloncesto', 24.99, 'L', 30, 5, '2023-01-11', 2, 2, 2, 3),
+('Raqueta de Tenis', 'Raqueta profesional', 89.99, NULL, 20, 3, '2023-01-12', 3, 3, 5, 1),
+('Gafas de Natación', 'Gafas anti-empañamiento', 19.99, NULL, 40, 8, '2023-01-13', 4, 4, 3, 1),
+('Zapatillas Running', 'Zapatillas para correr', 59.99, '42', 25, 5, '2023-01-14', 8, 5, 6, 3),
+('Casco Ciclismo', 'Casco de seguridad', 39.99, 'L', 15, 3, '2023-01-15', 6, 6, 4, 1),
+('Mancuernas 5kg', 'Par de mancuernas de 5kg', 29.99, NULL, 35, 7, '2023-01-16', 7, 7, 7, 3),
+('Colchoneta Yoga', 'Colchoneta antideslizante', 34.99, NULL, 45, 9, '2023-01-17', 9, 8, 8, 1),
+('Mochila Senderismo', 'Mochila 30L impermeable', 49.99, NULL, 20, 4, '2023-01-18', 10, 9, 9, 3),
+('Pelota de Tenis', 'Pack de 3 pelotas', 12.99, NULL, 60, 12, '2023-01-19', 3, 10, 10, 1);
+
+INSERT INTO Customer (customer_type_id, name, identity_document, phone, address, registration_date, created_by) VALUES 
+(1, 'Juan Pérez', '12345678A', '611223344', 'Calle Primavera 1', '2023-01-10', 1),
+(1, 'María García', '87654321B', '622334455', 'Avenida Verano 2', '2023-01-11', 3),
+(2, 'Gimnasio Active', 'A12345678', '633445566', 'Boulevard Otoño 3', '2023-01-12', 1),
+(1, 'Carlos López', '23456789C', '644556677', 'Calle Invierno 4', '2023-01-13', 3),
+(2, 'Club Deportivo', 'B23456789', '655667788', 'Avenida Estación 5', '2023-01-14', 1),
+(1, 'Ana Martínez', '34567891D', '666778899', 'Boulevard Sol 6', '2023-01-15', 3),
+(1, 'Luis Fernández', '45678912E', '677889900', 'Calle Luna 7', '2023-01-16', 1),
+(2, 'Escuela Natación', 'C34567891', '688990011', 'Avenida Mar 8', '2023-01-17', 3),
+(1, 'Sofía Rodríguez', '56789123F', '699001122', 'Boulevard Río 9', '2023-01-18', 1),
+(2, 'Equipo Ciclismo', 'D45678912', '600112233', 'Calle Montaña 10', '2023-01-19', 3);
+
+INSERT INTO Employee (name, position, phone, user_id, hire_date, created_by) VALUES 
+('Pedro Sánchez', 'ADMINISTRATOR', '611223344', 1, '2022-01-10', 1),
+('Laura Gómez', 'CASHIER', '622334455', 2, '2022-02-15', 1),
+('Miguel Torres', 'INVENTORY', '633445566', 3, '2022-03-20', 1),
+('Elena Ruiz', 'ADMINISTRATOR', '644556677', 5, '2022-04-25', 1),
+('David Jiménez', 'CASHIER', '655667788', 6, '2022-05-30', 1),
+('Sara Castro', 'INVENTORY', '666778899', 7, '2022-06-05', 1),
+('Jorge Navarro', 'CASHIER', '677889900', 9, '2022-07-10', 1),
+('Lucía Méndez', 'ADMINISTRATOR', '688990011', NULL, '2022-08-15', 1),
+('Pablo Ortega', 'CASHIER', '699001122', NULL, '2022-09-20', 1),
+('Marta Serrano', 'INVENTORY', '600112233', NULL, '2022-10-25', 1);
+
+INSERT INTO PurchaseStatus (status_name, description) VALUES 
+('PENDING', 'Pedido realizado pero no recibido'),
+('RECEIVED', 'Pedido recibido completamente'),
+('CANCELED', 'Pedido cancelado');
+
+INSERT INTO Purchase (date, supplier_id, status_id, employee_id) VALUES 
+('2023-01-05', 1, 2, 1),
+('2023-01-06', 2, 2, 2),
+('2023-01-07', 3, 1, 3),
+('2023-01-08', 4, 2, 4),
+('2023-01-09', 5, 3, 5),
+('2023-01-10', 6, 2, 6),
+('2023-01-11', 7, 2, 7),
+('2023-01-12', 8, 1, 8),
+('2023-01-13', 9, 2, 9),
+('2023-01-14', 10, 2, 10);
+
 INSERT INTO PaymentMethod (method_name, description) VALUES 
 ('CASH', 'Pago en efectivo'),
-('CARD', 'Pago con tarjeta de crédito/débito'),
+('CARD', 'Pago con tarjeta'),
 ('TRANSFER', 'Transferencia bancaria');
 
--- Insertar estados de compra
-INSERT INTO PurchaseStatus (status_name, description) VALUES 
-('PENDING', 'Compra pendiente de recepción'),
-('RECEIVED', 'Compra recibida completamente'),
-('CANCELED', 'Compra cancelada');
+INSERT INTO Sale (customer_id, sale_date, payment_method_id, discount, total, user_id) VALUES 
+(1, '2023-01-15', 1, 0.00, 59.98, 2),
+(2, '2023-01-16', 2, 5.00, 109.98, 2),
+(3, '2023-01-17', 3, 10.00, 179.98, 6),
+(4, '2023-01-18', 1, 0.00, 39.98, 2),
+(5, '2023-01-19', 2, 15.00, 299.95, 6),
+(6, '2023-01-20', 3, 0.00, 89.99, 2),
+(7, '2023-01-21', 1, 5.00, 64.99, 6),
+(8, '2023-01-22', 2, 0.00, 149.97, 2),
+(9, '2023-01-23', 3, 20.00, 199.96, 6),
+(10, '2023-01-24', 1, 0.00, 24.99, 2),
+INSERT INTO Sale (customer_id, sale_date, payment_method_id, discount, total, user_id) VALUES 
+(11,CURRENT_TIMESTAMP,1,0.00,188.85,11);
+INSERT INTO SaleDetail (sale_id, product_id, quantity, unit_price) VALUES 
+(1, 1, 2, 29.99),
+(2, 2, 1, 24.99),
+(2, 3, 1, 89.99),
+(3, 4, 2, 19.99),
+(3, 5, 2, 59.99),
+(4, 6, 1, 39.99),
+(5, 7, 5, 29.99),
+(5, 8, 3, 34.99),
+(6, 9, 1, 89.99),
+(7, 10, 5, 12.99);
 
--- Insertar estados de pedido
 INSERT INTO OrderStatus (status_name, description) VALUES 
 ('IN PROCESS', 'Pedido en proceso'),
 ('DELIVERED', 'Pedido entregado'),
 ('CANCELED', 'Pedido cancelado');
 
--- Insertar tipos de reporte
+INSERT INTO CustomerOrder (customer_id, order_date, status_id, total, user_id) VALUES 
+(1, '2023-01-20', 2, 89.99, 2),
+(2, '2023-01-21', 1, 149.98, 6),
+(3, '2023-01-22', 1, 199.97, 2),
+(4, '2023-01-23', 3, 59.99, 6),
+(5, '2023-01-24', 2, 119.98, 2),
+(6, '2023-01-25', 1, 34.99, 6),
+(7, '2023-01-26', 2, 179.97, 2),
+(8, '2023-01-27', 1, 49.99, 6),
+(9, '2023-01-28', 3, 99.99, 2),
+(10, '2023-01-29', 2, 24.99, 6);
+
+INSERT INTO Invoice (sale_id, invoice_number, issue_date, total_amount, taxes) VALUES 
+(1, 'FAC-2023-0001', '2023-01-15', 59.98, 12.60),
+(2, 'FAC-2023-0002', '2023-01-16', 109.98, 23.10),
+(3, 'FAC-2023-0003', '2023-01-17', 179.98, 37.80),
+(4, 'FAC-2023-0004', '2023-01-18', 39.98, 8.40),
+(5, 'FAC-2023-0005', '2023-01-19', 299.95, 62.99),
+(6, 'FAC-2023-0006', '2023-01-20', 89.99, 18.90),
+(7, 'FAC-2023-0007', '2023-01-21', 64.99, 13.65),
+(8, 'FAC-2023-0008', '2023-01-22', 149.97, 31.49),
+(9, 'FAC-2023-0009', '2023-01-23', 199.96, 41.99),
+(10, 'FAC-2023-0010', '2023-01-24', 24.99, 5.25);
+
 INSERT INTO ReportType (type_name, description) VALUES 
 ('SALES', 'Reportes de ventas'),
 ('INVENTORY', 'Reportes de inventario'),
 ('CUSTOMERS', 'Reportes de clientes');
 
--- Insertar colores
-INSERT INTO Color (name, hex_code) VALUES 
-('Rojo', '#FF0000'),
-('Azul', '#0000FF'),
-('Verde', '#00FF00'),
-('Negro', '#000000'),
-('Blanco', '#FFFFFF'),
-('Gris', '#808080'),
-('Amarillo', '#FFFF00'),
-('Morado', '#800080');
-
--- Insertar categorías
-INSERT INTO Category (name, description, created_by) VALUES 
-('Ropa', 'Artículos de vestir deportivos', NULL),
-('Calzado', 'Zapatos y zapatillas deportivas', NULL),
-('Equipamiento', 'Equipo deportivo variado', NULL),
-('Accesorios', 'Accesorios para deportes', NULL);
-
--- Insertar usuarios administradores
-INSERT INTO User (username, password, role, active) VALUES 
-('admin1', '12345678', 'ADMIN', TRUE),
-('admin2', '12345678', 'ADMIN', TRUE),
-('cajero1', '12345678', 'CASHIER', TRUE),
-('inventario1', '12345678', 'INVENTORY', TRUE),
-('cliente1', '12345678', 'CONSUMER', TRUE),
-('cliente2', '12345678', 'CONSUMER', TRUE),
-('cliente3', '12345678', 'CONSUMER', TRUE);
-
--- Insertar empleados (asociados a usuarios)
-INSERT INTO Employee (name, position, phone, user_id, hire_date, created_by) VALUES 
-('Juan Pérez', 'ADMINISTRATOR', '555-1234', 1, '2022-01-15', 1),
-('María García', 'CASHIER', '555-5678', 3, '2022-02-20', 1),
-('Carlos López', 'INVENTORY', '555-9012', 4, '2022-03-10', 1);
-
-INSERT INTO Supplier (name, phone, address, tax_id, created_by) VALUES 
-('Deportes S.A.', '555-1001', 'Calle Principal 123', 'SA12345678', 1),
-('Equipamiento Plus', '555-2002', 'Avenida Central 456', 'EP87654321', 1),
-('Ropa Deportiva VIP', '555-3003', 'Boulevard Deportivo 789', 'RDV45678912', 1);
-
-INSERT INTO Product (name, description, unit_price, size, current_stock, minimum_stock, entry_date, category_id, supplier_id, color_id, created_by) VALUES 
-('Camiseta Deportiva', 'Camiseta de algodón para entrenamiento', 25.99, 'M', 50, 10, '2023-01-10', 1, 1, 1, 1),
-('Short Running', 'Short ligero para correr', 19.99, 'L', 30, 5, '2023-01-15', 1, 1, 4, 1),
-('Zapatillas Running', 'Zapatillas para correr con amortiguación', 89.99, '42', 20, 5, '2023-02-01', 2, 2, 3, 1),
-('Raqueta Tenis', 'Raqueta profesional de tenis', 120.00, NULL, 15, 3, '2023-02-10', 3, 3, 5, 1),
-('Balón Fútbol', 'Balón oficial tamaño 5', 29.99, NULL, 40, 8, '2023-03-05', 3, 2, 1, 1),
-('Gorra Deportiva', 'Gorra ajustable con protección UV', 15.99, 'Única', 60, 15, '2023-03-15', 4, 1, 4, 1);
-
--- Insertar clientes adicionales
-INSERT INTO Customer (customer_type_id, name, identity_document, phone, address, registration_date, created_by) VALUES 
-(2, 'Empresa Deportes XYZ', 'J-123456789', '555-4004', 'Avenida Comercial 321', '2023-01-05', 1),
-(1, 'Ana Rodríguez', 'V-98765432', '555-5005', 'Calle Secundaria 654', '2023-02-15', 1);
-
-INSERT INTO Purchase (date, supplier_id, status_id, employee_id) VALUES 
-('2023-03-01', 1, 2, 3);
-
-SET @purchase_id = LAST_INSERT_ID();
-
-INSERT INTO PurchaseDetail (purchase_id, product_id, quantity, unit_price) VALUES 
-(@purchase_id, 1, 30, 18.50),
-(@purchase_id, 2, 20, 14.75);
-
--- Compra 2
-INSERT INTO Purchase (date, supplier_id, status_id, employee_id) VALUES 
-('2023-03-15', 2, 1, 3);
-
-SET @purchase_id = LAST_INSERT_ID();
-
-INSERT INTO PurchaseDetail (purchase_id, product_id, quantity, unit_price) VALUES 
-(@purchase_id, 3, 10, 65.00),
-(@purchase_id, 5, 15, 20.00);
-
--- Venta 1
-INSERT INTO Sale (customer_id, sale_date, payment_method_id, discount, total, user_id) VALUES 
-(1, '2023-03-10', 1, 5.00, 120.95, 3);
-
-SET @sale_id = LAST_INSERT_ID();
-
-INSERT INTO SaleDetail (sale_id, product_id, quantity, unit_price) VALUES 
-(@sale_id, 1, 2, 25.99),
-(@sale_id, 2, 1, 19.99),
-(@sale_id, 6, 3, 15.99);
-
--- Venta 2
-INSERT INTO Sale (customer_id, sale_date, payment_method_id, discount, 0, 89.99, user_id) VALUES 
-(2, '2023-03-12', 2, 0, 89.99, 3);
-
-SET @sale_id = LAST_INSERT_ID();
-
-INSERT INTO SaleDetail (sale_id, product_id, quantity, unit_price) VALUES 
-(@sale_id, 3, 1, 89.99);
-
--- Pedido 1
-INSERT INTO CustomerOrder (customer_id, order_date, status_id, total, user_id) VALUES 
-(3, '2023-03-05', 1, 240.00, 3);
-
-SET @order_id = LAST_INSERT_ID();
-
--- Pedido 2
-INSERT INTO CustomerOrder (customer_id, order_date, status_id, total, user_id) VALUES 
-(4, '2023-03-08', 3, 120.00, 3);
-
 INSERT INTO Report (report_type_id, generation_date, user_id, file_path, parameters) VALUES 
-(1, '2023-03-01', 1, '/reports/sales_20230301.pdf', '{"start_date":"2023-01-01","end_date":"2023-03-01"}'),
-(2, '2023-03-15', 1, '/reports/inventory_20230315.pdf', '{"threshold":"minimum_stock"}');
-
+(1, '2023-01-31', 1, '/reports/sales/jan2023.pdf', '{"month": "January", "year": 2023}'),
+(2, '2023-01-31', 1, '/reports/inventory/jan2023.pdf', '{"month": "January", "year": 2023}'),
+(3, '2023-01-31', 1, '/reports/customers/jan2023.pdf', '{"month": "January", "year": 2023}'),
+(1, '2023-02-28', 5, '/reports/sales/feb2023.pdf', '{"month": "February", "year": 2023}'),
+(2, '2023-02-28', 5, '/reports/inventory/feb2023.pdf', '{"month": "February", "year": 2023}'),
+(3, '2023-02-28', 5, '/reports/customers/feb2023.pdf', '{"month": "February", "year": 2023}'),
+(1, '2023-03-31', 1, '/reports/sales/mar2023.pdf', '{"month": "March", "year": 2023}'),
+(2, '2023-03-31', 1, '/reports/inventory/mar2023.pdf', '{"month": "March", "year": 2023}'),
+(3, '2023-03-31', 1, '/reports/customers/mar2023.pdf', '{"month": "March", "year": 2023}'),
+(1, '2023-04-30', 5, '/reports/sales/apr2023.pdf', '{"month": "April", "year": 2023}');
 -- Triggers:
 
 DELIMITER //

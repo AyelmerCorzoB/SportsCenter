@@ -27,7 +27,7 @@ public class ObtenerPurchasePorId {
                 System.out.println("⚠️ No se encontró una compra con ese ID");
             }
         } catch (Exception e) {
-            System.out.println("❌ Error al consultar compra: " + e.getMessage());
+            System.out.println("X Error al consultar compra: " + e.getMessage());
         }
     }
 }

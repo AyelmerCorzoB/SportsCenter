@@ -31,7 +31,7 @@ public class ListarPurchaseDetail {
                         p.getEmployeeId());
             }
         } catch (Exception e) {
-            System.out.println("❌ Error al listar compras: " + e.getMessage());
+            System.out.println("X Error al listar compras: " + e.getMessage());
         }
     }
 }

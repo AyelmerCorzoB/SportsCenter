@@ -15,7 +15,7 @@ public class RegistroReport {
         sc.nextLine();
 
         if (tipo < 1 || tipo > 3) {
-            System.out.println("❌ Tipo de reporte inválido");
+            System.out.println("X Tipo de reporte inválido");
             return;
         }
 
@@ -39,7 +39,7 @@ public class RegistroReport {
             System.out.println("✅ Reporte registrado exitosamente.");
             System.out.println("Ubicación: " + filePath);
         } catch (Exception e) {
-            System.out.println("❌ Error al registrar el reporte: " + e.getMessage());
+            System.out.println("X Error al registrar el reporte: " + e.getMessage());
         }
     }
 }

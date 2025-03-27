@@ -29,7 +29,7 @@ public class BuscarPurchaseDetail {
                 System.out.println("⚠️ No se encontró un detalle de compra con ese ID.");
             }
         } catch (Exception e) {
-            System.out.println("❌ Error al consultar detalle de compra: " + e.getMessage());
+            System.out.println("X Error al consultar detalle de compra: " + e.getMessage());
         }
     }
 }

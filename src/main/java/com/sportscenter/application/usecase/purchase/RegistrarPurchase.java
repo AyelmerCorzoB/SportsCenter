@@ -34,7 +34,7 @@ public class RegistrarPurchase {
             purchaseUseCase.registerPurchase(date, supplierId, statusId, employeeId);
             System.out.println("✅ Compra registrada exitosamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al registrar compra: " + e.getMessage());
+            System.out.println("X Error al registrar compra: " + e.getMessage());
         }
     }
 }

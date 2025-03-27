@@ -21,7 +21,7 @@ public class BuscarColor {
             System.out.println("Nombre: " + color.getName());
             System.out.println("Código HEX: " + (color.getHexCode() != null ? color.getHexCode() : "N/A"));
         } else {
-            System.out.println("❌ No se encontró el color con ID: " + id);
+            System.out.println("X No se encontró el color con ID: " + id);
         }
     }
 }

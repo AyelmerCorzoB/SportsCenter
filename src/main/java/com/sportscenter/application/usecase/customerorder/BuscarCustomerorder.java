@@ -25,7 +25,7 @@ public class BuscarCustomerorder {
             System.out.println("Total: $" + order.getTotal());
             System.out.println("ID Usuario: " + order.getUserId());
         } else {
-            System.out.println("❌ No se encontró la orden con ID: " + id);
+            System.out.println("X No se encontró la orden con ID: " + id);
         }
     }
 }

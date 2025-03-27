@@ -21,7 +21,7 @@ public class BuscarPaymentMethod {
             System.out.println("Método: " + method.getMethodName());
             System.out.println("Descripción: " + (method.getDescription() != null ? method.getDescription() : "N/A"));
         } else {
-            System.out.println("❌ No se encontró el método con ID: " + id);
+            System.out.println("X No se encontró el método con ID: " + id);
         }
     }
 }

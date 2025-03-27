@@ -119,7 +119,7 @@ public class ControlAdminUi {
             case 3 -> manageCustomerOrders();
             case 4 -> manageCustomerTypes();
             case 5 -> manageCustomers();
-            default -> System.out.println("❌ Opción no válida");
+            default -> System.out.println("X Opción no válida");
         }
     }
 
@@ -130,7 +130,7 @@ public class ControlAdminUi {
             case 3 -> manageSuppliers();
             case 4 -> manageEmployees();
             case 5 -> manageSales();
-            default -> System.out.println("❌ Opción no válida");
+            default -> System.out.println("X Opción no válida");
         }
     }
 

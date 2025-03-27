@@ -13,7 +13,7 @@ public class ListarPurchaseStatuses {
                     s.getDescription() != null ? s.getDescription() : "N/A"));
 
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener los estados de venta: " + e.getMessage());
+            System.out.println("X Error al obtener los estados de venta: " + e.getMessage());
         }
     }
 }

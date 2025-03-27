@@ -18,7 +18,7 @@ public class ActualizarCategory {
             sc.nextLine();
 
             if (categoryUseCase.getCategoryById(id) == null) {
-                System.out.println("❌ No existe una categoría con el ID: " + id);
+                System.out.println("X No existe una categoría con el ID: " + id);
                 System.out.println("Por favor, ingrese un ID válido.");
                 ConsoleUtils.pressEnterToContinue(sc);
                 ConsoleUtils.clear();

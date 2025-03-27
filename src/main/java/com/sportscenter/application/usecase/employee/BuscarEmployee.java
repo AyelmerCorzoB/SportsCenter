@@ -22,7 +22,7 @@ public class BuscarEmployee {
             System.out.println("Teléfono: " + employee.getPhone());
             System.out.println("ID de Usuario: " + employee.getUserId());
         } else {
-            System.out.println("❌ No se encontró el empleado con ID: " + id);
+            System.out.println("X No se encontró el empleado con ID: " + id);
         }
     }
 }

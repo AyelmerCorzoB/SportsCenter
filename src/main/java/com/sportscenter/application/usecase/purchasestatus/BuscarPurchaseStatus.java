@@ -23,10 +23,10 @@ public class BuscarPurchaseStatus {
                 System.out.println("Estado: " + status.getStatusName());
                 System.out.println("Descripción: " + (status.getDescription() != null ? status.getDescription() : "N/A"));
             } else {
-                System.out.println("❌ No se encontró el estado con ID: " + id);
+                System.out.println("X No se encontró el estado con ID: " + id);
             }
         } catch (Exception e) {
-            System.out.println("❌ Error al obener el estado de venta: " + e.getMessage());
+            System.out.println("X Error al obener el estado de venta: " + e.getMessage());
         }
 
     }

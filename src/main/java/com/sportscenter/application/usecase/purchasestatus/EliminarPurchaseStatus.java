@@ -19,7 +19,7 @@ public class EliminarPurchaseStatus {
             purchaseStatusUseCase.deletePurchaseStatus(id);
             System.out.println("✅ Estado de compra eliminado exitosamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al eliminar el estado de venta: " + e.getMessage());
+            System.out.println("X Error al eliminar el estado de venta: " + e.getMessage());
         }
     }
 }

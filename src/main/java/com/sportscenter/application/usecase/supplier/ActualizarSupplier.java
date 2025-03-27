@@ -41,7 +41,7 @@ public class ActualizarSupplier {
         System.out.println("✅ Proveedor actualizado exitosamente.");
 
         } catch (Exception e) {
-            System.out.println("❌ Error al actualizar el proveedor: " + e.getMessage());
+            System.out.println("X Error al actualizar el proveedor: " + e.getMessage());
         }
     }
 }

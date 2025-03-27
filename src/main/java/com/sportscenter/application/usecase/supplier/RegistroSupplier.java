@@ -32,7 +32,7 @@ public class RegistroSupplier {
             supplierUseCase.registerSupplier(name, phone, email, address, taxId);
             System.out.println("✅ Proveedor registrado exitosamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener a los proveedores: " + e.getMessage());
+            System.out.println("X Error al obtener a los proveedores: " + e.getMessage());
         }
     }
 }

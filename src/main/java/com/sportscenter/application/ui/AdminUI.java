@@ -83,7 +83,7 @@ public class AdminUI {
                 System.out.println("└──────────────────────────────┘");
             }
         } catch (Exception e) {
-            System.out.println("\n❌ Error durante el registro: " + e.getMessage());
+            System.out.println("\nX Error durante el registro: " + e.getMessage());
         }
     }
 
@@ -153,7 +153,7 @@ public class AdminUI {
             System.out.println("|-------------------------------------------------------------------------|");
             System.out.println("\nTotal de usuarios: " + users.size());
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener la lista de usuarios: " + e.getMessage());
+            System.out.println("X Error al obtener la lista de usuarios: " + e.getMessage());
         }
     }
 }

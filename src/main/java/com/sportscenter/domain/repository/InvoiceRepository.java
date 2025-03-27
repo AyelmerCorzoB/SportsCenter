@@ -6,10 +6,10 @@ import com.sportscenter.domain.entities.Invoice;
 
 //FACTURA
 public interface InvoiceRepository {
-void save(Invoice invoInvoice);
+    void save(Invoice invoice);
     Invoice searchById(int id);
     List<Invoice> listAll();
-    void update(Invoice invoInvoice);
+    List<Invoice> findByUserId(int userId); 
+    void update(Invoice invoice);
     void delete(int id);
-    
 }

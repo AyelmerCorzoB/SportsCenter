@@ -42,7 +42,7 @@ public class SupplierUI {
                     EliminarSupplier.eliminar(sc, supplierUseCase);
                     break;
                 default:
-                    System.out.println("❌ Opción inválida. Por favor intente nuevamente.");
+                    System.out.println("X Opción inválida. Por favor intente nuevamente.");
                     break;
             }
         } while (opcion != 7);

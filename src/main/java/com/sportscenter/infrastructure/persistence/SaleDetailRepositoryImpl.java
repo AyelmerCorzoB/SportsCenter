@@ -18,7 +18,8 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
 
     @Override
     public void save(SaleDetail detail) {
-        String sql = "INSERT INTO SaleDetail (sale_id, product_id, quantity, unit_price) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO saledetail (sale_id, product_id, quantity, unit_price, subtotal) " +
+                    "VALUES (?, ?, ?, ?, ?)";
         
         try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -27,13 +28,20 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
             stmt.setInt(2, detail.getProductId());
             stmt.setInt(3, detail.getQuantity());
             stmt.setDouble(4, detail.getUnitPrice());
+            stmt.setDouble(5, detail.getSubtotal());
             
-            stmt.executeUpdate();
+            int affectedRows = stmt.executeUpdate();
             
-            // Obtener el ID generado automáticamente
-            ResultSet generatedKeys = stmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                detail.setId(generatedKeys.getInt(1));
+            if (affectedRows == 0) {
+                throw new SQLException("Creating sale detail failed, no rows affected.");
+            }
+            
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    detail.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Creating sale detail failed, no ID obtained.");
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al guardar el detalle de venta", e);
@@ -42,7 +50,10 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
 
     @Override
     public void update(SaleDetail detail) {
-        String sql = "UPDATE SaleDetail SET sale_id = ?, product_id = ?, quantity = ?, unit_price = ? WHERE id = ?";
+        String sql = "UPDATE saledetail SET " +
+                     "sale_id = ?, product_id = ?, quantity = ?, " +
+                     "unit_price = ?, subtotal = ? " +
+                     "WHERE id = ?";
         
         try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -51,7 +62,8 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
             stmt.setInt(2, detail.getProductId());
             stmt.setInt(3, detail.getQuantity());
             stmt.setDouble(4, detail.getUnitPrice());
-            stmt.setInt(5, detail.getId());
+            stmt.setDouble(5, detail.getSubtotal());
+            stmt.setInt(6, detail.getId());
             
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
@@ -64,7 +76,7 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
 
     @Override
     public void delete(int id) {
-        String sql = "DELETE FROM SaleDetail WHERE id = ?";
+        String sql = "DELETE FROM saledetail WHERE id = ?";
         
         try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -82,13 +94,12 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
 
     @Override
     public void deleteBySaleId(int saleId) {
-        String sql = "DELETE FROM SaleDetail WHERE sale_id = ?";
+        String sql = "DELETE FROM saledetail WHERE sale_id = ?";
         
         try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, saleId);
-            
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar los detalles de venta por ID de venta", e);
@@ -97,16 +108,18 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
 
     @Override
     public SaleDetail findById(int id) {
-        String sql = "SELECT * FROM SaleDetail WHERE id = ?";
+        String sql = "SELECT id, sale_id, product_id, quantity, unit_price, subtotal, created_at " +
+                     "FROM saledetail WHERE id = ?";
         
         try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
             
-            if (rs.next()) {
-                return mapToSaleDetail(rs);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToSaleDetail(rs);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al buscar el detalle de venta por ID", e);
@@ -116,51 +129,60 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
 
     @Override
     public List<SaleDetail> findBySaleId(int saleId) {
-        List<SaleDetail> details = new ArrayList<>();
-        String sql = "SELECT * FROM SaleDetail WHERE sale_id = ?";
+        String sql = "SELECT id, sale_id, product_id, quantity, unit_price, subtotal, created_at " +
+                     "FROM saledetail WHERE sale_id = ?";
         
+        List<SaleDetail> saleDetails = new ArrayList<>();
+    
         try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, saleId);
-            ResultSet rs = stmt.executeQuery();
             
-            while (rs.next()) {
-                details.add(mapToSaleDetail(rs));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    saleDetails.add(mapResultSetToSaleDetail(rs));
+                }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al buscar los detalles de venta por ID de venta", e);
+            throw new RuntimeException("Error al buscar detalles de venta por ID de venta", e);
         }
-        return details;
+        return saleDetails;
     }
 
     @Override
     public List<SaleDetail> findAll() {
-        List<SaleDetail> details = new ArrayList<>();
-        String sql = "SELECT * FROM SaleDetail";
+        String sql = "SELECT id, sale_id, product_id, quantity, unit_price, subtotal, created_at " +
+                     "FROM saledetail";
         
+        List<SaleDetail> saleDetails = new ArrayList<>();
+    
         try (Connection conn = connection.getConexion();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
-            ResultSet rs = stmt.executeQuery();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
             
             while (rs.next()) {
-                details.add(mapToSaleDetail(rs));
+                saleDetails.add(mapResultSetToSaleDetail(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al listar todos los detalles de venta", e);
+            throw new RuntimeException("Error al obtener todos los detalles de venta", e);
         }
-        return details;
+        return saleDetails;
     }
 
-    private SaleDetail mapToSaleDetail(ResultSet rs) throws SQLException {
+    private SaleDetail mapResultSetToSaleDetail(ResultSet rs) throws SQLException {
         SaleDetail detail = new SaleDetail();
         detail.setId(rs.getInt("id"));
         detail.setSaleId(rs.getInt("sale_id"));
         detail.setProductId(rs.getInt("product_id"));
         detail.setQuantity(rs.getInt("quantity"));
         detail.setUnitPrice(rs.getDouble("unit_price"));
-        detail.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+        
+        Timestamp timestamp = rs.getTimestamp("created_at");
+        if (timestamp != null) {
+            detail.setCreatedAt(timestamp.toLocalDateTime());
+        }
+        
         return detail;
     }
 }

@@ -22,7 +22,7 @@ public class EliminarSaledetail {
                 eliminarPorVentaId(sc, saleDetailUseCase);
                 break;
             default:
-                System.out.println("❌ Opción inválida");
+                System.out.println("X Opción inválida");
         }
     }
 
@@ -33,7 +33,7 @@ public class EliminarSaledetail {
         sc.nextLine();
 
         if (saleDetailUseCase.getDetailById(id) == null) {
-            System.out.println("❌ No existe detalle con ese ID");
+            System.out.println("X No existe detalle con ese ID");
             return;
         }
 
