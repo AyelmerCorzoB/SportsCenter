@@ -2,7 +2,11 @@ package com.sportscenter.domain.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
+/**
+ * Represents a customer entity in the system.
+ */
 public class Customer {
     private int id;
     private int customerTypeId;
@@ -16,14 +20,15 @@ public class Customer {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Customer() {}
+    public Customer() {
+    }
 
     public Customer(int id) {
         this.id = id;
     }
 
-    public Customer(int customerTypeId, String name, String identityDocument, 
-                  String email, String phone, String address, LocalDate registrationDate) {
+    public Customer(int customerTypeId, String name, String identityDocument,
+                    String email, String phone, String address, LocalDate registrationDate) {
         this.customerTypeId = customerTypeId;
         this.name = name;
         this.identityDocument = identityDocument;
@@ -33,76 +38,67 @@ public class Customer {
         this.registrationDate = registrationDate;
     }
 
-    // Getters and Setters
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public int getCustomerTypeId() {
-        return customerTypeId;
-    }
-    public void setCustomerTypeId(int customerTypeId) {
-        this.customerTypeId = customerTypeId;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getIdentityDocument() {
-        return identityDocument;
-    }
-    public void setIdentityDocument(String identityDocument) {
-        this.identityDocument = identityDocument;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getPhone() {
-        return phone;
-    }
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    public String getAddress() {
-        return address;
-    }
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
-    }
-    public void setRegistrationDate(LocalDate registrationDate) {
-        this.registrationDate = registrationDate;
-    }
-    public int getCreatedBy() {
-        return createdBy;
-    }
-    public void setCreatedBy(int createdBy) {
-        this.createdBy = createdBy;
-    }
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+    // Getters y Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public int getCustomerTypeId() { return customerTypeId; }
+    public void setCustomerTypeId(int customerTypeId) { this.customerTypeId = customerTypeId; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getIdentityDocument() { return identityDocument; }
+    public void setIdentityDocument(String identityDocument) { this.identityDocument = identityDocument; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+
+    public LocalDate getRegistrationDate() { return registrationDate; }
+    public void setRegistrationDate(LocalDate registrationDate) { this.registrationDate = registrationDate; }
+
+    public int getCreatedBy() { return createdBy; }
+    public void setCreatedBy(int createdBy) { this.createdBy = createdBy; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
     @Override
     public String toString() {
-        return "Customer [id=" + id + ", name=" + name + ", identityDocument=" + identityDocument + "]";
+        return "Customer{" +
+                "id=" + id +
+                ", customerTypeId=" + customerTypeId +
+                ", name='" + name + '\'' +
+                ", identityDocument='" + identityDocument + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", registrationDate=" + registrationDate +
+                ", createdBy=" + createdBy +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return id == customer.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

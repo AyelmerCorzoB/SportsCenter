@@ -15,6 +15,18 @@ public class InventoryMovement {
     private LocalDateTime movementDate;
     private String reason;
 
+    public InventoryMovement() {
+        // Constructor vacío
+    }
+
+    public InventoryMovement(int productId, int quantity, MovementType movementType, LocalDateTime movementDate, String reason) {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.movementType = movementType;
+        this.movementDate = movementDate;
+        this.reason = reason;
+    }
+
     // Getters y setters
     public int getId() { return id; }
 
@@ -39,4 +51,16 @@ public class InventoryMovement {
     public String getReason() { return reason; }
 
     public void setReason(String reason) { this.reason = reason; }
+
+    @Override
+    public String toString() {
+        return "InventoryMovement{" +
+                "id=" + id +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                ", movementType=" + movementType +
+                ", movementDate=" + movementDate +
+                ", reason='" + reason + '\'' +
+                '}';
+    }
 }
