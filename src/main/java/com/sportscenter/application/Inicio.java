@@ -8,8 +8,8 @@ import com.sportscenter.application.usecase.product.ProductUseCase;
 import com.sportscenter.application.usecase.report.ReportUseCase;
 import com.sportscenter.application.usecase.saledetail.SaleDetailUseCase;
 import com.sportscenter.adapter.global.ConsoleUtils;
-import com.sportscenter.application.ui.AdminUI;
-import com.sportscenter.application.ui.InventoryUi;
+import com.sportscenter.application.ui.Admin.AdminUI;
+// import com.sportscenter.application.ui.InventoryUi;
 import com.sportscenter.application.ui.Cashier.CashierUI;
 import com.sportscenter.application.ui.Consumer.ActualizarPassword;
 import com.sportscenter.application.ui.Consumer.ConsumerUI;
@@ -21,6 +21,7 @@ import com.sportscenter.domain.repository.CustomerRepository;
 import com.sportscenter.domain.repository.InvoiceRepository;
 import com.sportscenter.domain.repository.OrderRepository;
 import com.sportscenter.domain.repository.ProductRepository;
+import com.sportscenter.domain.repository.ReportRepository;
 import com.sportscenter.domain.repository.SaleDetailRepository;
 import com.sportscenter.domain.repository.SaleRepository;
 import com.sportscenter.domain.repository.UserRepository;
@@ -31,6 +32,7 @@ import com.sportscenter.infrastructure.persistence.CustomerRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.InvoiceRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.OrderRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.ProductRepositoryImpl;
+import com.sportscenter.infrastructure.persistence.ReportRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.SaleDetailRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.SaleRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.UserRepositoryImpl;
@@ -65,7 +67,7 @@ public class Inicio {
             System.out.println("3. Salir");
             System.out.print("Elija una opción: ");
 
-            int option = obtenerOpcionValida();
+            int option = obtenerOpcionValida(1, 3);
 
             switch (option) {
                 case 1 -> Login();
@@ -79,16 +81,26 @@ public class Inicio {
         }
     }
 
-    private int obtenerOpcionValida() {
-        while (!scanner.hasNextInt()) {
-            System.out.println("Por favor, ingrese un número válido.");
-            scanner.next();
+    private int obtenerOpcionValida(int min, int max) {
+        while (true) {
+            try {
+                String input = scanner.nextLine().trim();
+                if (input.isEmpty()) {
+                    System.out.print("Error: No se permiten entradas vacías. Intente nuevamente: ");
+                    continue;
+                }
+                int opcion = Integer.parseInt(input);
+                if (opcion < min || opcion > max) {
+                    System.out.printf("Error: Opción debe estar entre %d y %d. Intente nuevamente: ", min, max);
+                    continue;
+                }
+                
+                return opcion;
+            } catch (NumberFormatException e) {
+                System.out.print("Error: Debe ingresar un número válido. Intente nuevamente: ");
+            }
         }
-        int opcion = scanner.nextInt();
-        scanner.nextLine();
-        return opcion;
     }
-
     private void Login() {
         System.out.print("\nUsername: ");
         String username = scanner.nextLine();
@@ -118,13 +130,14 @@ public class Inicio {
         SaleRepository saleRepository = new SaleRepositoryImpl(connection);
         SaleDetailRepository saleDetailRepository = new SaleDetailRepositoryImpl(connection);
         InvoiceRepository invoiceRepository = new InvoiceRepositoryImpl(connection);
-    
+        ReportRepository reportRepository = new ReportRepositoryImpl(connection);    
 
         SaleUseCase saleUseCase = new SaleUseCase(saleRepository);
         SaleDetailUseCase saleDetailUseCase = new SaleDetailUseCase(saleDetailRepository);
         ProductUseCase productUseCase = new ProductUseCase(productRepository);
         InvoiceUseCase invoiceUseCase = new InvoiceUseCase(invoiceRepository);
         ListarProducts listarProducts = new ListarProducts(productRepository);
+        ReportUseCase reportUseCase = new ReportUseCase(reportRepository);
         ListarSalesPorUsuario listarSalesPorUsuario = new ListarSalesPorUsuario(
                 saleRepository,
                 saleDetailRepository);
@@ -134,13 +147,15 @@ public class Inicio {
     
         switch (currentUser.getRole()) {
             case "ADMIN" -> new AdminUI(scanner, userService, currentUser).mostrarMenu();
-            case "CASHIER" -> System.out.println("Panel de Cajero no implementado aún");
-            case "INVENTORY" -> new InventoryUi(
-                    scanner,
-                    productUseCase,
-                    listarProducts,
-                    currentUser,
-                    productRepository).mostrarMenu();
+            case "CASHIER" -> 
+                new CashierUI(scanner,currentUser,saleUseCase,saleDetailUseCase,invoiceUseCase,reportUseCase)
+            .mostrarMenuPrincipal();
+            // case "INVENTORY" -> new InventoryUi(
+            //         scanner,
+            //         productUseCase,
+            //         listarProducts,
+            //         currentUser,
+            //         productRepository).mostrarMenu();
             case "CONSUMER" -> new ConsumerUI(
                     scanner,
                     productUseCase,

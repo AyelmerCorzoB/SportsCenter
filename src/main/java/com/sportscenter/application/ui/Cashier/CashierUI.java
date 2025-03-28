@@ -3,15 +3,18 @@ package com.sportscenter.application.ui.Cashier;
 import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.menus.MenuCajero;
 import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
-import com.sportscenter.application.usecase.invoice.ListarInvoice;
-import com.sportscenter.application.usecase.product.ProductUseCase;
+import com.sportscenter.application.ui.Admin.SaleUI;
 import com.sportscenter.application.usecase.Sale.SaleUseCase;
 import com.sportscenter.application.usecase.saledetail.SaleDetailUseCase;
 import com.sportscenter.domain.entities.Invoice;
 import com.sportscenter.domain.entities.User;
+import com.sportscenter.domain.repository.SaleDetailRepository;
+import com.sportscenter.domain.repository.SaleRepository;
+import com.sportscenter.infrastructure.database.ConnectionFactory;
+import com.sportscenter.infrastructure.persistence.SaleDetailRepositoryImpl;
+import com.sportscenter.infrastructure.persistence.SaleRepositoryImpl;
 import com.sportscenter.application.usecase.report.ReportUseCase;
 
-import java.util.Optional;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +22,6 @@ import java.util.List;
 public class CashierUI {
     private final Scanner scanner;
     private final User currentUser;
-    private final ProductUseCase productUseCase;
     private final SaleUseCase saleUseCase;
     private final SaleDetailUseCase saleDetailUseCase;
     private final InvoiceUseCase invoiceUseCase;
@@ -27,14 +29,12 @@ public class CashierUI {
 
     public CashierUI(Scanner scanner,
                     User currentUser,
-                    ProductUseCase productUseCase,
                     SaleUseCase saleUseCase,
                     SaleDetailUseCase saleDetailUseCase,
                     InvoiceUseCase invoiceUseCase,
                     ReportUseCase reportUseCase) {
         this.scanner = scanner;
         this.currentUser = currentUser;
-        this.productUseCase = productUseCase;
         this.saleUseCase = saleUseCase;
         this.saleDetailUseCase = saleDetailUseCase;
         this.invoiceUseCase = invoiceUseCase;
@@ -73,7 +73,7 @@ public class CashierUI {
         System.out.println("\n--- PROCESAR NUEVA VENTA ---");
         ConsoleUtils.pressEnterToContinue(scanner);
     }
-
+    
     private void gestionarFacturas() {
         int opcion;
         do {
