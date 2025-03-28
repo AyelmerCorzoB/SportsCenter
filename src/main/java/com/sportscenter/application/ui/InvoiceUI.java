@@ -81,4 +81,9 @@ public class InvoiceUI {
                 "+-------------------------------------------------------------------------------------------------------+");
         System.out.println("Total de facturas: " + facturas.size());
     }
+
+    public void mostrarMenu() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mostrarMenu'");
+    }
 }

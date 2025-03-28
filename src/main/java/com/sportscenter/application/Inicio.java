@@ -6,6 +6,7 @@ import com.sportscenter.application.usecase.product.ListarProducts;
 import com.sportscenter.application.usecase.product.ProductUseCase;
 import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.application.ui.AdminUI;
+import com.sportscenter.application.ui.InventoryUi;
 import com.sportscenter.application.ui.Consumer.ActualizarPassword;
 import com.sportscenter.application.ui.Consumer.ConsumerUI;
 import com.sportscenter.application.ui.Consumer.ListarSalesPorUsuario;
@@ -112,37 +113,35 @@ public class Inicio {
         SaleRepository saleRepository = new SaleRepositoryImpl(connection);
         SaleDetailRepository saleDetailRepository = new SaleDetailRepositoryImpl(connection);
         InvoiceRepository invoiceRepository = new InvoiceRepositoryImpl(connection);
-
+    
         ProductUseCase productUseCase = new ProductUseCase(productRepository);
         InvoiceUseCase invoiceUseCase = new InvoiceUseCase(invoiceRepository);
-        ListarProducts listarProducts = new ListarProducts();
+        ListarProducts listarProducts = new ListarProducts(productRepository);
         ListarSalesPorUsuario listarSalesPorUsuario = new ListarSalesPorUsuario(
                 saleRepository,
                 saleDetailRepository);
-
+    
         ListarInvoice listarInvoice = new ListarInvoice();
         ActualizarPassword actualizarPassword = new ActualizarPassword(userRepository);
-
+    
         switch (currentUser.getRole()) {
-            case "ADMIN" ->
-                new AdminUI(scanner, userService, currentUser).mostrarMenu();
-
-            case "CASHIER" ->
-                System.out.println("Panel de Cajero no implementado aún");
-
-            case "INVENTORY" ->
-                System.out.println("Panel de Inventario no implementado aún");
-
-            case "CONSUMER" ->
-                new ConsumerUI(
-                        scanner,
-                        productUseCase,
-                        currentUser,
-                        listarProducts,
-                        listarSalesPorUsuario,
-                        listarInvoice,
-                        actualizarPassword,
-                        invoiceUseCase).mostrarMenuPrincipal();
+            case "ADMIN" -> new AdminUI(scanner, userService, currentUser).mostrarMenu();
+            case "CASHIER" -> System.out.println("Panel de Cajero no implementado aún");
+            case "INVENTORY" -> new InventoryUi(
+                    scanner,
+                    productUseCase,
+                    listarProducts,
+                    currentUser,
+                    productRepository).mostrarMenu();
+            case "CONSUMER" -> new ConsumerUI(
+                    scanner,
+                    productUseCase,
+                    currentUser,
+                    listarProducts,
+                    listarSalesPorUsuario,
+                    listarInvoice,
+                    actualizarPassword,
+                    invoiceUseCase).mostrarMenuPrincipal();
         }
     }
 

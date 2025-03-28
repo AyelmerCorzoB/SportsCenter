@@ -62,7 +62,7 @@ public class AdminUI {
     }
 
     private void mostrarPanelControl() {
-        ControlAdminUi controlAdmin = new ControlAdminUi();
+        ControlAdminUi controlAdmin = new ControlAdminUi(scanner, userService, currentUser);
         controlAdmin.start();
     }
 

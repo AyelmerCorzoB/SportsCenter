@@ -79,4 +79,9 @@ public class SaleUI {
                     venta.getUserId());
         }
     }
+
+    public void mostrarMenu() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mostrarMenu'");
+    }
 }

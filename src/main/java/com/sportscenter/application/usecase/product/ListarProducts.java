@@ -4,8 +4,13 @@ import java.util.List;
 
 import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.domain.entities.Product;
+import com.sportscenter.domain.repository.ProductRepository;
 
 public class ListarProducts {
+    public ListarProducts(ProductRepository productRepository) {
+        //TODO Auto-generated constructor stub
+    }
+
     public void listar(ProductUseCase productUseCase) {
         ConsoleUtils.clear();
         System.out.println("\n=== LISTADO DE PRODUCTOS ===");
@@ -30,5 +35,10 @@ public class ListarProducts {
                         p.getEntryDate());
             });
         }
+    }
+
+    public void ejecutar() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
     }
 }

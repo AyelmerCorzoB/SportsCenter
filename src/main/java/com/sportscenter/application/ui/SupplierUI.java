@@ -70,4 +70,9 @@ public class SupplierUI {
                     prov.getTaxId());
         }
     }
+
+    public void mostrarMenu() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mostrarMenu'");
+    }
 }
