@@ -95,7 +95,44 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
 
         return invoice;
     }
-
+    @Override
+    public List<Invoice> findByUserId(int userId) {
+        String sql = """
+                SELECT i.*,
+                    s.sale_date, s.total AS sale_total,
+                    c.name AS customer_name, c.identity_document AS customer_doc,
+                    pm.method_name AS payment_method,
+                    (SELECT COUNT(*) FROM SaleDetail sd WHERE sd.sale_id = s.id) AS items_count
+                FROM Invoice i
+                JOIN Sale s ON i.sale_id = s.id
+                JOIN Customer c ON s.customer_id = c.id
+                JOIN PaymentMethod pm ON s.payment_method_id = pm.id
+                WHERE s.user_id = ?
+                ORDER BY i.issue_date DESC
+                """;
+    
+        List<Invoice> invoices = new ArrayList<>();
+    
+        try (Connection conn = connection.getConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+    
+            while (rs.next()) {
+                Invoice invoice = mapInvoiceWithDetails(rs);
+                try {
+                    invoice.setItemsCount(rs.getInt("items_count"));
+                } catch (SQLException e) {
+                    invoice.setItemsCount(0);
+                }
+                invoices.add(invoice);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding invoices by user id: " + userId, e);
+        }
+        return invoices;
+    }
     @Override
     public List<Invoice> listAll() {
         String sql = """
@@ -148,14 +185,6 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
         }
     }
 
-    private boolean columnExists(ResultSet rs, String columnName) {
-        try {
-            rs.findColumn(columnName);
-            return true;
-        } catch (SQLException e) {
-            return false;
-        }
-    }
 
     @Override
     public void update(Invoice invoice) {

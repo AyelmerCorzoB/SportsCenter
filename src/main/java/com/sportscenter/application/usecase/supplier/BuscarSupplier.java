@@ -25,10 +25,10 @@ public class BuscarSupplier {
                 System.out.println("Dirección: " + supplier.getAddress());
                 System.out.println("RUC/NIT: " + supplier.getTaxId());
             } else {
-                System.out.println("❌ No se encontró el proveedor con ID: " + id);
+                System.out.println("X No se encontró el proveedor con ID: " + id);
             }
         } catch (Exception e) {
-            System.out.println("❌ Error al buscar el proveedor: " + e.getMessage());
+            System.out.println("X Error al buscar el proveedor: " + e.getMessage());
         }
     }
 }

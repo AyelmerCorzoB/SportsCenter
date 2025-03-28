@@ -21,7 +21,7 @@ public class BuscarOrderStatus {
             System.out.println("Estado: " + status.getStatusName());
             System.out.println("Descripción: " + (status.getDescription() != null ? status.getDescription() : "N/A"));
         } else {
-            System.out.println("❌ No se encontró el estado con ID: " + id);
+            System.out.println("X No se encontró el estado con ID: " + id);
         }
     }
 }

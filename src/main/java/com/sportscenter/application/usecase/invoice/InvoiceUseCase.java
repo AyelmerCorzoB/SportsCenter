@@ -14,6 +14,7 @@ public class InvoiceUseCase {
 
     public void registerInvoice(int saleId, String invoiceNumber, LocalDate issueDate,
             double totalAmount, double taxes) {
+        // Validaciones
         if (invoiceNumber == null || invoiceNumber.trim().isEmpty()) {
             throw new IllegalArgumentException("El número de factura no puede estar vacío");
         }
@@ -27,10 +28,7 @@ public class InvoiceUseCase {
             throw new IllegalArgumentException("Los impuestos no pueden ser negativos");
         }
 
-        Invoice invoice = new Invoice();
-        invoice.setSaleId(saleId);
-        invoice.setInvoiceNumber(invoiceNumber);
-        invoice.setIssueDate(issueDate);
+        Invoice invoice = new Invoice(saleId, invoiceNumber, issueDate);
         invoice.setTotalAmount(totalAmount);
         invoice.setTaxes(taxes);
         repository.save(invoice);
@@ -44,15 +42,11 @@ public class InvoiceUseCase {
         return repository.listAll();
     }
 
-    public void updateInvoice(int id, int saleId, String invoiceNumber, LocalDate issueDate,
-            double totalAmount, double taxes) {
-        Invoice invoice = new Invoice();
-        invoice.setId(id);
-        invoice.setSaleId(saleId);
-        invoice.setInvoiceNumber(invoiceNumber);
-        invoice.setIssueDate(issueDate);
-        invoice.setTotalAmount(totalAmount);
-        invoice.setTaxes(taxes);
+    public List<Invoice> getInvoicesByUserId(int userId) {
+        return repository.findByUserId(userId);
+    }
+
+    public void updateInvoice(Invoice invoice) {
         repository.update(invoice);
     }
 

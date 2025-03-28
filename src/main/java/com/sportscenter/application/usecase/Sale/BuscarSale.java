@@ -25,7 +25,7 @@ public class BuscarSale {
             System.out.println("Total: $" + sale.getTotal());
             System.out.println("ID Usuario: " + sale.getUserId());
         } else {
-            System.out.println("❌ No se encontró ninguna venta con ID: " + id);
+            System.out.println("X No se encontró ninguna venta con ID: " + id);
         }
     }
 }

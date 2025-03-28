@@ -18,7 +18,7 @@ public class ListarSaledetail {
         List<SaleDetail> details = saleDetailUseCase.getDetailsBySaleId(saleId);
 
         if (details.isEmpty()) {
-            System.out.println("❌ No se encontraron detalles para la venta con ID: " + saleId);
+            System.out.println("X No se encontraron detalles para la venta con ID: " + saleId);
             return;
         }
 

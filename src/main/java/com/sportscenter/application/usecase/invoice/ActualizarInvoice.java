@@ -1,9 +1,9 @@
 package com.sportscenter.application.usecase.invoice;
 
+import com.sportscenter.adapter.validations.ValidationInt;
+import com.sportscenter.domain.entities.Invoice;
 import java.time.LocalDate;
 import java.util.Scanner;
-
-import com.sportscenter.adapter.validations.ValidationInt;
 
 public class ActualizarInvoice {
     public void actualizar(Scanner sc, InvoiceUseCase invoiceUseCase) {
@@ -14,25 +14,49 @@ public class ActualizarInvoice {
         int id = sc.nextInt();
         sc.nextLine();
 
-        System.out.print("ID de la venta: ");
-        ValidationInt.validate(sc);
-        int saleId = sc.nextInt();
-        sc.nextLine();
+        Invoice invoice = invoiceUseCase.getInvoiceById(id);
+        if (invoice == null) {
+            System.out.println("❌ No se encontró una factura con el ID proporcionado");
+            return;
+        }
 
-        System.out.print("Número de factura: ");
-        String invoiceNumber = sc.nextLine();
+        System.out.println("\nDatos actuales de la factura:");
+        System.out.println("Número de factura: " + invoice.getInvoiceNumber());
+        System.out.println("Fecha de emisión: " + invoice.getIssueDate());
+        System.out.println("Total: " + invoice.getTotalAmount());
+        System.out.println("Impuestos: " + invoice.getTaxes());
 
-        System.out.print("Fecha de emisión (AAAA-MM-DD): ");
-        LocalDate issueDate = LocalDate.parse(sc.nextLine());
+        System.out.println("\nIngrese los nuevos datos (deje en blanco para mantener el valor actual):");
 
-        System.out.print("Total: ");
-        double total = sc.nextDouble();
+        System.out.print("Nuevo número de factura [" + invoice.getInvoiceNumber() + "]: ");
+        String newInvoiceNumber = sc.nextLine();
+        if (!newInvoiceNumber.isBlank()) {
+            invoice.setInvoiceNumber(newInvoiceNumber);
+        }
 
-        System.out.print("Impuestos: ");
-        double taxes = sc.nextDouble();
-        sc.nextLine();
+        System.out.print("Nueva fecha de emisión (AAAA-MM-DD) [" + invoice.getIssueDate() + "]: ");
+        String dateInput = sc.nextLine();
+        if (!dateInput.isBlank()) {
+            invoice.setIssueDate(LocalDate.parse(dateInput));
+        }
 
-        invoiceUseCase.updateInvoice(id, saleId, invoiceNumber, issueDate, total, taxes);
-        System.out.println("✅ Factura actualizada exitosamente.");
+        System.out.print("Nuevo total [" + invoice.getTotalAmount() + "]: ");
+        String totalInput = sc.nextLine();
+        if (!totalInput.isBlank()) {
+            invoice.setTotalAmount(Double.parseDouble(totalInput));
+        }
+
+        System.out.print("Nuevos impuestos [" + invoice.getTaxes() + "]: ");
+        String taxesInput = sc.nextLine();
+        if (!taxesInput.isBlank()) {
+            invoice.setTaxes(Double.parseDouble(taxesInput));
+        }
+
+        try {
+            invoiceUseCase.updateInvoice(invoice);
+            System.out.println("✅ Factura actualizada exitosamente.");
+        } catch (Exception e) {
+            System.out.println("❌ Error al actualizar la factura: " + e.getMessage());
+        }
     }
 }

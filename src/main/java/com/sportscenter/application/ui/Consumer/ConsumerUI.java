@@ -5,6 +5,7 @@ import com.sportscenter.adapter.menus.MenuClientes;
 import com.sportscenter.application.usecase.product.ListarProducts;
 import com.sportscenter.application.usecase.product.ProductUseCase;
 import com.sportscenter.application.usecase.invoice.ListarInvoice;
+import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
 import com.sportscenter.domain.entities.User;
 
 import java.util.Scanner;
@@ -14,26 +15,28 @@ public class ConsumerUI {
     private final ProductUseCase productUseCase;
     private final User currentUser;
     private final ListarProducts listarProducts;
-    private final ListarOrdersPorUsuario listarOrdersPorUsuario;
+    private final ListarSalesPorUsuario listarSalesPorUsuario;
     private final ListarInvoice listarInvoice;
+    private final InvoiceUseCase invoiceUseCase;
     private final ActualizarPassword actualizarPassword;
 
     public ConsumerUI(Scanner scanner,
-                  ProductUseCase productUseCase,
-                  User currentUser,
-                  ListarProducts listarProducts,
-                  ListarOrdersPorUsuario listarOrdersPorUsuario,
-                  ListarInvoice listarInvoice,
-                  ActualizarPassword actualizarPassword) {
-    this.scanner = scanner;
-    this.productUseCase = productUseCase;
-    this.currentUser = currentUser;
-    this.listarProducts = listarProducts;
-    this.listarOrdersPorUsuario = listarOrdersPorUsuario;
-    this.listarInvoice = listarInvoice;
-    this.actualizarPassword = actualizarPassword;
-}
-
+            ProductUseCase productUseCase,
+            User currentUser,
+            ListarProducts listarProducts,
+            ListarSalesPorUsuario listarSalesPorUsuario,
+            ListarInvoice listarInvoice,
+            ActualizarPassword actualizarPassword,
+            InvoiceUseCase invoiceUseCase) {
+        this.scanner = scanner;
+        this.productUseCase = productUseCase;
+        this.currentUser = currentUser;
+        this.listarProducts = listarProducts;
+        this.listarSalesPorUsuario = listarSalesPorUsuario;
+        this.listarInvoice = listarInvoice;
+        this.actualizarPassword = actualizarPassword;
+        this.invoiceUseCase = invoiceUseCase;
+    }
 
     public void mostrarMenuPrincipal() {
         int opcion;
@@ -68,18 +71,18 @@ public class ConsumerUI {
             scanner.next();
         }
         int opcion = scanner.nextInt();
-        scanner.nextLine(); // Limpiar buffer
+        scanner.nextLine();
         return opcion;
     }
 
     private void mostrarHistorialCompras() {
         System.out.println("\n--- HISTORIAL DE COMPRAS ---");
-        listarOrdersPorUsuario.mostrarPorUsuario(currentUser.getId());
+        listarSalesPorUsuario.mostrarPorUsuario(currentUser.getId());
     }
 
     private void mostrarFacturacion() {
-        System.out.println("\n--- FACTURACIÓN ---");
-        listarInvoice.mostrarFacturasPorUsuario(currentUser.getId());
+        System.out.println("\n--- HISTORIAL DE FACTURAS ---");
+        listarInvoice.mostrarFacturasPorUsuario(currentUser.getId(), invoiceUseCase);
     }
 
     private void mostrarPerfil() {

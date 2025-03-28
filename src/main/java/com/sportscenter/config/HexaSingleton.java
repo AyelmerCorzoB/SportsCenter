@@ -19,18 +19,18 @@ public enum HexaSingleton {
     // FileInputStream(classLoader.getResource(rutaArchivo).getFile())) {
     // propiedades.load(archivo);
     // } catch (IOException e) {
-    // System.err.println("❌ Error cargando configuración: " + e.getMessage());
+    // System.err.println("X Error cargando configuración: " + e.getMessage());
     // }
     // }
     private void cargarConfiguraciones(String rutaArchivo) {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(rutaArchivo)) {
             if (inputStream == null) {
-                System.err.println("❌ Archivo de configuración no encontrado: " + rutaArchivo);
+                System.err.println("X Archivo de configuración no encontrado: " + rutaArchivo);
                 return;
             }
             propiedades.load(inputStream);
         } catch (IOException e) {
-            System.err.println("❌ Error cargando configuración: " + e.getMessage());
+            System.err.println("X Error cargando configuración: " + e.getMessage());
         }
     }
 

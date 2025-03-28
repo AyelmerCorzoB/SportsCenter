@@ -88,6 +88,32 @@ public class SaleRepositoryImpl implements SaleRepository {
     }
 
     @Override
+public List<Sale> findByUserId(int userId) {
+    List<Sale> sales = new ArrayList<>();
+    String sql = "SELECT * FROM Sale WHERE user_id = ?";
+    
+    try (Connection conn = connection.getConexion();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        
+        stmt.setInt(1, userId);
+        ResultSet rs = stmt.executeQuery();
+        
+        while (rs.next()) {
+            Sale sale = new Sale();
+            sale.setId(rs.getInt("id"));
+            sale.setCustomerId(rs.getInt("customer_id"));
+            sale.setSaleDate(rs.getDate("sale_date").toLocalDate());
+            sale.setPaymentMethodId(rs.getInt("payment_method_id"));
+            sale.setTotal(rs.getDouble("total"));
+            sale.setUserId(rs.getInt("user_id"));
+            sales.add(sale);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return sales;
+}
+    @Override
     public void update(Sale sale) {
         String sql = "UPDATE Sale SET customer_id = ?, sale_date = ?, payment_method_id = ?, " +
                      "total = ? WHERE id = ?";

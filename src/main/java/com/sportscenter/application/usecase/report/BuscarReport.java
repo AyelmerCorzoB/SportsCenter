@@ -27,7 +27,7 @@ public class BuscarReport {
                     (reporte.getParameters() != null ? reporte.getParameters() : "Ninguno"));
             System.out.println("Fecha de Creación: " + reporte.getCreatedAt());
         } else {
-            System.out.println("❌ No se encontró un reporte con ID: " + id);
+            System.out.println("X No se encontró un reporte con ID: " + id);
         }
     }
 }

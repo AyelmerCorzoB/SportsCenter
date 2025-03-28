@@ -34,7 +34,7 @@ public class RegistroSaledetail {
             saleDetailUseCase.registerSaleDetail(saleId, productId, quantity, unitPrice);
             System.out.println("✅ Detalle de venta registrado exitosamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al registrar detalle de venta: " + e.getMessage());
+            System.out.println("X Error al registrar detalle de venta: " + e.getMessage());
         }
     }
 }

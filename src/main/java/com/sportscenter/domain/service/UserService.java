@@ -26,26 +26,23 @@ public class UserService {
 
     public User register(User user, boolean isAdmin) {
         try {
-            // Validar campos obligatorios
+
             if (user.getUsername() == null || user.getUsername().isEmpty() ||
-                user.getPassword() == null || user.getPassword().isEmpty()) {
+                    user.getPassword() == null || user.getPassword().isEmpty()) {
                 System.err.println("Error: Username y password son obligatorios");
                 return null;
             }
-    
-            // Verificar si el usuario ya existe
+
             if (userRepository.findByUsername(user.getUsername()) != null) {
                 System.err.println("Error: El nombre de usuario '" + user.getUsername() + "' ya está registrado");
                 return null;
             }
-    
-            // Configurar rol y estado
+
             user.setRole(isAdmin ? "ADMIN" : "CONSUMER");
             user.setActive(true);
-    
-            // Guardar el nuevo usuario
+
             return userRepository.save(user);
-            
+
         } catch (Exception e) {
             System.err.println("Error técnico al registrar usuario: " + e.getMessage());
             return null;

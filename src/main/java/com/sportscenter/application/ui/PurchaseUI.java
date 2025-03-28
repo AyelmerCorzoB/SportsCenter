@@ -44,7 +44,7 @@ public class PurchaseUI {
                     System.out.println("Regresando al menú principal...");
                     break;
                 default:
-                    System.out.println("❌ Opción inválida. Por favor intente nuevamente.");
+                    System.out.println("X Opción inválida. Por favor intente nuevamente.");
                     break;
             }
         } while (opcion != 6);

@@ -38,9 +38,9 @@ public class OrderRepositoryImpl implements OrderRepository {
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error al obtener órdenes por usuario: " + e.getMessage());
+            System.err.println("X Error al obtener órdenes por usuario: " + e.getMessage());
         } catch (IllegalArgumentException e) {
-            System.err.println("❌ Error al convertir estado de orden: " + e.getMessage());
+            System.err.println("X Error al convertir estado de orden: " + e.getMessage());
         }
 
         return orders;

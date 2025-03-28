@@ -16,7 +16,7 @@ public class ActualizarSaleDetail {
 
         SaleDetail detalle = saleDetailUseCase.getDetailById(id);
         if (detalle == null) {
-            System.out.println("❌ No se encontró el detalle con ID: " + id);
+            System.out.println("X No se encontró el detalle con ID: " + id);
             return;
         }
 

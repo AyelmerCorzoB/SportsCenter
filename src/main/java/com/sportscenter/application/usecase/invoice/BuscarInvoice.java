@@ -24,7 +24,7 @@ public class BuscarInvoice {
             System.out.println("Total: $" + invoice.getTotalAmount());
             System.out.println("Impuestos: $" + invoice.getTaxes());
         } else {
-            System.out.println("❌ No se encontró la factura con ID: " + id);
+            System.out.println("X No se encontró la factura con ID: " + id);
         }
     }
 }

@@ -33,7 +33,7 @@ public class ActualizarReport {
                     newType = "CUSTOMERS";
                     break;
                 default:
-                    System.out.println("❌ Opción inválida. Debe ser 1, 2 o 3.");
+                    System.out.println("X Opción inválida. Debe ser 1, 2 o 3.");
                     return;
             }
         }
@@ -50,7 +50,7 @@ public class ActualizarReport {
             // Obtener el reporte existente
             Report report = reportUseCase.getReportById(id);
             if (report == null) {
-                System.out.println("❌ No se encontró un reporte con ese ID.");
+                System.out.println("X No se encontró un reporte con ese ID.");
                 return;
             }
 
@@ -69,7 +69,7 @@ public class ActualizarReport {
             reportUseCase.updateReport(report);
             System.out.println("✅ Reporte actualizado exitosamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al actualizar el reporte: " + e.getMessage());
+            System.out.println("X Error al actualizar el reporte: " + e.getMessage());
         }
     }
 

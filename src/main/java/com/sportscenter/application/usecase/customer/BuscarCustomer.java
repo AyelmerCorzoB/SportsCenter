@@ -27,7 +27,7 @@ public class BuscarCustomer {
             System.out.println("Dirección: " + customer.getAddress());
             System.out.println("Fecha de Registro: " + customer.getRegistrationDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
         } else {
-            System.out.println("❌ No se encontró el cliente con ID: " + id);
+            System.out.println("X No se encontró el cliente con ID: " + id);
         }
     }
 }

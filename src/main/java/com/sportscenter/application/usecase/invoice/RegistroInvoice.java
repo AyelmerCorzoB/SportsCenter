@@ -33,7 +33,7 @@ public class RegistroInvoice {
             invoiceUseCase.registerInvoice(saleId, invoiceNumber, issueDate, totalAmount, taxes);
             System.out.println("✅ Factura registrada exitosamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al registrar factura: " + e.getMessage());
+            System.out.println("X Error al registrar factura: " + e.getMessage());
         }
     }
 }

@@ -28,7 +28,7 @@ public class BuscarProduct {
             System.out.println("Proveedor ID: " + product.getSupplierId());
             System.out.println("Color ID: " + product.getColorId());
         } else {
-            System.out.println("❌ No se encontró el producto con ID: " + id);
+            System.out.println("X No se encontró el producto con ID: " + id);
         }
     }
 }

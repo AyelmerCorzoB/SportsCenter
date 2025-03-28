@@ -34,7 +34,7 @@ public class ActualizarPurchase {
             purchaseUseCase.updatePurchase(id, date, supplierId, statusId);
             System.out.println("✅ Compra actualizada exitosamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al actualizar compra: " + e.getMessage());
+            System.out.println("X Error al actualizar compra: " + e.getMessage());
         }
     }
 }

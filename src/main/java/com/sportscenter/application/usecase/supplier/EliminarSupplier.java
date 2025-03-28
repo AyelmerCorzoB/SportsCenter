@@ -17,7 +17,7 @@ public class EliminarSupplier {
             supplierUseCase.deleteSupplier(id);
             System.out.println("✅ Proveedor eliminado exitosamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al eliminar el proveedor: " + e.getMessage());
+            System.out.println("X Error al eliminar el proveedor: " + e.getMessage());
         }
     }
 }
