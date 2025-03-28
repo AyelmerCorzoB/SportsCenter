@@ -7,18 +7,20 @@ import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.validations.ValidationInt;
 import com.sportscenter.application.usecase.product.*;
 import com.sportscenter.domain.entities.Product;
+import com.sportscenter.domain.service.UserService;
 
 public class ProductUI {
     private final ProductUseCase productUseCase;
     private final Scanner scanner;
 
-    public ProductUI(Scanner scanner, ProductUseCase productUseCase) {
+    public ProductUI(Scanner scanner, ProductUseCase productUseCase, UserService userService) {
         this.scanner = scanner;
         this.productUseCase = productUseCase;
+        this.userService = userService;
     }
 
     public void agregarProducto() {
-        new RegistroProduct().registro(scanner, productUseCase);
+        new RegistroProduct().registro(scanner, productUseCase, null);
     }
 
     public void buscarProductoPorId() {
