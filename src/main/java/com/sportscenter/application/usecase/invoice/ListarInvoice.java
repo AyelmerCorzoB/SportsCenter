@@ -54,4 +54,7 @@ public class ListarInvoice {
         System.out.println("Total facturado: $" + String.format("%.2f", totalFacturado));
         System.out.println("Cantidad de facturas: " + facturas.size());
     }
+
+
+    
 }
