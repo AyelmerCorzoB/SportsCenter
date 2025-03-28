@@ -1,15 +1,20 @@
 package com.sportscenter.application;
 
+import com.sportscenter.application.usecase.Sale.SaleUseCase;
 import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
 import com.sportscenter.application.usecase.invoice.ListarInvoice;
 import com.sportscenter.application.usecase.product.ListarProducts;
 import com.sportscenter.application.usecase.product.ProductUseCase;
+import com.sportscenter.application.usecase.report.ReportUseCase;
+import com.sportscenter.application.usecase.saledetail.SaleDetailUseCase;
 import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.application.ui.AdminUI;
 import com.sportscenter.application.ui.InventoryUi;
+import com.sportscenter.application.ui.Cashier.CashierUI;
 import com.sportscenter.application.ui.Consumer.ActualizarPassword;
 import com.sportscenter.application.ui.Consumer.ConsumerUI;
 import com.sportscenter.application.ui.Consumer.ListarSalesPorUsuario;
+import com.sportscenter.domain.entities.Sale;
 import com.sportscenter.domain.entities.SaleDetail;
 import com.sportscenter.domain.entities.User;
 import com.sportscenter.domain.repository.CustomerRepository;
@@ -114,6 +119,9 @@ public class Inicio {
         SaleDetailRepository saleDetailRepository = new SaleDetailRepositoryImpl(connection);
         InvoiceRepository invoiceRepository = new InvoiceRepositoryImpl(connection);
     
+
+        SaleUseCase saleUseCase = new SaleUseCase(saleRepository);
+        SaleDetailUseCase saleDetailUseCase = new SaleDetailUseCase(saleDetailRepository);
         ProductUseCase productUseCase = new ProductUseCase(productRepository);
         InvoiceUseCase invoiceUseCase = new InvoiceUseCase(invoiceRepository);
         ListarProducts listarProducts = new ListarProducts(productRepository);
