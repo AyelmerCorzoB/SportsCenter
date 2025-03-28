@@ -35,7 +35,8 @@ public class InventoryMovementRepositoryImpl implements InventoryMovementReposit
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("❌ Error al guardar el movimiento de inventario: " + e.getMessage());
+            // e.printStackTrace(); // Puedes descomentar si quieres ver el stack completo
         }
     }
 
