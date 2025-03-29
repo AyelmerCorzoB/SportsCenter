@@ -9,17 +9,14 @@ import com.sportscenter.application.usecase.report.ReportUseCase;
 import com.sportscenter.application.usecase.saledetail.SaleDetailUseCase;
 import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.application.ui.Admin.AdminUI;
-// import com.sportscenter.application.ui.InventoryUi;
 import com.sportscenter.application.ui.Cashier.CashierUI;
 import com.sportscenter.application.ui.Consumer.ActualizarPassword;
 import com.sportscenter.application.ui.Consumer.ConsumerUI;
 import com.sportscenter.application.ui.Consumer.ListarSalesPorUsuario;
-import com.sportscenter.domain.entities.Sale;
-import com.sportscenter.domain.entities.SaleDetail;
+import com.sportscenter.application.ui.Inventory.InventoryUi;
 import com.sportscenter.domain.entities.User;
 import com.sportscenter.domain.repository.CustomerRepository;
 import com.sportscenter.domain.repository.InvoiceRepository;
-import com.sportscenter.domain.repository.OrderRepository;
 import com.sportscenter.domain.repository.ProductRepository;
 import com.sportscenter.domain.repository.ReportRepository;
 import com.sportscenter.domain.repository.SaleDetailRepository;
@@ -30,7 +27,6 @@ import com.sportscenter.infrastructure.database.ConnectionDb;
 import com.sportscenter.infrastructure.database.ConnectionFactory;
 import com.sportscenter.infrastructure.persistence.CustomerRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.InvoiceRepositoryImpl;
-import com.sportscenter.infrastructure.persistence.OrderRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.ProductRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.ReportRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.SaleDetailRepositoryImpl;
@@ -94,13 +90,14 @@ public class Inicio {
                     System.out.printf("Error: Opción debe estar entre %d y %d. Intente nuevamente: ", min, max);
                     continue;
                 }
-                
+
                 return opcion;
             } catch (NumberFormatException e) {
                 System.out.print("Error: Debe ingresar un número válido. Intente nuevamente: ");
             }
         }
     }
+
     private void Login() {
         System.out.print("\nUsername: ");
         String username = scanner.nextLine();
@@ -130,7 +127,7 @@ public class Inicio {
         SaleRepository saleRepository = new SaleRepositoryImpl(connection);
         SaleDetailRepository saleDetailRepository = new SaleDetailRepositoryImpl(connection);
         InvoiceRepository invoiceRepository = new InvoiceRepositoryImpl(connection);
-        ReportRepository reportRepository = new ReportRepositoryImpl(connection);    
+        ReportRepository reportRepository = new ReportRepositoryImpl(connection);
 
         SaleUseCase saleUseCase = new SaleUseCase(saleRepository);
         SaleDetailUseCase saleDetailUseCase = new SaleDetailUseCase(saleDetailRepository);
@@ -141,21 +138,18 @@ public class Inicio {
         ListarSalesPorUsuario listarSalesPorUsuario = new ListarSalesPorUsuario(
                 saleRepository,
                 saleDetailRepository);
-    
+
         ListarInvoice listarInvoice = new ListarInvoice();
         ActualizarPassword actualizarPassword = new ActualizarPassword(userRepository);
-    
+
         switch (currentUser.getRole()) {
             case "ADMIN" -> new AdminUI(scanner, userService, currentUser).mostrarMenu();
-            case "CASHIER" -> 
-                new CashierUI(scanner,currentUser,saleUseCase,saleDetailUseCase,invoiceUseCase,reportUseCase)
-            .mostrarMenuPrincipal();
-            // case "INVENTORY" -> new InventoryUi(
-            //         scanner,
-            //         productUseCase,
-            //         listarProducts,
-            //         currentUser,
-            //         productRepository).mostrarMenu();
+            case "CASHIER" ->
+                new CashierUI(scanner, currentUser, saleUseCase, saleDetailUseCase, invoiceUseCase, reportUseCase)
+                        .mostrarMenuPrincipal();
+            case "INVENTORY" ->
+                new InventoryUi(scanner, productUseCase, listarProducts, currentUser, productRepository, userService)
+                        .mostrarMenu();
             case "CONSUMER" -> new ConsumerUI(
                     scanner,
                     productUseCase,
@@ -217,14 +211,6 @@ public class Inicio {
                 address,
                 LocalDate.now(),
                 user.getId());
-    }
-
-    private void AdminPanel() {
-        if (currentUser == null || !currentUser.getRole().equals("ADMIN")) {
-            System.out.println("\nAcceso denegado. Se requiere rol ADMIN.");
-            return;
-        }
-        new AdminUI(scanner, userService, currentUser).mostrarMenu();
     }
 
     public static void main(String[] args) {

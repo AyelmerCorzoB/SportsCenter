@@ -253,10 +253,10 @@ CREATE TABLE AuditLog (
 );
 -- 1. Insertar usuarios primero (son referenciados en muchas tablas)
 INSERT INTO User (username, password, role, active, last_login) VALUES 
-('admin1', 'Admin1234', 'ADMIN', TRUE, '2023-01-15 09:30:00'),
-('cajero1', 'Cajero123', 'CASHIER', TRUE, '2023-01-16 10:15:00'),
-('inventario1', 'Invent123', 'INVENTORY', TRUE, '2023-01-17 11:20:00'),
-('cliente1', 'Cliente123', 'CONSUMER', TRUE, '2023-01-18 14:45:00'),
+('admin', 'admin123', 'ADMIN', TRUE, '2023-01-15 09:30:00'),
+('cajero', 'cajero123', 'CASHIER', TRUE, '2023-01-16 10:15:00'),
+('inventario', 'inventario123', 'INVENTORY', TRUE, '2023-01-17 11:20:00'),
+('cliente', 'cliente123', 'CONSUMER', TRUE, '2023-01-18 14:45:00'),
 ('admin2', 'Admin5678', 'ADMIN', TRUE, '2023-01-19 08:10:00'),
 ('cajero2', 'Cajero456', 'CASHIER', TRUE, '2023-01-20 13:25:00'),
 ('inventario2', 'Invent456', 'INVENTORY', TRUE, '2023-01-21 16:30:00'),

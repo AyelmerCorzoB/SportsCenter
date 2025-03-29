@@ -8,6 +8,15 @@ import java.util.List;
 
 public class UserService {
     private final UserRepository userRepository;
+    private User currentUser; // Variable para mantener el usuario actual
+
+    public User getCurrentUser() {
+        return this.currentUser;
+    }
+
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+    }
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -19,8 +28,10 @@ public class UserService {
         if (user != null && user.isActive() && user.getPassword().equals(password)) {
             user.setLast_login(new Timestamp(System.currentTimeMillis()));
             userRepository.update(user);
+            this.currentUser = user; // Establecer el usuario actual
             return user;
         }
+        this.currentUser = null; // Limpiar el usuario actual si la autenticación falla
         return null;
     }
 

@@ -23,16 +23,11 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     // Nuevo método sobrecargado
     public void save(Product product, int userId) {
-        String productSql = "INSERT INTO Product (name, description, unit_price, size, current_stock, category_id, supplier_id, color_id, minimum_stock, entry_date) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        String inventorySql = "INSERT INTO InventoryMovement (product_id, quantity, movement_type, movement_date, reason, user_id) " +
-                              "VALUES (?, ?, ?, ?, ?, ?)";
-
+        String productSql = "INSERT INTO product (name, description, unit_price, size, current_stock, category_id, supplier_id, color_id, minimum_stock, entry_date) " +
+                           "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
         try (Connection conn = connection.getConexion()) {
-            conn.setAutoCommit(false);
-
-            try (PreparedStatement productStmt = conn.prepareStatement(productSql, Statement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement productStmt = conn.prepareStatement(productSql)) {
                 productStmt.setString(1, product.getName());
                 productStmt.setString(2, product.getDescription());
                 productStmt.setDouble(3, product.getUnitPrice());
@@ -43,35 +38,11 @@ public class ProductRepositoryImpl implements ProductRepository {
                 productStmt.setInt(8, product.getColorId());
                 productStmt.setInt(9, product.getMinimumStock());
                 productStmt.setDate(10, Date.valueOf(product.getEntryDate()));
-
+    
                 productStmt.executeUpdate();
-
-                ResultSet rs = productStmt.getGeneratedKeys();
-                if (rs.next()) {
-                    int productId = rs.getInt(1);
-
-                    try (PreparedStatement inventoryStmt = conn.prepareStatement(inventorySql)) {
-                        inventoryStmt.setInt(1, productId);
-                        inventoryStmt.setInt(2, product.getCurrentStock());
-                        inventoryStmt.setString(3, "INVENTORY");
-                        inventoryStmt.setTimestamp(4, Timestamp.valueOf(java.time.LocalDateTime.now()));
-                        inventoryStmt.setString(5, "Registro inicial en inventario");
-                        inventoryStmt.setInt(6, userId);
-
-                        inventoryStmt.executeUpdate();
-                    }
-                }
-
-                conn.commit();
-            } catch (SQLException e) {
-                conn.rollback();
-                throw e;
-            } finally {
-                conn.setAutoCommit(true);
             }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            
         }
     }
 

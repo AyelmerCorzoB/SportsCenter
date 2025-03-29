@@ -27,7 +27,7 @@ public class AdminUI {
             System.out.println("1. Registrar nuevo usuario administrativo");
             System.out.println("2. Listar todos los usuarios");
             System.out.println("3. Panel de control");
-            System.out.println("4. Volver al menú principal");
+            System.out.println("4. Cerrar sesion");
             System.out.print("Elija una opción: ");
 
             int option = obtenerOpcionValida();
