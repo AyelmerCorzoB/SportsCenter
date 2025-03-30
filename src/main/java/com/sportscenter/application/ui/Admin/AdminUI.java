@@ -33,8 +33,8 @@ public class AdminUI {
             int option = obtenerOpcionValida();
 
             switch (option) {
-                case 1 -> registrarAdminUser();
-                case 2 -> listarUsuarios();
+                case 1 -> RegisterAdminUser();
+                case 2 -> ListUsuarios();
                 case 3 -> mostrarPanelControl();
                 case 4 -> {
                     return;
@@ -65,7 +65,7 @@ public class AdminUI {
         ControlAdminUi controlAdmin = new ControlAdminUi();
         controlAdmin.start();}
 
-    private void registrarAdminUser() {
+    private void RegisterAdminUser() {
         ConsoleUtils.clear();
         System.out.println("\n--- Registro de usuario administrativo ---");
         
@@ -74,7 +74,7 @@ public class AdminUI {
             User registeredUser = userService.register(adminUser, true);
             
             if (registeredUser != null) {
-                System.out.println("\n✅ Usuario administrativo registrado con éxito!");
+                System.out.println("\n🚀 Usuario administrativo registrado con éxito!");
                 System.out.println("|------------------------------|");
                 System.out.printf("| %-15s: %-10s |\n", "ID", registeredUser.getId());
                 System.out.printf("| %-15s: %-10s |\n", "Usuario", registeredUser.getUsername());
@@ -124,7 +124,7 @@ public class AdminUI {
         };
     }
 
-    private void listarUsuarios() {
+    private void ListUsuarios() {
         ConsoleUtils.clear();
         System.out.println("\n--- Listado de Usuarios ---");
         

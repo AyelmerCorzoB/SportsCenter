@@ -5,7 +5,7 @@ import java.util.List;
 import com.sportscenter.domain.entities.Invoice;
 
 public class ListInvoice {
-    public void listar(InvoiceUseCase invoiceUseCase) {
+    public void List(InvoiceUseCase invoiceUseCase) {
         System.out.println("\n=== LISTADO DE FACTURAS ===");
         System.out.printf("%-5s %-12s %-15s %-15s %-10s %-10s%n", 
             "ID", "VentaID", "N° Factura", "Fecha Emisión", "Total", "Impuestos");

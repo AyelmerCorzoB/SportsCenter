@@ -13,7 +13,7 @@ public class ReportTypeUI {
         do {
             System.out.println("\n******** MENÚ DE TIPOS DE REPORTES ********");
             System.out.println("1. Registrar tipo de reporte");
-            System.out.println("2. Buscar tipo de reporte por ID");
+            System.out.println("2. Search tipo de reporte por ID");
             System.out.println("3. Listar todas los tipo de reporte");
             System.out.println("4. Actualizar un tipo de reporte");
             System.out.println("5. Eliminar una tipo de reporte");
@@ -26,19 +26,19 @@ public class ReportTypeUI {
 
             switch (opcion) {
                 case 1:
-                    new RegistroReportType().registro(sc, reportTypeUseCase);
+                    new RegisterReportType().Register(sc, reportTypeUseCase);
                     break;
                 case 2:
-                    new BuscarReportType().buscar(sc, reportTypeUseCase);
+                    new SearchReportType().Search(sc, reportTypeUseCase);
                     break;
                 case 3:
                     reportTypeUseCase.getAllReportTypes();
                     break;
                 case 4:
-                    new ActualizarReportType().actualizar(sc, reportTypeUseCase);
+                    new UpdateReportType().Update(sc, reportTypeUseCase);
                     break;
                 case 5:
-                    new EliminarReportType().eliminar(sc, reportTypeUseCase);
+                    new DeleteReportType().Delete(sc, reportTypeUseCase);
                     break;
                 case 6:
                     System.out.println("Regresando al menú principal...");

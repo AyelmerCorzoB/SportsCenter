@@ -1,7 +1,7 @@
 package com.sportscenter.application.ui.Inventory;
 
 import com.sportscenter.adapter.global.ConsoleUtils;
-import com.sportscenter.application.usecase.product.ListarProducts;
+import com.sportscenter.application.usecase.product.ListProducts;
 import com.sportscenter.application.usecase.product.ProductUseCase;
 import com.sportscenter.domain.entities.User;
 import com.sportscenter.domain.repository.ProductRepository;
@@ -18,7 +18,7 @@ public class InventoryUi {
 
     public InventoryUi(Scanner scanner,
             ProductUseCase productUseCase,
-            ListarProducts listarProducts,
+            ListProducts ListProducts,
             User currentUser,
             ProductRepository productRepository,
             UserService userService) {
@@ -50,11 +50,11 @@ public class InventoryUi {
     }
 
     private void mostrarOpcionesMenu() {
-        System.out.println("1. Listar todos los productos");
+        System.out.println("1. List todos los productos");
         System.out.println("2. Agregar nuevo producto");
         System.out.println("3. Actualizar producto");
         System.out.println("4. Eliminar producto");
-        System.out.println("5. Buscar producto por ID");
+        System.out.println("5. Search producto por ID");
         System.out.println("6. Volver al menú principal");
         System.out.print("\nSeleccione una opción: ");
     }
@@ -72,7 +72,7 @@ public class InventoryUi {
     private boolean procesarOpcion(int opcion) {
         switch (opcion) {
             case 1 -> {
-                productUi.listarProductos();
+                productUi.ListProductos();
                 ConsoleUtils.pressEnterToContinue(scanner);
             }
             case 2 -> {
@@ -80,15 +80,15 @@ public class InventoryUi {
                 ConsoleUtils.pressEnterToContinue(scanner);
             }
             case 3 -> {
-                productUi.actualizarProducto();
+                productUi.UpdateProducto();
                 ConsoleUtils.pressEnterToContinue(scanner);
             }
             case 4 -> {
-                productUi.eliminarProducto();
+                productUi.DeleteProducto();
                 ConsoleUtils.pressEnterToContinue(scanner);
             }
             case 5 -> {
-                productUi.buscarProductoPorId();
+                productUi.SearchProductoPorId();
                 ConsoleUtils.pressEnterToContinue(scanner);
             }
             case 6 -> {

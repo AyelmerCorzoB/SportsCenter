@@ -16,7 +16,7 @@ public class SaleUI {
         do {
             System.out.println("\n******** MENÚ DE VENTAS ********");
             System.out.println("1. Registrar venta");
-            System.out.println("2. Buscar venta por ID");
+            System.out.println("2. Search venta por ID");
             System.out.println("3. Listar todas las ventas");
             System.out.println("4. Actualizar una venta");
             System.out.println("5. Eliminar una venta");
@@ -29,19 +29,19 @@ public class SaleUI {
 
             switch (opcion) {
                 case 1:
-                    RegistroSale.registro(sc, saleUseCase);
+                    RegisterSale.Register(sc, saleUseCase);
                     break;
                 case 2:
-                    BuscarSale.buscar(sc, saleUseCase);
+                    SearchSale.Search(sc, saleUseCase);
                     break;
                 case 3:
-                    listarTodasVentas(saleUseCase);
+                    ListTodasVentas(saleUseCase);
                     break;
                 case 4:
-                    ActualizarSale.actualizar(sc, saleUseCase);
+                    UpdateSale.Update(sc, saleUseCase);
                     break;
                 case 5:
-                    EliminarSale.eliminar(sc, saleUseCase);
+                    DeleteSale.Delete(sc, saleUseCase);
                     break;
                 case 6:
                     
@@ -57,7 +57,7 @@ public class SaleUI {
         } while (opcion != 7);
     }
 
-    private static void listarTodasVentas(SaleUseCase saleUseCase) {
+    private static void ListTodasVentas(SaleUseCase saleUseCase) {
         System.out.println("\n--- LISTA DE VENTAS ---");
         List<Sale> ventas = saleUseCase.getAllSales();
 

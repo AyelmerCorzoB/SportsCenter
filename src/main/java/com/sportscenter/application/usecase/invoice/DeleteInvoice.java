@@ -5,7 +5,7 @@ import java.util.Scanner;
 import com.sportscenter.adapter.validations.ValidationInt;
 
 public class DeleteInvoice {
-    public void eliminar(Scanner sc, InvoiceUseCase invoiceUseCase) {
+    public void Delete(Scanner sc, InvoiceUseCase invoiceUseCase) {
         System.out.println("\n=== ELIMINAR FACTURA ===");
 
         System.out.print("ID de la factura a eliminar: ");
@@ -14,6 +14,6 @@ public class DeleteInvoice {
         sc.nextLine(); // limpiar buffer
 
         invoiceUseCase.deleteInvoice(id);
-        System.out.println("✅ Factura eliminada exitosamente.");
+        System.out.println("🚀 Factura eliminada exitosamente.");
     }
 }

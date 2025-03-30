@@ -27,27 +27,27 @@ public class ProductUI {
             return;
         }
         
-        new RegistroProduct().registro(scanner, productUseCase, currentUser);
+        new RegisterProduct().Register(scanner, productUseCase, currentUser);
     }
 
-    public void buscarProductoPorId() {
-        new BuscarProduct().buscar(scanner, productUseCase);
+    public void SearchProductoPorId() {
+        new SearchProduct().Search(scanner, productUseCase);
     }
 
-    public void actualizarProducto() {
+    public void UpdateProducto() {
         User currentUser = userService.getCurrentUser();
         if(currentUser == null) {
             System.out.println("❌ Error: Debes iniciar sesión para agregar productos");
             return;
         }
-        new ActualizarProduct().actualizar(scanner, productUseCase,currentUser);
+        new UpdateProduct().Update(scanner, productUseCase,currentUser);
     }
 
-    public void eliminarProducto() {
-        new EliminarProduct().eliminar(scanner, productUseCase);
+    public void DeleteProducto() {
+        new DeleteProduct().Delete(scanner, productUseCase);
     }
 
-    public void listarProductos() {
+    public void ListProductos() {
         List<Product> productos = productUseCase.getAllProducts();
 
         if (productos.isEmpty()) {
@@ -89,7 +89,7 @@ public class ProductUI {
             System.out.println("\n=== MENÚ DE PRODUCTOS ===");
             System.out.println("1. Listar productos");
             System.out.println("2. Agregar producto");
-            System.out.println("3. Buscar producto por ID");
+            System.out.println("3. Search producto por ID");
             System.out.println("4. Actualizar producto");
             System.out.println("5. Eliminar producto");
             System.out.println("6. Volver al menú anterior");
@@ -99,11 +99,11 @@ public class ProductUI {
             scanner.nextLine();
 
             switch (opcion) {
-                case 1 -> listarProductos();
+                case 1 -> ListProductos();
                 case 2 -> agregarProducto();
-                case 3 -> buscarProductoPorId();
-                case 4 -> actualizarProducto();
-                case 5 -> eliminarProducto();
+                case 3 -> SearchProductoPorId();
+                case 4 -> UpdateProducto();
+                case 5 -> DeleteProducto();
                 case 6 -> volver = true;
                 default -> System.out.println("Opción inválida");
             }

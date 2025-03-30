@@ -13,7 +13,7 @@ public class PurchaseStatusUI {
         do {
             System.out.println("\n******** MENÚ DE PURCHASESTATUS ********");
             System.out.println("1. Registrar purchaseStatus");
-            System.out.println("2. Buscar purchaseStatus por ID");
+            System.out.println("2. Search purchaseStatus por ID");
             System.out.println("3. Listar todas los purchaseStatus");
             System.out.println("4. Actualizar un purchaseStatus");
             System.out.println("5. Eliminar una purchaseStatus");
@@ -26,19 +26,19 @@ public class PurchaseStatusUI {
 
             switch (opcion) {
                 case 1:
-                    new RegistroPurchaseStatus().registro(sc, purchaseStatusUseCase);
+                    new RegisterPurchaseStatus().Register(sc, purchaseStatusUseCase);
                     break;
                 case 2:
-                    new BuscarPurchaseStatus().buscar(sc, purchaseStatusUseCase);
+                    new SearchPurchaseStatus().Search(sc, purchaseStatusUseCase);
                     break;
                 case 3:
                     purchaseStatusUseCase.getAllPurchaseStatuses();
                     break;
                 case 4:
-                    new ActualizarPurchaseStatus().actualizar(sc, purchaseStatusUseCase);
+                    new UpdatePurchaseStatus().Update(sc, purchaseStatusUseCase);
                     break;
                 case 5:
-                    new EliminarPurchaseStatus().eliminar(sc, purchaseStatusUseCase);
+                    new DeletePurchaseStatus().Delete(sc, purchaseStatusUseCase);
                     break;
                 case 6:
                     System.out.println("Regresando al menú principal...");

@@ -15,7 +15,7 @@ public class InvoiceUI {
         do {
             System.out.println("\n******** MENÚ DE FACTURAS ********");
             System.out.println("1. Registrar factura");
-            System.out.println("2. Buscar factura por ID");
+            System.out.println("2. Search factura por ID");
             System.out.println("3. Listar todas las facturas");
             System.out.println("4. Actualizar una factura");
             System.out.println("5. Eliminar una factura");
@@ -27,19 +27,19 @@ public class InvoiceUI {
 
             switch (opcion) {
                 case 1:
-                    new RegisterInvoice().registro(sc, invoiceUseCase);
+                    new RegisterInvoice().Register(sc, invoiceUseCase);
                     break;
                 case 2:
-                    new BuscarInvoice().buscar(sc, invoiceUseCase);
+                    new SearchInvoice().Search(sc, invoiceUseCase);
                     break;
                 case 3:
-                    listarFacturas(invoiceUseCase);
+                    ListFacturas(invoiceUseCase);
                     break;
                 case 4:
-                    new UpdateInvoice().actualizar(sc, invoiceUseCase);
+                    new UpdateInvoice().Update(sc, invoiceUseCase);
                     break;
                 case 5:
-                    new DeleteInvoice().eliminar(sc, invoiceUseCase);
+                    new DeleteInvoice().Delete(sc, invoiceUseCase);
                     break;
                 case 6:
                     System.out.println("Regresando al menú principal...");
@@ -51,7 +51,7 @@ public class InvoiceUI {
         } while (opcion != 6);
     }
 
-    private static void listarFacturas(InvoiceUseCase invoiceUseCase) {
+    private static void ListFacturas(InvoiceUseCase invoiceUseCase) {
         List<Invoice> facturas = invoiceUseCase.getAllInvoices();
 
         if (facturas.isEmpty()) {

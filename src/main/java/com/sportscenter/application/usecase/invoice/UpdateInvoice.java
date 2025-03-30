@@ -6,10 +6,10 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class UpdateInvoice {
-    public void actualizar(Scanner sc, InvoiceUseCase invoiceUseCase) {
+    public void Update(Scanner sc, InvoiceUseCase invoiceUseCase) {
         System.out.println("\n=== ACTUALIZAR FACTURA ===");
 
-        System.out.print("ID de la factura a actualizar: ");
+        System.out.print("ID de la factura a Update: ");
         ValidationInt.validate(sc);
         int id = sc.nextInt();
         sc.nextLine();
@@ -54,7 +54,7 @@ public class UpdateInvoice {
 
         try {
             invoiceUseCase.updateInvoice(invoice);
-            System.out.println("✅ Factura actualizada exitosamente.");
+            System.out.println("🚀 Factura actualizada exitosamente.");
         } catch (Exception e) {
             System.out.println("❌ Error al actualizar la factura: " + e.getMessage());
         }

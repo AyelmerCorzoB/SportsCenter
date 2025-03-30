@@ -16,7 +16,7 @@ public class CustomerOrderUI {
                     1. Registrar CustomerOrder
                     2. Obtener customerOrder por ID
                     3. Listar todos los customerOrder
-                    4. Actualizar un customerOrder
+                    4. Update un customerOrder
                     5. Eliminar un customerOrder
                     6. Salir...
                     Seleccione una opción:""";
@@ -29,19 +29,19 @@ public class CustomerOrderUI {
 
             switch (opcion) {
                 case 1:
-                new RegistroCustomerorder().registro(sc, customerOrderUseCase);
+                new RegisterCustomerorder().Register(sc, customerOrderUseCase);
                     break;
                 case 2:
-                new BuscarCustomerorder().buscar(sc, customerOrderUseCase);
+                new SearchCustomerorder().Search(sc, customerOrderUseCase);
                     break;
                 case 3:
                     customerOrderUseCase.getAllCustomerOrders();
                     break;
                 case 4:
-                    new ActualizarCustomerorder().actualizar(sc, customerOrderUseCase);
+                    new UpdateCustomerorder().Update(sc, customerOrderUseCase);
                     break;
                 case 5:
-                    new EliminarCustomerOrder().eliminar(sc, customerOrderUseCase); 
+                    new DeleteCustomerOrder().Delete(sc, customerOrderUseCase); 
                     break;
                 case 6:
                     System.out.println("Saliendo....");

@@ -82,16 +82,16 @@ public class CashierUI {
             opcion = obtenerOpcionValida();
 
             switch (opcion) {
-                case 1 -> listarTodasFacturas();
-                case 2 -> buscarFacturaPorId();
-                case 3 -> new RegisterInvoice().registro(scanner, invoiceUseCase);
+                case 1 -> ListTodasFacturas();
+                case 2 -> SearchFacturaPorId();
+                case 3 -> new RegisterInvoice().Register(scanner, invoiceUseCase);
                 case 4 -> System.out.println("Volviendo al menú principal...");
                 default -> System.out.println("Opción inválida. Intente nuevamente.");
             }
         } while (opcion != 4);
     }
 
-    private void listarTodasFacturas() {
+    private void ListTodasFacturas() {
         System.out.println("\n--- LISTADO DE FACTURAS ---");
         List<Invoice> facturas = invoiceUseCase.getAllInvoices();
         
@@ -116,7 +116,7 @@ public class CashierUI {
         }
         ConsoleUtils.pressEnterToContinue(scanner);
     }
-    private void buscarFacturaPorId() {
+    private void SearchFacturaPorId() {
         System.out.print("\nIngrese el ID de la factura: ");
         try {
             int idFactura = Integer.parseInt(scanner.nextLine());
@@ -150,8 +150,8 @@ public class CashierUI {
             opcion = obtenerOpcionValida();
 
             switch (opcion) {
-                case 1 -> listarTodasVentas();
-                case 2 -> buscarVentaPorId();
+                case 1 -> ListTodasVentas();
+                case 2 -> SearchVentaPorId();
                 case 3 -> verDetallesVenta();
                 case 4 -> System.out.println("Volviendo al menú principal...");
                 default -> System.out.println("Opción inválida. Intente nuevamente.");
@@ -159,12 +159,12 @@ public class CashierUI {
         } while (opcion != 4);
     }
 
-    private void listarTodasVentas() {
+    private void ListTodasVentas() {
         System.out.println("\n--- LISTADO DE VENTAS ---");
         // Implementación pendiente
     }
 
-    private void buscarVentaPorId() {
+    private void SearchVentaPorId() {
         System.out.print("\nIngrese el ID de la venta: ");
         String idVenta = scanner.nextLine();
         // Implementación pendiente

@@ -16,7 +16,7 @@ public class CategoryUI {
                     1. Registrar Category
                     2. Obtener category por ID
                     3. Listar todos los category
-                    4. Actualizar un category
+                    4. Update un category
                     5. Eliminar un category
                     6. Salir...
                     Seleccione una opción:""";
@@ -29,19 +29,19 @@ public class CategoryUI {
 
             switch (opcion) {
                 case 1:
-                    new RegistroCategory().registro(sc, categoryUseCase);
+                    new RegisterCategory().Register(sc, categoryUseCase);
                     break;
                 case 2:
-                    new BuscarCategory().buscar(sc, categoryUseCase);
+                    new SearchCategory().Search(sc, categoryUseCase);
                     break;
                 case 3:
                     categoryUseCase.getAllCategories();
                     break;
                 case 4:
-                    new ActualizarCategory().actualizar(sc, categoryUseCase);
+                    new UpdateCategory().Update(sc, categoryUseCase);
                     break;
                 case 5:
-                    new EliminarCategory().eliminar(sc, categoryUseCase);
+                    new DeleteCategory().Delete(sc, categoryUseCase);
                     break;
                 case 6:
                     System.out.println("Saliendo....");

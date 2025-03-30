@@ -13,7 +13,7 @@ public class OrderStatusUI {
         do {
             System.out.println("\n******** MENÚ DE ORDERSTATUS ********");
             System.out.println("1. Registrar orderstatus");
-            System.out.println("2. Buscar orderstatus por ID");
+            System.out.println("2. Search orderstatus por ID");
             System.out.println("3. Listar todas los orderstatus");
             System.out.println("4. Actualizar un orderstatus");
             System.out.println("5. Eliminar una orderstatus");
@@ -26,19 +26,19 @@ public class OrderStatusUI {
 
             switch (opcion) {
                 case 1:
-                    new RegistroOrderStatus().registro(sc, orderStatusUseCase);
+                    new RegisterOrderStatus().Register(sc, orderStatusUseCase);
                     break;
                 case 2:
-                    new BuscarOrderStatus().buscar(sc, orderStatusUseCase);
+                    new SearchOrderStatus().Search(sc, orderStatusUseCase);
                     break;
                 case 3:
                     orderStatusUseCase.getAllOrderStatuses();
                     break;
                 case 4:
-                    new ActualizarOrderStatus().actualizar(sc, orderStatusUseCase);
+                    new UpdateOrderStatus().Update(sc, orderStatusUseCase);
                     break;
                 case 5:
-                    new EliminarOrderStatus().eliminar(sc, orderStatusUseCase);
+                    new DeleteOrderStatus().Delete(sc, orderStatusUseCase);
                     break;
                 case 6:
                     System.out.println("Regresando al menú principal...");

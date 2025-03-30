@@ -9,7 +9,7 @@ import com.sportscenter.adapter.validations.ValidationString;
 
 public class RegisterInvoice {
 
-    public void registro(Scanner sc, InvoiceUseCase invoiceUseCase) {
+    public void Register(Scanner sc, InvoiceUseCase invoiceUseCase) {
         System.out.println("\n=== REGISTRO DE FACTURA ===");
 
         System.out.print("ID de la venta: ");
@@ -33,7 +33,7 @@ public class RegisterInvoice {
 
         try {
             invoiceUseCase.registerInvoice(saleId, invoiceNumber, issueDate, totalAmount, taxes);
-            System.out.println("✅ Factura registrada exitosamente.");
+            System.out.println("🚀 Factura registrada exitosamente.");
         } catch (Exception e) {
             System.out.println("X Error al registrar factura: " + e.getMessage());
         }

@@ -3,16 +3,16 @@ package com.sportscenter.application;
 import com.sportscenter.application.usecase.Sale.SaleUseCase;
 import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
 import com.sportscenter.application.usecase.invoice.ListInvoice;
-import com.sportscenter.application.usecase.product.ListarProducts;
+import com.sportscenter.application.usecase.product.ListProducts;
 import com.sportscenter.application.usecase.product.ProductUseCase;
 import com.sportscenter.application.usecase.report.ReportUseCase;
 import com.sportscenter.application.usecase.saledetail.SaleDetailUseCase;
 import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.application.ui.Admin.AdminUI;
 import com.sportscenter.application.ui.Cashier.CashierUI;
-import com.sportscenter.application.ui.Consumer.ActualizarPassword;
+import com.sportscenter.application.ui.Consumer.UpdatePassword;
 import com.sportscenter.application.ui.Consumer.ConsumerUI;
-import com.sportscenter.application.ui.Consumer.ListarSalesPorUsuario;
+import com.sportscenter.application.ui.Consumer.ListSalesPorUsuario;
 import com.sportscenter.application.ui.Inventory.InventoryUi;
 import com.sportscenter.domain.entities.User;
 import com.sportscenter.domain.repository.CustomerRepository;
@@ -133,14 +133,14 @@ public class Inicio {
         SaleDetailUseCase saleDetailUseCase = new SaleDetailUseCase(saleDetailRepository);
         ProductUseCase productUseCase = new ProductUseCase(productRepository);
         InvoiceUseCase invoiceUseCase = new InvoiceUseCase(invoiceRepository);
-        ListarProducts listarProducts = new ListarProducts(productRepository);
+        ListProducts ListProducts = new ListProducts(productRepository);
         ReportUseCase reportUseCase = new ReportUseCase(reportRepository);
-        ListarSalesPorUsuario listarSalesPorUsuario = new ListarSalesPorUsuario(
+        ListSalesPorUsuario ListSalesPorUsuario = new ListSalesPorUsuario(
                 saleRepository,
                 saleDetailRepository);
 
         ListInvoice ListInvoice = new ListInvoice();
-        ActualizarPassword actualizarPassword = new ActualizarPassword(userRepository);
+        UpdatePassword UpdatePassword = new UpdatePassword(userRepository);
 
         switch (currentUser.getRole()) {
             case "ADMIN" -> new AdminUI(scanner, userService, currentUser).mostrarMenu();
@@ -148,23 +148,23 @@ public class Inicio {
                 new CashierUI(scanner, currentUser, saleUseCase, saleDetailUseCase, invoiceUseCase, reportUseCase)
                         .mostrarMenuPrincipal();
             case "INVENTORY" ->
-                new InventoryUi(scanner, productUseCase, listarProducts, currentUser, productRepository, userService)
+                new InventoryUi(scanner, productUseCase, ListProducts, currentUser, productRepository, userService)
                         .mostrarMenu();
             case "CONSUMER" -> new ConsumerUI(
                     scanner,
                     productUseCase,
                     currentUser,
-                    listarProducts,
-                    listarSalesPorUsuario,
+                    ListProducts,
+                    ListSalesPorUsuario,
                     ListInvoice,
-                    actualizarPassword,
+                    UpdatePassword,
                     invoiceUseCase).mostrarMenuPrincipal();
         }
     }
 
     private void Register() {
         System.out.println("\n--- Registro de nuevo usuario ---");
-        User newUser = solicitarDatosRegistro();
+        User newUser = solicitarDatosRegister();
         User registeredUser = userService.register(newUser, false);
 
         if (registeredUser != null) {
@@ -180,7 +180,7 @@ public class Inicio {
         ConsoleUtils.pressEnterToContinue(scanner);
     }
 
-    private User solicitarDatosRegistro() {
+    private User solicitarDatosRegister() {
         System.out.print("Username: ");
         String username = scanner.nextLine();
 

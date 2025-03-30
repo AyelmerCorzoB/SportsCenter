@@ -13,7 +13,7 @@ public class EmployeeUI {
         do {
             System.out.println("\n******** MENÚ DE EMPLEADOS ********");
             System.out.println("1. Registrar empleado");
-            System.out.println("2. Buscar empleado por ID");
+            System.out.println("2. Search empleado por ID");
             System.out.println("3. Listar todas los empleados");
             System.out.println("4. Actualizar un empleado");
             System.out.println("5. Eliminar una empleado");
@@ -26,19 +26,19 @@ public class EmployeeUI {
 
             switch (opcion) {
                 case 1:
-                    new RegistroEmployee().registro(sc, employeeUseCase);
+                    new RegisterEmployee().Register(sc, employeeUseCase);
                     break;
                 case 2:
-                    new BuscarEmployee().buscar(sc, employeeUseCase);
+                    new SearchEmployee().Search(sc, employeeUseCase);
                     break;
                 case 3:
-                    listarTodosEmpleados(employeeUseCase);
+                    ListAllEmployees(employeeUseCase);
                     break;
                 case 4:
-                    new ActualizarEmployee().actualizar(sc, employeeUseCase);
+                    new UpdateEmployee().Update(sc, employeeUseCase);
                     break;
                 case 5:
-                    new EliminarEmployee().eliminar(sc, employeeUseCase);
+                    new DeleteEmployee().Delete(sc, employeeUseCase);
                     break;
                 case 6:
                     System.out.println("Regresando al menú principal...");
@@ -49,7 +49,7 @@ public class EmployeeUI {
             }
         } while (opcion != 6);
     }
-    private static void listarTodosEmpleados(EmployeeUseCase employeeUseCase) {
+    private static void ListAllEmployees(EmployeeUseCase employeeUseCase) {
         ConsoleUtils.clear();
         System.out.println("\n--- LISTA DE EMPLEADOS ---");
     

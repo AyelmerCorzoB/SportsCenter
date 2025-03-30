@@ -15,7 +15,7 @@ public class SupplierUI {
         do {
             System.out.println("\n******** MENÚ DE VENTAS ********");
             System.out.println("1. Registrar venta");
-            System.out.println("2. Buscar venta por ID");
+            System.out.println("2. Search venta por ID");
             System.out.println("3. Listar todas las ventas");
             System.out.println("4. Actualizar una venta");
             System.out.println("5. Eliminar una venta");
@@ -27,19 +27,19 @@ public class SupplierUI {
 
             switch (opcion) {
                 case 1:
-                    RegistroSupplier.registro(sc, supplierUseCase);
+                    RegisterSupplier.Register(sc, supplierUseCase);
                     break;
                 case 2:
-                    BuscarSupplier.buscar(sc, supplierUseCase);
+                    SearchSupplier.Search(sc, supplierUseCase);
                     break;
                 case 3:
-                    listarProveedores(supplierUseCase);
+                    ListProveedores(supplierUseCase);
                     break;
                 case 4:
-                    ActualizarSupplier.actualizar(sc, supplierUseCase);
+                    UpdateSupplier.Update(sc, supplierUseCase);
                     break;
                 case 5:
-                    EliminarSupplier.eliminar(sc, supplierUseCase);
+                    DeleteSupplier.Delete(sc, supplierUseCase);
                     break;
                 default:
                     System.out.println("X Opción inválida. Por favor intente nuevamente.");
@@ -48,7 +48,7 @@ public class SupplierUI {
         } while (opcion != 7);
     }
 
-    private static void listarProveedores(SupplierUseCase supplierUseCase) {
+    private static void ListProveedores(SupplierUseCase supplierUseCase) {
         System.out.println("\n--- LISTA DE PROVEEDORES ---");
         List<Supplier> proveedores = supplierUseCase.getAllSuppliers();
 

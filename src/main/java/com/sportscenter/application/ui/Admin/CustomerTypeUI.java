@@ -17,7 +17,7 @@ public class CustomerTypeUI {
                     1. Registrar CustomerType
                     2. Obtener customerType por ID
                     3. Listar todos los customerType
-                    4. Actualizar un customerType
+                    4. Update un customerType
                     5. Eliminar un customerType
                     6. Salir...
                     Seleccione una opción:""";
@@ -30,19 +30,19 @@ public class CustomerTypeUI {
 
             switch (opcion) {
                 case 1:
-                    new RegistroCustomerType().registro(sc, customerTypeUseCase);
+                    new RegisterCustomerType().Register(sc, customerTypeUseCase);
                     break;
                 case 2:
-                    new BuscarCustomerType().buscar(sc, customerTypeUseCase);
+                    new SearchCustomerType().Search(sc, customerTypeUseCase);
                     break;
                 case 3:
                     customerTypeUseCase.getAllCustomerTypes();
                     break;
                 case 4:
-                new ActualizarCustomerType().actualizar(sc, customerTypeUseCase);
+                new UpdateCustomerType().Update(sc, customerTypeUseCase);
                     break;
                 case 5:
-                    new EliminarCustomerType().eliminar(sc, customerTypeUseCase);
+                    new DeleteCustomerType().Delete(sc, customerTypeUseCase);
                     break;
                 case 6:
                     System.out.println("Saliendo....");

@@ -15,7 +15,7 @@ public class SaleDetailUI {
         do {
             System.out.println("\n******** MENÚ DE DETALLES DE VENTA ********");
             System.out.println("1. Registrar detalle de venta");
-            System.out.println("2. Buscar detalles por ID de venta");
+            System.out.println("2. Search detalles por ID de venta");
             System.out.println("3. Listar todos los detalles de venta");
             System.out.println("4. Actualizar un detalle de venta");
             System.out.println("5. Eliminar detalles de venta");
@@ -27,19 +27,19 @@ public class SaleDetailUI {
 
             switch (opcion) {
                 case 1:
-                    RegistroSaledetail.registro(sc, saleDetailUseCase);
+                    RegisterSaledetail.Register(sc, saleDetailUseCase);
                     break;
                 case 2:
-                    BuscarSaleDetail.buscarPorVenta(sc, saleDetailUseCase);
+                    SearchSaleDetail.SearchPorVenta(sc, saleDetailUseCase);
                     break;
                 case 3:
-                    listarTodosDetalles(saleDetailUseCase);
+                    ListTodosDetalles(saleDetailUseCase);
                     break;
                 case 4:
-                    ActualizarSaleDetail.actualizar(sc, saleDetailUseCase);
+                    UpdateSaleDetail.Update(sc, saleDetailUseCase);
                     break;
                 case 5:
-                    EliminarSaledetail.eliminar(sc, saleDetailUseCase);
+                    DeleteSaledetail.Delete(sc, saleDetailUseCase);
                     break;
                 case 6:
                     System.out.println("Regresando al menú principal...");
@@ -51,7 +51,7 @@ public class SaleDetailUI {
         } while (opcion != 6);
     }
 
-    private static void listarTodosDetalles(SaleDetailUseCase saleDetailUseCase) {
+    private static void ListTodosDetalles(SaleDetailUseCase saleDetailUseCase) {
         System.out.println("\n--- LISTA DE DETALLES DE VENTA ---");
         List<SaleDetail> detalles = saleDetailUseCase.getAllDetails();
 

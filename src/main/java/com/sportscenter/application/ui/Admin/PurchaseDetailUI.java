@@ -14,7 +14,7 @@ public class PurchaseDetailUI {
         do {
             System.out.println("\n******** MENÚ DE DETALLES DE COMPRA ********");
             System.out.println("1. Registrar detalle de compra");
-            System.out.println("2. Buscar detalle de compra por ID");
+            System.out.println("2. Search detalle de compra por ID");
             System.out.println("3. Listar todos los detalles de compra");
             System.out.println("4. Actualizar un detalle de compra");
             System.out.println("5. Eliminar un detalle de compra");
@@ -27,19 +27,19 @@ public class PurchaseDetailUI {
 
             switch (opcion) {
                 case 1:
-                    RegistrarPurchasedetail.registrar(sc, purchaseDetailUseCase);
+                    RegisterPurchasedetail.Register(sc, purchaseDetailUseCase);
                     break;
                 case 2:
-                    BuscarPurchaseDetail.obtenerPorId(sc, purchaseDetailUseCase);
+                    SearchPurchaseDetail.obtenerPorId(sc, purchaseDetailUseCase);
                     break;
                 case 3:
-                    listarTodosLosDetalles(purchaseDetailUseCase);
+                    ListTodosLosDetalles(purchaseDetailUseCase);
                     break;
                 case 4:
-                    ActualizarPurchaseDetail.actualizar(sc, purchaseDetailUseCase);
+                    UpdatePurchaseDetail.Update(sc, purchaseDetailUseCase);
                     break;
                 case 5:
-                    EliminarPurchaseDetail.eliminar(sc, purchaseDetailUseCase);
+                    DeletePurchaseDetail.Delete(sc, purchaseDetailUseCase);
                     break;
                 case 6:
                     System.out.println("Regresando al menú principal...");
@@ -51,7 +51,7 @@ public class PurchaseDetailUI {
         } while (opcion != 6);
     }
 
-    private static void listarTodosLosDetalles(PurchaseDetailUseCase purchaseDetailUseCase) {
+    private static void ListTodosLosDetalles(PurchaseDetailUseCase purchaseDetailUseCase) {
         System.out.println("\n--- LISTA DE DETALLES DE COMPRA ---");
         // Aquí deberías implementar la lógica para mostrar los detalles
         // Por ejemplo:

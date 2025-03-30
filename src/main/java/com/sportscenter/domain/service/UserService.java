@@ -82,7 +82,7 @@ public class UserService {
         try {
             return userRepository.findById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Error al buscar usuario por ID: " + e.getMessage(), e);
+            throw new RuntimeException("Error al Search usuario por ID: " + e.getMessage(), e);
         }
     }
 

@@ -13,7 +13,7 @@ public class CustomerUI {
         do {
             System.out.println("\n******** MENÚ DE CLIENTES ********");
             System.out.println("1. Registrar cliente");
-            System.out.println("2. Buscar cliente por ID");
+            System.out.println("2. Search cliente por ID");
             System.out.println("3. Listar todas las órdenes");
             System.out.println("4. Actualizar una cliente");
             System.out.println("5. Eliminar una cliente");
@@ -26,19 +26,19 @@ public class CustomerUI {
 
             switch (opcion) {
                 case 1:
-                    new RegistroCustomer().registro(sc, customerUseCase);
+                    new RegisterCustomer().Register(sc, customerUseCase);
                     break;
                 case 2:
-                    new BuscarCustomer().buscar(sc, customerUseCase);
+                    new SearchCustomer().Search(sc, customerUseCase);
                     break;
                 case 3:
                     customerUseCase.getAllCustomers();
                     break;
                 case 4:
-                    new ActualizarCustomer().actualizar(sc, customerUseCase);
+                    new UpdateCustomer().Update(sc, customerUseCase);
                     break;
                 case 5:
-                    new EliminarCustomer().eliminar(sc, customerUseCase);
+                    new DeleteCustomer().Delete(sc, customerUseCase);
                     break;
                 case 6:
                     System.out.println("Regresando al menú principal...");

@@ -25,7 +25,7 @@ public class MenuCajero {
         System.out.println("|      GESTIÓN DE FACTURAS     |");
         System.out.println("╠------------------------------╣");
         System.out.println("| 1. Listar todas las facturas  |");
-        System.out.println("| 2. Buscar factura por ID      |");
+        System.out.println("| 2. Search factura por ID      |");
         System.out.println("| 3. Generar nueva factura     |");
         System.out.println("| 4. Volver al menú principal  |");
         System.out.println("|------------------------------|");
@@ -38,7 +38,7 @@ public class MenuCajero {
         System.out.println("|       GESTIÓN DE VENTAS      |");
         System.out.println("╠------------------------------╣");
         System.out.println("| 1. Listar todas las ventas   |");
-        System.out.println("| 2. Buscar venta por ID       |");
+        System.out.println("| 2. Search venta por ID       |");
         System.out.println("| 3. Ver detalles de venta     |");
         System.out.println("| 4. Volver al menú principal  |");
         System.out.println("|------------------------------|");

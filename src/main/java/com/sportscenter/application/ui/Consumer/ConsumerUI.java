@@ -2,7 +2,7 @@ package com.sportscenter.application.ui.Consumer;
 
 import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.menus.MenuClientes;
-import com.sportscenter.application.usecase.product.ListarProducts;
+import com.sportscenter.application.usecase.product.ListProducts;
 import com.sportscenter.application.usecase.product.ProductUseCase;
 import com.sportscenter.application.usecase.invoice.ListInvoice;
 import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
@@ -14,27 +14,27 @@ public class ConsumerUI {
     private final Scanner scanner;
     private final ProductUseCase productUseCase;
     private final User currentUser;
-    private final ListarProducts listarProducts;
-    private final ListarSalesPorUsuario listarSalesPorUsuario;
+    private final ListProducts ListProducts;
+    private final ListSalesPorUsuario ListSalesPorUsuario;
     private final ListInvoice ListInvoice;
     private final InvoiceUseCase invoiceUseCase;
-    private final ActualizarPassword actualizarPassword;
+    private final UpdatePassword UpdatePassword;
 
     public ConsumerUI(Scanner scanner,
             ProductUseCase productUseCase,
             User currentUser,
-            ListarProducts listarProducts,
-            ListarSalesPorUsuario listarSalesPorUsuario,
+            ListProducts ListProducts,
+            ListSalesPorUsuario ListSalesPorUsuario,
             ListInvoice ListInvoice,
-            ActualizarPassword actualizarPassword,
+            UpdatePassword UpdatePassword,
             InvoiceUseCase invoiceUseCase) {
         this.scanner = scanner;
         this.productUseCase = productUseCase;
         this.currentUser = currentUser;
-        this.listarProducts = listarProducts;
-        this.listarSalesPorUsuario = listarSalesPorUsuario;
+        this.ListProducts = ListProducts;
+        this.ListSalesPorUsuario = ListSalesPorUsuario;
         this.ListInvoice = ListInvoice;
-        this.actualizarPassword = actualizarPassword;
+        this.UpdatePassword = UpdatePassword;
         this.invoiceUseCase = invoiceUseCase;
     }
 
@@ -47,7 +47,7 @@ public class ConsumerUI {
 
             switch (opcion) {
                 case 1 -> {
-                    listarProducts.listar(productUseCase);
+                    ListProducts.List(productUseCase);
                     ConsoleUtils.pressEnterToContinue(scanner);
                 }
                 case 2 -> {
@@ -77,7 +77,7 @@ public class ConsumerUI {
 
     private void mostrarHistorialCompras() {
         System.out.println("\n--- HISTORIAL DE COMPRAS ---");
-        listarSalesPorUsuario.mostrarPorUsuario(currentUser.getId());
+        ListSalesPorUsuario.mostrarPorUsuario(currentUser.getId());
     }
 
     private void mostrarFacturacion() {
@@ -113,7 +113,7 @@ public class ConsumerUI {
             }
         } while (nuevaContraseña.isBlank());
 
-        actualizarPassword.cambiar(currentUser.getId(), nuevaContraseña);
-        System.out.println("✅ Contraseña actualizada exitosamente.");
+        UpdatePassword.cambiar(currentUser.getId(), nuevaContraseña);
+        System.out.println("🚀 Contraseña actualizada exitosamente.");
     }
 }

@@ -16,7 +16,7 @@ public class ColorUI {
                     1. Registrar Color
                     2. Obtener color por ID
                     3. Listar todos los color
-                    4. Actualizar un color
+                    4. Update un color
                     5. Eliminar un color
                     6. Salir...
                     Seleccione una opción:""";
@@ -29,19 +29,19 @@ public class ColorUI {
 
             switch (opcion) {
                 case 1:
-                    new RegistroColor().registro(sc, colorUseCase);
+                    new RegisterColor().Register(sc, colorUseCase);
                     break;
                 case 2:
-                    new BuscarColor().buscar(sc, colorUseCase);    
+                    new SearchColor().Search(sc, colorUseCase);    
                     break;
                 case 3:
                     colorUseCase.getAllColors();
                     break;
                 case 4:
-                new ActualizarColor().actualizar(sc, colorUseCase);
+                new UpdateColor().Update(sc, colorUseCase);
                     break;
                 case 5:
-                    new EliminarColor().eliminar(sc, colorUseCase);
+                    new DeleteColor().Delete(sc, colorUseCase);
                     break;
                 case 6:
                     System.out.println("Saliendo....");

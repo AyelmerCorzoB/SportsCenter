@@ -122,7 +122,7 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al buscar el detalle de venta por ID", e);
+            throw new RuntimeException("Error al Search el detalle de venta por ID", e);
         }
         return null;
     }
@@ -145,7 +145,7 @@ public class SaleDetailRepositoryImpl implements SaleDetailRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al buscar detalles de venta por ID de venta", e);
+            throw new RuntimeException("Error al Search detalles de venta por ID de venta", e);
         }
         return saleDetails;
     }
