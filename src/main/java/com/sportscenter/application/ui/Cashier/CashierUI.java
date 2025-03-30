@@ -5,15 +5,22 @@ import com.sportscenter.adapter.menus.MenuCajero;
 import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
 import com.sportscenter.application.usecase.invoice.RegisterInvoice;
 import com.sportscenter.application.ui.Admin.SaleUI;
+import com.sportscenter.application.usecase.Sale.ListSale;
 import com.sportscenter.application.usecase.Sale.SaleUseCase;
+import com.sportscenter.application.usecase.Sale.SearchSale;
 import com.sportscenter.application.usecase.saledetail.SaleDetailUseCase;
+import com.sportscenter.application.usecase.saledetail.SearchSaleDetail;
 import com.sportscenter.domain.entities.Invoice;
 import com.sportscenter.domain.entities.User;
+import com.sportscenter.domain.repository.ReportRepository;
 import com.sportscenter.domain.repository.SaleDetailRepository;
 import com.sportscenter.domain.repository.SaleRepository;
+import com.sportscenter.infrastructure.database.ConnectionDb;
 import com.sportscenter.infrastructure.database.ConnectionFactory;
+import com.sportscenter.infrastructure.persistence.ReportRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.SaleDetailRepositoryImpl;
 import com.sportscenter.infrastructure.persistence.SaleRepositoryImpl;
+import com.sportscenter.application.usecase.report.ReportService;
 import com.sportscenter.application.usecase.report.ReportUseCase;
 
 import java.util.Scanner;
@@ -150,60 +157,44 @@ public class CashierUI {
             opcion = obtenerOpcionValida();
 
             switch (opcion) {
-                case 1 -> ListTodasVentas();
-                case 2 -> SearchVentaPorId();
-                case 3 -> verDetallesVenta();
+                case 1 -> new ListSale().List(saleUseCase);
+                case 2 -> new SearchSale().Search(scanner, saleUseCase);
+                case 3 -> new SearchSaleDetail().SearchPorVenta(scanner, saleDetailUseCase);
                 case 4 -> System.out.println("Volviendo al menú principal...");
                 default -> System.out.println("Opción inválida. Intente nuevamente.");
             }
         } while (opcion != 4);
     }
 
-    private void ListTodasVentas() {
-        System.out.println("\n--- LISTADO DE VENTAS ---");
-        // Implementación pendiente
-    }
-
-    private void SearchVentaPorId() {
-        System.out.print("\nIngrese el ID de la venta: ");
-        String idVenta = scanner.nextLine();
-        // Implementación pendiente
-    }
-
-    private void verDetallesVenta() {
-        System.out.print("\nIngrese el ID de la venta para ver detalles: ");
-        String idVenta = scanner.nextLine();
-        // Implementación pendiente
-    }
-
     private void generarReportes() {
+        ConnectionDb connection = ConnectionFactory.crearConexion();
+        ReportRepository repository = new ReportRepositoryImpl(connection);
+        ReportService reportService = new ReportService(repository);
+        
         int opcion;
         do {
             MenuCajero.mostrarSubmenuReportes();
             opcion = obtenerOpcionValida();
-
+            String filePath;
             switch (opcion) {
-                case 1 -> generarReporteVentasPeriodo();
-                case 2 -> generarReporteProductosMasVendidos();
-                case 3 -> generarReporteIngresos();
+                case 1 -> {
+                    filePath = "Reporte_Ventas.pdf";
+                    reportService.generarReporteVentas(filePath);
+                }
+                case 2 -> {
+                    filePath = "Reporte_Productos_Mas_Vendidos.pdf";
+                    reportService.generarReporteProductosMasVendidos(filePath);
+                }
+                case 3 -> {
+                    filePath = "Reporte_Ingresos.pdf";
+                    reportService.generarReporteIngresos(filePath);
+                }
                 case 4 -> System.out.println("Volviendo al menú principal...");
                 default -> System.out.println("Opción inválida. Intente nuevamente.");
             }
         } while (opcion != 4);
     }
+    
 
-    private void generarReporteVentasPeriodo() {
-        System.out.println("\n--- REPORTE DE VENTAS ---");
-        // Implementación pendiente
-    }
-
-    private void generarReporteProductosMasVendidos() {
-        System.out.println("\n--- REPORTE DE PRODUCTOS MÁS VENDIDOS ---");
-        // Implementación pendiente
-    }
-
-    private void generarReporteIngresos() {
-        System.out.println("\n--- REPORTE DE INGRESOS ---");
-        // Implementación pendiente
-    }
+    
 }
