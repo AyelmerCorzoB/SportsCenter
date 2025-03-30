@@ -9,7 +9,6 @@ import com.sportscenter.application.usecase.customer_type.CustomerTypeUseCase;
 import com.sportscenter.application.usecase.customerorder.CustomerOrderUseCase;
 import com.sportscenter.application.usecase.employee.EmployeeUseCase;
 import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
-import com.sportscenter.application.usecase.product.ProductUseCase;
 import com.sportscenter.application.usecase.saledetail.SaleDetailUseCase;
 import com.sportscenter.application.usecase.supplier.SupplierUseCase;
 import com.sportscenter.domain.entities.User;

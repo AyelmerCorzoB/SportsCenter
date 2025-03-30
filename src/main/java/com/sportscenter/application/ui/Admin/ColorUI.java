@@ -1,4 +1,4 @@
-﻿package com.sportscenter.application.ui.Admin;
+package com.sportscenter.application.ui.Admin;
 
 import java.util.Scanner;
 
