@@ -2,7 +2,7 @@ package com.sportscenter.application;
 
 import com.sportscenter.application.usecase.Sale.SaleUseCase;
 import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
-import com.sportscenter.application.usecase.invoice.ListarInvoice;
+import com.sportscenter.application.usecase.invoice.ListInvoice;
 import com.sportscenter.application.usecase.product.ListarProducts;
 import com.sportscenter.application.usecase.product.ProductUseCase;
 import com.sportscenter.application.usecase.report.ReportUseCase;
@@ -139,7 +139,7 @@ public class Inicio {
                 saleRepository,
                 saleDetailRepository);
 
-        ListarInvoice listarInvoice = new ListarInvoice();
+        ListInvoice ListInvoice = new ListInvoice();
         ActualizarPassword actualizarPassword = new ActualizarPassword(userRepository);
 
         switch (currentUser.getRole()) {
@@ -156,7 +156,7 @@ public class Inicio {
                     currentUser,
                     listarProducts,
                     listarSalesPorUsuario,
-                    listarInvoice,
+                    ListInvoice,
                     actualizarPassword,
                     invoiceUseCase).mostrarMenuPrincipal();
         }

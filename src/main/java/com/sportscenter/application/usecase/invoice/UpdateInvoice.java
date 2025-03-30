@@ -5,7 +5,7 @@ import com.sportscenter.domain.entities.Invoice;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class ActualizarInvoice {
+public class UpdateInvoice {
     public void actualizar(Scanner sc, InvoiceUseCase invoiceUseCase) {
         System.out.println("\n=== ACTUALIZAR FACTURA ===");
 

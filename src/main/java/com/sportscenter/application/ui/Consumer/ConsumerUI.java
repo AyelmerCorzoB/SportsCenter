@@ -4,7 +4,7 @@ import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.menus.MenuClientes;
 import com.sportscenter.application.usecase.product.ListarProducts;
 import com.sportscenter.application.usecase.product.ProductUseCase;
-import com.sportscenter.application.usecase.invoice.ListarInvoice;
+import com.sportscenter.application.usecase.invoice.ListInvoice;
 import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
 import com.sportscenter.domain.entities.User;
 
@@ -16,7 +16,7 @@ public class ConsumerUI {
     private final User currentUser;
     private final ListarProducts listarProducts;
     private final ListarSalesPorUsuario listarSalesPorUsuario;
-    private final ListarInvoice listarInvoice;
+    private final ListInvoice ListInvoice;
     private final InvoiceUseCase invoiceUseCase;
     private final ActualizarPassword actualizarPassword;
 
@@ -25,7 +25,7 @@ public class ConsumerUI {
             User currentUser,
             ListarProducts listarProducts,
             ListarSalesPorUsuario listarSalesPorUsuario,
-            ListarInvoice listarInvoice,
+            ListInvoice ListInvoice,
             ActualizarPassword actualizarPassword,
             InvoiceUseCase invoiceUseCase) {
         this.scanner = scanner;
@@ -33,7 +33,7 @@ public class ConsumerUI {
         this.currentUser = currentUser;
         this.listarProducts = listarProducts;
         this.listarSalesPorUsuario = listarSalesPorUsuario;
-        this.listarInvoice = listarInvoice;
+        this.ListInvoice = ListInvoice;
         this.actualizarPassword = actualizarPassword;
         this.invoiceUseCase = invoiceUseCase;
     }
@@ -82,7 +82,7 @@ public class ConsumerUI {
 
     private void mostrarFacturacion() {
         System.out.println("\n--- HISTORIAL DE FACTURAS ---");
-        listarInvoice.mostrarFacturasPorUsuario(currentUser.getId(), invoiceUseCase);
+        ListInvoice.mostrarFacturasPorUsuario(currentUser.getId(), invoiceUseCase);
     }
 
     private void mostrarPerfil() {

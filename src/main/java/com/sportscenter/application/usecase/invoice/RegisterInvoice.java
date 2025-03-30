@@ -2,10 +2,12 @@ package com.sportscenter.application.usecase.invoice;
 
 import java.time.LocalDate;
 import java.util.Scanner;
+
+import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.validations.ValidationInt;
 import com.sportscenter.adapter.validations.ValidationString;
 
-public class RegistroInvoice {
+public class RegisterInvoice {
 
     public void registro(Scanner sc, InvoiceUseCase invoiceUseCase) {
         System.out.println("\n=== REGISTRO DE FACTURA ===");
@@ -35,5 +37,6 @@ public class RegistroInvoice {
         } catch (Exception e) {
             System.out.println("X Error al registrar factura: " + e.getMessage());
         }
+        
     }
 }

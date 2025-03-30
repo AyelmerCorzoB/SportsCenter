@@ -27,7 +27,7 @@ public class InvoiceUI {
 
             switch (opcion) {
                 case 1:
-                    new RegistroInvoice().registro(sc, invoiceUseCase);
+                    new RegisterInvoice().registro(sc, invoiceUseCase);
                     break;
                 case 2:
                     new BuscarInvoice().buscar(sc, invoiceUseCase);
@@ -36,10 +36,10 @@ public class InvoiceUI {
                     listarFacturas(invoiceUseCase);
                     break;
                 case 4:
-                    new ActualizarInvoice().actualizar(sc, invoiceUseCase);
+                    new UpdateInvoice().actualizar(sc, invoiceUseCase);
                     break;
                 case 5:
-                    new EliminarInvoice().eliminar(sc, invoiceUseCase);
+                    new DeleteInvoice().eliminar(sc, invoiceUseCase);
                     break;
                 case 6:
                     System.out.println("Regresando al menú principal...");

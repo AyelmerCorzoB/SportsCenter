@@ -3,6 +3,7 @@ package com.sportscenter.application.ui.Cashier;
 import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.menus.MenuCajero;
 import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
+import com.sportscenter.application.usecase.invoice.RegisterInvoice;
 import com.sportscenter.application.ui.Admin.SaleUI;
 import com.sportscenter.application.usecase.Sale.SaleUseCase;
 import com.sportscenter.application.usecase.saledetail.SaleDetailUseCase;
@@ -83,7 +84,7 @@ public class CashierUI {
             switch (opcion) {
                 case 1 -> listarTodasFacturas();
                 case 2 -> buscarFacturaPorId();
-                case 3 -> generarNuevaFactura();
+                case 3 -> new RegisterInvoice().registro(scanner, invoiceUseCase);
                 case 4 -> System.out.println("Volviendo al menú principal...");
                 default -> System.out.println("Opción inválida. Intente nuevamente.");
             }
@@ -140,39 +141,7 @@ public class CashierUI {
         ConsoleUtils.pressEnterToContinue(scanner);
     }
 
-    private void generarNuevaFactura() {
-    System.out.println("\n--- GENERAR NUEVA FACTURA ---");
     
-    try {
-        System.out.print("Ingrese el ID de la venta: ");
-        int saleId = Integer.parseInt(scanner.nextLine());
-        
-        System.out.print("Número de factura: ");
-        String invoiceNumber = scanner.nextLine();
-        
-        System.out.print("Fecha de emisión (AAAA-MM-DD): ");
-        LocalDate issueDate = LocalDate.parse(scanner.nextLine());
-        
-        System.out.print("Total: ");
-        double totalAmount = Double.parseDouble(scanner.nextLine());
-        
-        System.out.print("Impuestos: ");
-        double taxes = Double.parseDouble(scanner.nextLine());
-        
-        invoiceUseCase.registerInvoice(saleId, invoiceNumber, issueDate, totalAmount, taxes);
-        
-        System.out.println("\nFactura registrada exitosamente!");
-        
-    } catch (NumberFormatException e) {
-        System.out.println("Error: Debe ingresar valores numéricos válidos.");
-    } catch (IllegalArgumentException e) {
-        System.out.println("Error: " + e.getMessage());
-    } catch (Exception e) {
-        System.out.println("Error inesperado al registrar factura: " + e.getMessage());
-    }
-    
-    ConsoleUtils.pressEnterToContinue(scanner);
-}
 
     private void gestionarVentas() {
         int opcion;
@@ -224,7 +193,7 @@ public class CashierUI {
     }
 
     private void generarReporteVentasPeriodo() {
-        System.out.println("\n--- REPORTE DE VENTAS POR PERÍODO ---");
+        System.out.println("\n--- REPORTE DE VENTAS ---");
         // Implementación pendiente
     }
 

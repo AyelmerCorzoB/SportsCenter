@@ -67,12 +67,12 @@ C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\us
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\employee\EmployeeUseCase.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\employee\ListarEmployee.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\employee\RegistroEmployee.java
-C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\invoice\ActualizarInvoice.java
+C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\invoice\UpdateInvoice.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\invoice\BuscarInvoice.java
-C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\invoice\EliminarInvoice.java
+C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\invoice\DeleteInvoice.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\invoice\InvoiceUseCase.java
-C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\invoice\ListarInvoice.java
-C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\invoice\RegistroInvoice.java
+C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\invoice\ListInvoice.java
+C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\invoice\RegisterInvoice.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\orderstatus\ActualizarOrderStatus.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\orderstatus\BuscarOrderStatus.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\application\usecase\orderstatus\EliminarOrderStatus.java
@@ -194,7 +194,6 @@ C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\infrastructure
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\infrastructure\persistence\CustomerRepositoryImpl.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\infrastructure\persistence\CustomerTypeRepositoryImpl.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\infrastructure\persistence\EmployeeRepositoryImpl.java
-C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\infrastructure\persistence\InventoryMovementRepositoryImpl.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\infrastructure\persistence\InvoiceRepositoryImpl.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\infrastructure\persistence\OrderRepositoryImpl.java
 C:\Users\ALAN\Desktop\SportsCenter\src\main\java\com\sportscenter\infrastructure\persistence\OrderStatusRepositoryImpl.java

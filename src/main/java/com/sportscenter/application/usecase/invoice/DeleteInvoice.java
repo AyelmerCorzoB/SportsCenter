@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import com.sportscenter.adapter.validations.ValidationInt;
 
-public class EliminarInvoice {
+public class DeleteInvoice {
     public void eliminar(Scanner sc, InvoiceUseCase invoiceUseCase) {
         System.out.println("\n=== ELIMINAR FACTURA ===");
 
