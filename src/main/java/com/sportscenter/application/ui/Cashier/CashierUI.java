@@ -36,11 +36,11 @@ public class CashierUI {
     private final ReportUseCase reportUseCase;
 
     public CashierUI(Scanner scanner,
-                    User currentUser,
-                    SaleUseCase saleUseCase,
-                    SaleDetailUseCase saleDetailUseCase,
-                    InvoiceUseCase invoiceUseCase,
-                    ReportUseCase reportUseCase) {
+            User currentUser,
+            SaleUseCase saleUseCase,
+            SaleDetailUseCase saleDetailUseCase,
+            InvoiceUseCase invoiceUseCase,
+            ReportUseCase reportUseCase) {
         this.scanner = scanner;
         this.currentUser = currentUser;
         this.saleUseCase = saleUseCase;
@@ -81,7 +81,7 @@ public class CashierUI {
         System.out.println("\n--- PROCESAR NUEVA VENTA ---");
         ConsoleUtils.pressEnterToContinue(scanner);
     }
-    
+
     private void gestionarFacturas() {
         int opcion;
         do {
@@ -101,34 +101,34 @@ public class CashierUI {
     private void ListTodasFacturas() {
         System.out.println("\n--- LISTADO DE FACTURAS ---");
         List<Invoice> facturas = invoiceUseCase.getAllInvoices();
-        
+
         if (facturas.isEmpty()) {
             System.out.println("No hay facturas registradas.");
             ConsoleUtils.pressEnterToContinue(scanner);
             return;
         }
-    
-        System.out.printf("%-5s %-12s %-15s %-15s %-10s %-10s%n", 
-            "ID", "VentaID", "N° Factura", "Fecha Emisión", "Total", "Impuestos");
+
+        System.out.printf("%-5s %-12s %-15s %-15s %-10s %-10s%n",
+                "ID", "VentaID", "N° Factura", "Fecha Emisión", "Total", "Impuestos");
         System.out.println("----------------------------------------------------------------------");
         for (Invoice invoice : facturas) {
             System.out.printf("%-5d %-12d %-15s %-15s %-10.2f %-10.2f%n",
-                invoice.getId(),
-                invoice.getSaleId(),
-                invoice.getInvoiceNumber(),
-                invoice.getIssueDate(),
-                invoice.getTotalAmount(),
-                invoice.getTaxes()
-            );
+                    invoice.getId(),
+                    invoice.getSaleId(),
+                    invoice.getInvoiceNumber(),
+                    invoice.getIssueDate(),
+                    invoice.getTotalAmount(),
+                    invoice.getTaxes());
         }
         ConsoleUtils.pressEnterToContinue(scanner);
     }
+
     private void SearchFacturaPorId() {
         System.out.print("\nIngrese el ID de la factura: ");
         try {
             int idFactura = Integer.parseInt(scanner.nextLine());
             Invoice factura = invoiceUseCase.getInvoiceById(idFactura);
-            
+
             if (factura != null) {
                 System.out.println("\n=== DETALLE DE FACTURA ===");
                 System.out.println("ID: " + factura.getId());
@@ -136,7 +136,8 @@ public class CashierUI {
                 System.out.println("Fecha Emisión: " + factura.getIssueDate());
                 System.out.println("ID Venta: " + factura.getSaleId());
                 System.out.println("----------------------------------");
-                System.out.println("Subtotal: $" + String.format("%.2f", factura.getTotalAmount() - factura.getTaxes()));
+                System.out
+                        .println("Subtotal: $" + String.format("%.2f", factura.getTotalAmount() - factura.getTaxes()));
                 System.out.println("Impuestos: $" + String.format("%.2f", factura.getTaxes()));
                 System.out.println("Total: $" + String.format("%.2f", factura.getTotalAmount()));
             } else {
@@ -148,8 +149,6 @@ public class CashierUI {
         ConsoleUtils.pressEnterToContinue(scanner);
     }
 
-    
-
     private void gestionarVentas() {
         int opcion;
         do {
@@ -157,9 +156,18 @@ public class CashierUI {
             opcion = obtenerOpcionValida();
 
             switch (opcion) {
-                case 1 -> new ListSale().List(saleUseCase);
-                case 2 -> new SearchSale().Search(scanner, saleUseCase);
-                case 3 -> new SearchSaleDetail().SearchPorVenta(scanner, saleDetailUseCase);
+                case 1 -> {
+                    new ListSale().List(saleUseCase);
+                    ConsoleUtils.pressEnterToContinue(scanner);
+                }
+                case 2 -> {
+                    new SearchSale().Search(scanner, saleUseCase);
+                    ConsoleUtils.pressEnterToContinue(scanner);
+                }
+                case 3 -> {
+                    new SearchSaleDetail().SearchPorVenta(scanner, saleDetailUseCase);
+                    ConsoleUtils.pressEnterToContinue(scanner);
+                }
                 case 4 -> System.out.println("Volviendo al menú principal...");
                 default -> System.out.println("Opción inválida. Intente nuevamente.");
             }
@@ -168,9 +176,12 @@ public class CashierUI {
 
     private void generarReportes() {
         ConnectionDb connection = ConnectionFactory.crearConexion();
-        ReportRepository repository = new ReportRepositoryImpl(connection);
-        ReportService reportService = new ReportService(repository);
-        
+        ReportRepository reportRepository = new ReportRepositoryImpl(connection);
+        SaleRepository saleRepository = new SaleRepositoryImpl(connection);
+        SaleDetailRepository saleDetailRepository = new SaleDetailRepositoryImpl(connection);
+
+        ReportService reportService = new ReportService(reportRepository, saleRepository, saleDetailRepository);
+
         int opcion;
         do {
             MenuCajero.mostrarSubmenuReportes();
@@ -180,21 +191,21 @@ public class CashierUI {
                 case 1 -> {
                     filePath = "Reporte_Ventas.pdf";
                     reportService.generarReporteVentas(filePath);
+                    ConsoleUtils.pressEnterToContinue(scanner);
                 }
                 case 2 -> {
                     filePath = "Reporte_Productos_Mas_Vendidos.pdf";
                     reportService.generarReporteProductosMasVendidos(filePath);
+                    ConsoleUtils.pressEnterToContinue(scanner);
                 }
                 case 3 -> {
                     filePath = "Reporte_Ingresos.pdf";
                     reportService.generarReporteIngresos(filePath);
+                    ConsoleUtils.pressEnterToContinue(scanner);
                 }
                 case 4 -> System.out.println("Volviendo al menú principal...");
                 default -> System.out.println("Opción inválida. Intente nuevamente.");
             }
         } while (opcion != 4);
     }
-    
-
-    
 }

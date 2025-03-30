@@ -1,6 +1,5 @@
 package com.sportscenter.infrastructure.persistence;
 
-import com.sportscenter.domain.entities.Color;
 import com.sportscenter.domain.entities.CustomerType;
 import com.sportscenter.domain.repository.CustomerTypeRepository;
 import com.sportscenter.infrastructure.database.ConnectionDb;

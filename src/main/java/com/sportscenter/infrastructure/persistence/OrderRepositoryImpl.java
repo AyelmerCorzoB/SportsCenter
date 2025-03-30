@@ -34,7 +34,6 @@ public class OrderRepositoryImpl implements OrderRepository {
                     rs.getDate("order_date").toLocalDate(),
                     OrderStatus.valueOf(rs.getString("status").toUpperCase())
                 );
-                
             }
 
         } catch (SQLException e) {
