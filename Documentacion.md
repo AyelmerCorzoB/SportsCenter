@@ -133,7 +133,7 @@ El administrador tiene acceso total al sistema y puede gestionar:
 - Productos
 - Proveedores
 - Ventas
-- Etc
+- Etc..
 
 #### Opciones del Administrador
 ```
