@@ -22,7 +22,6 @@ public class SearchCustomer {
             System.out.println("Tipo de Cliente ID: " + customer.getCustomerTypeId());
             System.out.println("Nombre: " + customer.getName());
             System.out.println("Documento de Identidad: " + customer.getIdentityDocument());
-            System.out.println("Email: " + customer.getEmail());
             System.out.println("Teléfono: " + customer.getPhone());
             System.out.println("Dirección: " + customer.getAddress());
             System.out.println("Fecha de Registro: " + customer.getRegistrationDate().format(DateTimeFormatter.ISO_LOCAL_DATE));

@@ -1,6 +1,5 @@
 package com.sportscenter.infrastructure.persistence;
 
-import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.domain.entities.CustomerOrder;
 import com.sportscenter.domain.repository.CustomerOrderRepository;
 import com.sportscenter.infrastructure.database.ConnectionDb;
@@ -93,7 +92,6 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Scanner sc = new Scanner(System.in);
         System.out.println("╔════════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                            LISTADO DE PEDIDOS                              ║");
         System.out.println("║════════════════════════════════════════════════════════════════════════════║");
@@ -110,7 +108,6 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
                     order.getTotal());
         }
         System.out.println("╚════════════════════════════════════════════════════════════════════════════╝");
-        ConsoleUtils.pressEnterToContinue(sc);
         return customerOrders;
     }
 

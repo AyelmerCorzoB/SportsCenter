@@ -14,13 +14,11 @@ public class CustomerUseCase {
     }
 
     public void registerCustomer(int customerTypeId, String name, String identityDocument,
-                               String email, String phone, String address, LocalDate registrationDate) {
+            String phone, String address, LocalDate registrationDate) {
         Customer customer = new Customer();
         customer.setCustomerTypeId(customerTypeId);
         customer.setName(name);
         customer.setIdentityDocument(identityDocument);
-        customer.setEmail(email);
-        customer.setPhone(phone);
         customer.setAddress(address);
         customer.setRegistrationDate(registrationDate);
         repository.save(customer);
@@ -34,14 +32,12 @@ public class CustomerUseCase {
         return repository.findAll();
     }
 
-    public void updateCustomer(int id, int customerTypeId, String name, String identityDocument,
-                             String email, String phone, String address) {
+    public void updateCustomer(int id, int customerTypeId, String name, String identityDocument, int phone, String address) {
         Customer customer = new Customer();
         customer.setId(id);
         customer.setCustomerTypeId(customerTypeId);
         customer.setName(name);
         customer.setIdentityDocument(identityDocument);
-        customer.setEmail(email);
         customer.setPhone(phone);
         customer.setAddress(address);
         repository.update(customer);

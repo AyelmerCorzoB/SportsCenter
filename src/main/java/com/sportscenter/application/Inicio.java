@@ -56,10 +56,7 @@ public class Inicio {
 
     private void mostrarMenuPrincipal() {
         final String RESET = "\u001B[0m";
-        final String CYAN_BOLD = "\u001B[32m";
-        final String GREEN = "\u001B[1;36m";
-        final String RED = "\u001B[91m";
-        final String YELLOW = "\u001B[33m";
+        final String CYAN_BOLD = "\u001B[1;36m";
 
         while (true) {
             ConsoleUtils.clear();
@@ -111,8 +108,8 @@ public class Inicio {
         ConsoleUtils.clear();
 
         final String RESET = "\u001B[0m";
-        final String CYAN_BOLD = "\u001B[32m";
-        final String GREEN = "\u001B[1;36m";
+        final String CYAN_BOLD = "\u001B[1;36m";
+        final String GREEN = "\u001B[32m";
         final String RED = "\u001B[91m";
         final String YELLOW = "\u001B[33m";
 
@@ -133,17 +130,17 @@ public class Inicio {
         if (user != null) {
             this.currentUser = user;
             ConsoleUtils.clear();
-
             System.out.println(GREEN + "╔════════════════════════════════════╗");
             System.out.println("║           LOGIN EXITOSO            ║");
             System.out.println("╠════════════════════════════════════╣");
-            System.out.printf("║ %-20s: %-12s ║\n", "Bienvenido", user.getUsername());
+            System.out.printf("║ %-20s: %-12s ║\n", "Bienvenido", user.getUsername().toUpperCase());
             System.out.printf("║ %-20s: %-12s ║\n", "Rol", user.getRole());
             System.out.println("╚════════════════════════════════════╝" + RESET);
 
             ConsoleUtils.pressEnterToContinue(scanner);
             redirigirSegunRol();
         } else {
+            ConsoleUtils.clear();
             System.out.println(RED + "\n╔════════════════════════════════════╗");
             System.out.println("║    ¡¡¡¡CREDENCIALES INVÁLIDAS!!!   ║");
             System.out.println("╚════════════════════════════════════╝" + RESET);

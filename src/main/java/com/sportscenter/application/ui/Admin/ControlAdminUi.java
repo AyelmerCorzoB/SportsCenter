@@ -60,10 +60,12 @@ public class ControlAdminUi {
     }
 
     private void printMainMenuOptions() {
+        final String RESET = "\u001B[0m";
+            final String CYAN_BOLD = "\u001B[1;36m";
         System.out.println("╔═══════════════════════════════════════╗");
         System.out.println("║     PANEL DE CONTROL ADMINISTRATIVO   ║");
         System.out.println("╠═══════════════════════════════════════╣");
-        System.out.printf("║ Usuario: %-28s ║%n", currentUser.getUsername());
+        System.out.printf(CYAN_BOLD + "║ Usuario: %-28s     ║%n", currentUser.getUsername()+RESET);
         System.out.printf("║ Página %d de 2 %-23s ║%n", currentPage, "");
         System.out.println("╠═══════════════════════════════════════╣");
 

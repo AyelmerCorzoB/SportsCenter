@@ -4,7 +4,7 @@ public class ListSuppliers {
     public void List(SupplierUseCase supplierUseCase) {
         System.out.println("\n=== LISTADO DE PROVEEDORES ===");
         System.out.printf("%-5s %-20s %-15s %-25s %-15s%n",
-                "ID", "NOMBRE", "TELÉFONO", "EMAIL", "RUC/NIT");
+                "ID", "NOMBRE", "TELÉFONO", "RUC/NIT");
         System.out.println("------------------------------------------------------------------");
 
         try {
@@ -12,7 +12,6 @@ public class ListSuppliers {
                     s.getId(),
                     s.getName(),
                     s.getPhone(),
-                    s.getEmail(),
                     s.getTaxId()));
         } catch (Exception e) {
             System.out.println("X Error al obtener a los proveedores: " + e.getMessage());

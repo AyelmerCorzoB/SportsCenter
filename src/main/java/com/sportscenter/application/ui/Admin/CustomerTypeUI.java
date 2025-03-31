@@ -10,30 +10,30 @@ public class CustomerTypeUI {
 
     public static void mostrarMenu(Scanner sc, CustomerTypeUseCase customerTypeUseCase) {
         int opcion;
-        ConsoleUtils.clear();
         do {
-            String menuCustomerType = """
-                    \n╔═══════════════════════════════════╗
-                    ║           MENU CustomerType       ║
-                    ╠═══════════════════════════════════╣
-                    ║ 1. Registrar CustomerType         ║
-                    ║ 2. Obtener customerType por ID    ║
-                    ║ 3. Listar todos los customerType  ║
-                    ║ 4. Update un customerType         ║
-                    ║ 5. Eliminar un customerType       ║
-                    ║ 6. Salir...                       ║
-                    ╚═══════════════════════════════════╝
+            String menu = """
+                    \n╔═══════════════════════════════════════╗
+                    ║         MENU CustomerType               ║
+                    ║  Recordatorio: si ya tienes los 2       ║
+                    ║  tipos que son:(INDIVIDUAL) y (COMPANY) ║
+                    ╠═════════════════════════════════════════╣
+                    ║ 1. Registrar CustomerType               ║
+                    ║ 2. Obtener customerType por ID          ║
+                    ║ 3. Listar todos los customerType        ║
+                    ║ 4. Update un customerType               ║
+                    ║ 5. Eliminar un customerType             ║
+                    ║ 6. Salir...                             ║
+                    ╚═════════════════════════════════════════╝
                     Seleccione una opción:""";
-            System.out.print(menuCustomerType);
-
+            ConsoleUtils.clear();
+            System.out.print(menu);
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
-
             sc.nextLine();
-
             switch (opcion) {
                 case 1:
                     new RegisterCustomerType().Register(sc, customerTypeUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 2:
                     new SearchCustomerType().Search(sc, customerTypeUseCase);
@@ -42,7 +42,7 @@ public class CustomerTypeUI {
                     customerTypeUseCase.getAllCustomerTypes();
                     break;
                 case 4:
-                new UpdateCustomerType().Update(sc, customerTypeUseCase);
+                    new UpdateCustomerType().Update(sc, customerTypeUseCase);
                     break;
                 case 5:
                     new DeleteCustomerType().Delete(sc, customerTypeUseCase);

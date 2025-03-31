@@ -21,7 +21,6 @@ public class SearchSupplier {
                 System.out.println("ID: " + supplier.getId());
                 System.out.println("Nombre: " + supplier.getName());
                 System.out.println("Teléfono: " + supplier.getPhone());
-                System.out.println("Email: " + supplier.getEmail());
                 System.out.println("Dirección: " + supplier.getAddress());
                 System.out.println("RUC/NIT: " + supplier.getTaxId());
             } else {

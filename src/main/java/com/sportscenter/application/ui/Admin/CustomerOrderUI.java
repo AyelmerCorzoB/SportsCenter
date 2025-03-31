@@ -9,7 +9,7 @@ import com.sportscenter.application.usecase.customerorder.*;
 public class CustomerOrderUI {
     public static void mostrarMenu(Scanner sc, CustomerOrderUseCase customerOrderUseCase) {
         int opcion;
-        ConsoleUtils.clear();
+        
         do {
             String menu = """
                         \n╔═══════════════════════════════╗
@@ -23,7 +23,7 @@ public class CustomerOrderUI {
                         ║ 6. Salir                       ║
                         ╚════════════════════════════════╝
                         Seleccione una opción:""";
-            
+            ConsoleUtils.clear();
             System.out.print(menu);
 
             ValidationInt.validate(sc);
@@ -39,7 +39,9 @@ public class CustomerOrderUI {
                 new SearchCustomerorder().Search(sc, customerOrderUseCase);
                     break;
                 case 3:
+                ConsoleUtils.clear();
                     customerOrderUseCase.getAllCustomerOrders();
+                ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 4:
                     new UpdateCustomerorder().Update(sc, customerOrderUseCase);

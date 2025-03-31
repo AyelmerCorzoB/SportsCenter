@@ -21,7 +21,7 @@ public class CategoryUI {
                     ║ 3. Listar todas            ║
                     ║ 4. Actualizar categoría    ║
                     ║ 5. Eliminar categoría      ║
-                    ║ 6. Salir                   ║
+                    ║ 6. Volver atras            ║
                     ╚════════════════════════════╝
                     Seleccione una opción:""";
             ConsoleUtils.clear();
@@ -40,7 +40,9 @@ public class CategoryUI {
                     new SearchCategory().Search(sc, categoryUseCase);
                     break;
                 case 3:
+                    ConsoleUtils.clear();
                     categoryUseCase.getAllCategories();
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 4:
                     new UpdateCategory().Update(sc, categoryUseCase);

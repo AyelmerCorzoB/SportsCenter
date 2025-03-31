@@ -1,5 +1,6 @@
 package com.sportscenter.infrastructure.persistence;
 
+import com.sportscenter.domain.entities.Category;
 import com.sportscenter.domain.entities.Color;
 import com.sportscenter.domain.repository.ColorRepository;
 import com.sportscenter.infrastructure.database.ConnectionDb;
@@ -74,12 +75,25 @@ public class ColorRepositoryImpl implements ColorRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        for (Color color : colors) {
-            System.out.println("|-------------------------------------------------------------------------|");
-            System.out.println(" Nombre: " + color.getName() + " \n" +
-                    "| Codigo de color(Hex): " + color.getHexCode());
-            System.out.println("|-------------------------------------------------------------------------|");
+        System.out.println("╔══════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                       LISTADO DE COLORES                             ║");
+        System.out.println("╠════╦══════════════════════╦══════════════════════════════════════════╣");
+        System.out.println("║ ID ║ Nombre               ║ HexCode                                  ║");
+        System.out.println("╠════╬══════════════════════╬══════════════════════════════════════════╣");
+
+        if (colors.isEmpty()) {
+            System.out.println("║                 No hay Colores registrados.                  ║");
+            System.out.println("╚══════════════════════════════════════════════════════════════╝");
         }
+        for (Color color : colors) {
+            System.out.printf(
+                    "║ %-2d ║ %-20s ║ %-40s ║%n",
+                    color.getId(),
+                    color.getName(),
+                    color.getHexCode());
+        }
+
+        System.out.println("╚════╩══════════════════════╩══════════════════════════════════════════╝");
         return colors;
     }
     

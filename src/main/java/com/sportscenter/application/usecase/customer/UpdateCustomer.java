@@ -24,16 +24,13 @@ public class UpdateCustomer {
         System.out.print("Documento de identidad: ");
         String identityDocument = sc.nextLine();
 
-        System.out.print("Email: ");
-        String email = sc.nextLine();
-
         System.out.print("Teléfono: ");
-        String phone = sc.nextLine();
+        int phone = sc.nextInt();
 
         System.out.print("Dirección: ");
         String address = sc.nextLine();
 
-        customerUseCase.updateCustomer(id, customerTypeId, name, identityDocument, email, phone, address);
+        customerUseCase.updateCustomer(id, customerTypeId, name, identityDocument, phone, address);
         System.out.println(":D Cliente actualizado exitosamente.");
     }
 }

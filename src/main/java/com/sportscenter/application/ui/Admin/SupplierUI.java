@@ -11,8 +11,9 @@ import com.sportscenter.domain.entities.Supplier;
 public class SupplierUI {
     public static void mostrarMenu(Scanner sc, SupplierUseCase supplierUseCase) {
         int opcion;
-        ConsoleUtils.clear();
+        
         do {
+            ConsoleUtils.clear();
             String menu = """
                         \n╔═════════════════════════════╗
                         ║       MENÚ PROVEEDORES      ║
@@ -33,46 +34,66 @@ public class SupplierUI {
             switch (opcion) {
                 case 1:
                     RegisterSupplier.Register(sc, supplierUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 2:
                     SearchSupplier.Search(sc, supplierUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 3:
+                    ConsoleUtils.clear();
                     ListProveedores(supplierUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 4:
-                    UpdateSupplier.Update(sc, supplierUseCase);
+                    UpdateSupplier.update(sc, supplierUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 5:
                     DeleteSupplier.Delete(sc, supplierUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
+                    break;
+                case 6: 
+                    System.out.println("Saliendo...");
                     break;
                 default:
                     System.out.println("X Opción inválida. Por favor intente nuevamente.");
                     break;
             }
-        } while (opcion != 7);
+        } while (opcion != 6);
     }
 
     private static void ListProveedores(SupplierUseCase supplierUseCase) {
-        System.out.println("\n--- LISTA DE PROVEEDORES ---");
-        List<Supplier> proveedores = supplierUseCase.getAllSuppliers();
-
-        if (proveedores.isEmpty()) {
-            System.out.println("No hay proveedores registrados");
-            return;
-        }
-
-        System.out.printf("%-5s %-20s %-15s %-25s %-30s %-15s%n",
-                "ID", "Nombre", "Teléfono", "Email", "Dirección", "RUC/NIT");
-
-        for (Supplier prov : proveedores) {
-            System.out.printf("%-5d %-20s %-15s %-25s %-30s %-15s%n",
+        System.out.println("╔══════════════════════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                         LISTADO DE PROVEEDORES                                               ║");
+        System.out.println("╠════╦════════════════════════════╦════════════════════╦════════════════════╦══════════════════╣");
+        System.out.println("║ ID ║ Nombre                     ║ Teléfono           ║ Dirección          ║ RFC              ║");
+        System.out.println("╠════╬════════════════════════════╬════════════════════╬════════════════════╬══════════════════╣");
+    
+        try {
+            List<Supplier> proveedores = supplierUseCase.getAllSuppliers();
+    
+            if (proveedores.isEmpty()) {
+                System.out.println("║                       No hay proveedores registrados.                        ║");
+                System.out.println("╚══════════════════════════════════════════════════════════════════════════════╝");
+                return;
+            }
+            for (Supplier prov : proveedores) {
+                System.out.printf(
+                    "║ %-4d ║ %-26s ║ %-18s ║ %-18s ║ %-16s ║%n",
                     prov.getId(),
                     prov.getName(),
                     prov.getPhone(),
-                    prov.getEmail(),
                     prov.getAddress(),
-                    prov.getTaxId());
+                    prov.getTaxId()
+                );
+            }
+    
+            System.out.println("╚════╩════════════════════════════╩════════════════════╩════════════════════╩══════════════════╝");
+            System.out.println("Total de proveedores: " + proveedores.size());
+        } catch (Exception e) {
+            System.out.println(" Error al obtener la lista de proveedores: " + e.getMessage());
         }
     }
-}
+    
+    }

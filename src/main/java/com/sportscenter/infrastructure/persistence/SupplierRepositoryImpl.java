@@ -18,16 +18,15 @@ public class SupplierRepositoryImpl implements SupplierRepository {
 
     @Override
     public void save(Supplier supplier) {
-        String sql = "INSERT INTO Supplier (name, phone, email, address, tax_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Supplier (name, phone, address, tax_id) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, supplier.getName());
-            stmt.setString(2, supplier.getPhone());
-            stmt.setString(3, supplier.getEmail());
-            stmt.setString(4, supplier.getAddress());
-            stmt.setString(5, supplier.getTaxId());
+            stmt.setInt(2, supplier.getPhone());
+            stmt.setString(3, supplier.getAddress());
+            stmt.setString(4, supplier.getTaxId());
             
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -49,8 +48,7 @@ public class SupplierRepositoryImpl implements SupplierRepository {
                 Supplier supplier = new Supplier();
                 supplier.setId(rs.getInt("id"));
                 supplier.setName(rs.getString("name"));
-                supplier.setPhone(rs.getString("phone"));
-                supplier.setEmail(rs.getString("email"));
+                supplier.setPhone(rs.getInt("phone"));
                 supplier.setAddress(rs.getString("address"));
                 supplier.setTaxId(rs.getString("tax_id"));
                 return supplier;
@@ -74,8 +72,7 @@ public class SupplierRepositoryImpl implements SupplierRepository {
                 Supplier supplier = new Supplier();
                 supplier.setId(rs.getInt("id"));
                 supplier.setName(rs.getString("name"));
-                supplier.setPhone(rs.getString("phone"));
-                supplier.setEmail(rs.getString("email"));
+                supplier.setPhone(rs.getInt("phone"));
                 supplier.setAddress(rs.getString("address"));
                 supplier.setTaxId(rs.getString("tax_id"));
                 suppliers.add(supplier);
@@ -88,17 +85,16 @@ public class SupplierRepositoryImpl implements SupplierRepository {
 
     @Override
     public void update(Supplier supplier) {
-        String sql = "UPDATE Supplier SET name = ?, phone = ?, email = ?, address = ?, tax_id = ? WHERE id = ?";
+        String sql = "UPDATE Supplier SET name = ?, phone = ?, address = ?, tax_id = ? WHERE id = ?";
         
         try (Connection conn = connection.getConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, supplier.getName());
-            stmt.setString(2, supplier.getPhone());
-            stmt.setString(3, supplier.getEmail());
-            stmt.setString(4, supplier.getAddress());
-            stmt.setString(5, supplier.getTaxId());
-            stmt.setInt(6, supplier.getId());
+            stmt.setInt(2, supplier.getPhone());
+            stmt.setString(3, supplier.getAddress());
+            stmt.setString(4, supplier.getTaxId());
+            stmt.setInt(5, supplier.getId());
             
             stmt.executeUpdate();
         } catch (SQLException e) {

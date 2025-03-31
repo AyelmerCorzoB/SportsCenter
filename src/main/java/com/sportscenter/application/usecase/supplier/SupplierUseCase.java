@@ -11,12 +11,11 @@ public class SupplierUseCase {
         this.repository = repository;
     }
 
-    public void registerSupplier(String name, String phone, String email, 
+    public void registerSupplier(String name, int phone,
                                String address, String taxId) {
         Supplier supplier = new Supplier();
         supplier.setName(name);
         supplier.setPhone(phone);
-        supplier.setEmail(email);
         supplier.setAddress(address);
         supplier.setTaxId(taxId);
         repository.save(supplier);
@@ -30,13 +29,12 @@ public class SupplierUseCase {
         return repository.findAll();
     }
 
-    public void updateSupplier(int id, String name, String phone, String email, 
+    public void updateSupplier(int id, String name, int phone, 
                              String address, String taxId) {
         Supplier supplier = new Supplier();
         supplier.setId(id);
         supplier.setName(name);
         supplier.setPhone(phone);
-        supplier.setEmail(email);
         supplier.setAddress(address);
         supplier.setTaxId(taxId);
         repository.update(supplier);

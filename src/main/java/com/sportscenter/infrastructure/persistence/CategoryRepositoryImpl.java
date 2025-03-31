@@ -59,11 +59,11 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public List<Category> findAll() {
         List<Category> categories = new ArrayList<>();
         String sql = "SELECT * FROM Category";
-        
+
         try (Connection conn = connection.getConexion();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
                 Category category = new Category();
                 category.setId(rs.getInt("id"));
@@ -74,13 +74,27 @@ public class CategoryRepositoryImpl implements CategoryRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        for (Category category : categories) {
-            System.out.println("|-------------------------------------------------------------------------|");
-            System.out.println("| ID: " + category.getId() + "\n"+ 
-            "| Nombre: " + category.getName() + " \n" +
-                    "| Descripcion: " + category.getDescription());
-            System.out.println("|-------------------------------------------------------------------------|");
+        
+        System.out.println("╔══════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                       LISTADO DE CATEGORÍAS                          ║");
+        System.out.println("╠════╦══════════════════════╦══════════════════════════════════════════╣");
+        System.out.println("║ ID ║ Nombre               ║ Descripción                              ║");
+        System.out.println("╠════╬══════════════════════╬══════════════════════════════════════════╣");
+
+        if (categories.isEmpty()) {
+            System.out.println("║                 No hay categorías registradas.               ║");
+            System.out.println("╚══════════════════════════════════════════════════════════════╝");
         }
+        for (Category category : categories) {
+            System.out.printf(
+                    "║ %-2d ║ %-20s ║ %-40s ║%n",
+                    category.getId(),
+                    category.getName(),
+                    category.getDescription());
+        }
+
+        System.out.println("╚════╩══════════════════════╩══════════════════════════════════════════╝");
+        System.out.println("Total de categorías: " + categories.size());
         return categories;
     }
 

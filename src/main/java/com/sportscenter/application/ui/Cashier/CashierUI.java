@@ -92,7 +92,7 @@ public class CashierUI {
             switch (opcion) {
                 case 1 -> ListTodasFacturas();
                 case 2 -> SearchFacturaPorId();
-                case 3 -> new RegisterInvoice().Register(scanner, invoiceUseCase);
+                case 3 -> new RegisterInvoice().register(scanner, invoiceUseCase);
                 case 4 -> System.out.println("Volviendo al menú principal...");
                 default -> System.out.println("Opción inválida. Intente nuevamente.");
             }

@@ -12,17 +12,17 @@ public class OrderStatusUI {
         ConsoleUtils.clear();
         do {
             String menu = """
-                        \n╔══════════════════════════════════╗
-                        ║          MENÚ ORDERSTATUS        ║
-                        ╠══════════════════════════════════╣
-                        ║ 1. Registrar Estado de orden     ║
-                        ║ 2. Buscar Estado de orden por ID ║
-                        ║ 3. Listar todos los estados      ║
-                        ║ 4. Actualizar Estado de orden    ║
-                        ║ 5. Eliminar Estado de orden      ║
-                        ║ 6. Salir                         ║
-                        ╚══════════════════════════════════╝
-                        Seleccione una opción:""";
+                    \n╔══════════════════════════════════╗
+                    ║          MENÚ ORDERSTATUS        ║
+                    ╠══════════════════════════════════╣
+                    ║ 1. Registrar Estado de orden     ║
+                    ║ 2. Buscar Estado de orden por ID ║
+                    ║ 3. Listar todos los estados      ║
+                    ║ 4. Actualizar Estado de orden    ║
+                    ║ 5. Eliminar Estado de orden      ║
+                    ║ 6. Salir                         ║
+                    ╚══════════════════════════════════╝
+                    Seleccione una opción:""";
             System.out.print(menu);
 
             ValidationInt.validate(sc);
@@ -32,18 +32,24 @@ public class OrderStatusUI {
             switch (opcion) {
                 case 1:
                     new RegisterOrderStatus().Register(sc, orderStatusUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 2:
                     new SearchOrderStatus().Search(sc, orderStatusUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 3:
+                    ConsoleUtils.clear();
                     orderStatusUseCase.getAllOrderStatuses();
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 4:
                     new UpdateOrderStatus().Update(sc, orderStatusUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 5:
                     new DeleteOrderStatus().Delete(sc, orderStatusUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 6:
                     System.out.println("Regresando al menú principal...");

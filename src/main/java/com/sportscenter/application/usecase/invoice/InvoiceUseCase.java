@@ -14,7 +14,6 @@ public class InvoiceUseCase {
 
     public void registerInvoice(int saleId, String invoiceNumber, LocalDate issueDate,
             double totalAmount, double taxes) {
-        // Validaciones
         if (invoiceNumber == null || invoiceNumber.trim().isEmpty()) {
             throw new IllegalArgumentException("El número de factura no puede estar vacío");
         }

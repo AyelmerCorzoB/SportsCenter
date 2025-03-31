@@ -25,11 +25,12 @@ public class AdminUI {
     public void mostrarMenu() {
         while (true) {
             ConsoleUtils.clear();
+            final String RESET = "\u001B[0m";
+            final String CYAN_BOLD = "\u001B[1;36m";
             System.out.println("\n╔════════════════════════════════════════════╗");
             System.out.println("║          PANEL DE ADMINISTRACIÓN           ║");
-            System.out.println("╣                                            ╣");
-            System.out.printf("║ Usuario actual: %-26s ║%n",
-                    currentUser.getUsername() + " (" + currentUser.getRole() + ")");
+            System.out.printf(CYAN_BOLD + "║       Usuario actual: %-23s  ║%n",
+                    currentUser.getUsername() + " (" + currentUser.getRole() + ")" + RESET);
             System.out.println("╠════════════════════════════════════════════╣");
             System.out.println("║ 1. Registrar nuevo usuario administrativo  ║");
             System.out.println("║ 2. Listar todos los usuarios               ║");
@@ -141,7 +142,6 @@ public class AdminUI {
 
     private void ListUsuarios() {
         ConsoleUtils.clear();
-        System.out.println("");
         System.out.println("╔════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                         LISTADO DE USUARIOS                            ║");
         System.out.println("╠════╦══════════════════╦════════════════════╦═════════════╦═════════════╣");

@@ -5,8 +5,7 @@ import java.time.LocalDateTime;
 public class Supplier {
     private int id;
     private String name;
-    private String phone;
-    private String email;
+    private int phone;
     private String address;
     private String taxId;
     private LocalDateTime createdAt;
@@ -19,10 +18,9 @@ public class Supplier {
         this.id = id;
     }
 
-    public Supplier(String name, String phone, String email, String address, String taxId) {
+    public Supplier(String name, int phone, String address, String taxId) {
         this.name = name;
         this.phone = phone;
-        this.email = email;
         this.address = address;
         this.taxId = taxId;
     }
@@ -40,17 +38,11 @@ public class Supplier {
     public void setName(String name) {
         this.name = name;
     }
-    public String getPhone() {
+    public int getPhone() {
         return phone;
     }
-    public void setPhone(String phone) {
+    public void setPhone(int phone) {
         this.phone = phone;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
     }
     public String getAddress() {
         return address;

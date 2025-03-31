@@ -28,9 +28,6 @@ public class RegisterCustomer {
         System.out.print("Documento de identidad: ");
         String identityDoc = ValidationString.validate(sc);
 
-        System.out.print("Email: ");
-        String email = ValidationString.validate(sc);
-
         System.out.print("Teléfono: ");
         String phone = ValidationString.validate(sc);
 
@@ -50,7 +47,7 @@ public class RegisterCustomer {
             }
         }
         try {
-            customerUseCase.registerCustomer(typeId, name, identityDoc, email, phone, address, regDate);
+            customerUseCase.registerCustomer(typeId, name, identityDoc, phone, address, regDate);
             System.out.println(":D Cliente registrado exitosamente.");
         } catch (Exception e) {
             System.out.println("X Error al registrar cliente: " + e.getMessage());

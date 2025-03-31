@@ -98,9 +98,9 @@ public class ProductUI {
             scanner.nextLine();
 
             switch (opcion) {
-                case 1 -> this.ListProductos();
-                case 2 -> this.agregarProducto();
-                case 3 -> this.SearchProductoPorId();
+                case 1 -> this.agregarProducto();
+                case 2 -> this.SearchProductoPorId();
+                case 3 -> this.ListProductos();
                 case 4 -> this.UpdateProducto();
                 case 5 -> this.DeleteProducto();
                 case 6 -> volver = true;

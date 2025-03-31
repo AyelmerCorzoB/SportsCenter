@@ -12,8 +12,7 @@ public class Customer {
     private int customerTypeId;
     private String name;
     private String identityDocument;
-    private String email;
-    private String phone;
+    private int phone;
     private String address;
     private LocalDate registrationDate;
     private int createdBy;
@@ -27,12 +26,10 @@ public class Customer {
         this.id = id;
     }
 
-    public Customer(int customerTypeId, String name, String identityDocument,
-                    String email, String phone, String address, LocalDate registrationDate) {
+    public Customer(int customerTypeId, String name, String identityDocument, int phone, String address, LocalDate registrationDate) {
         this.customerTypeId = customerTypeId;
         this.name = name;
         this.identityDocument = identityDocument;
-        this.email = email;
         this.phone = phone;
         this.address = address;
         this.registrationDate = registrationDate;
@@ -51,11 +48,8 @@ public class Customer {
     public String getIdentityDocument() { return identityDocument; }
     public void setIdentityDocument(String identityDocument) { this.identityDocument = identityDocument; }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public int getPhone() { return phone; }
+    public void setPhone(int phone) { this.phone = phone; }
 
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }
@@ -79,7 +73,6 @@ public class Customer {
                 ", customerTypeId=" + customerTypeId +
                 ", name='" + name + '\'' +
                 ", identityDocument='" + identityDocument + '\'' +
-                ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", registrationDate=" + registrationDate +
