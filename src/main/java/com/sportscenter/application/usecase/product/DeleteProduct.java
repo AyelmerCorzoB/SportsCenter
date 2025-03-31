@@ -14,6 +14,6 @@ public class DeleteProduct {
         sc.nextLine();
         
         productUseCase.deleteProduct(id);
-        System.out.println("🚀 Producto eliminado exitosamente.");
+        System.out.println(":D Producto eliminado exitosamente.");
     }
 }

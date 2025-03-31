@@ -1,5 +1,6 @@
 package com.sportscenter.infrastructure.persistence;
 
+import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.domain.entities.CustomerOrder;
 import com.sportscenter.domain.repository.CustomerOrderRepository;
 import com.sportscenter.infrastructure.database.ConnectionDb;
@@ -7,6 +8,7 @@ import com.sportscenter.infrastructure.database.ConnectionDb;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
 
@@ -91,24 +93,24 @@ public class CustomerOrderRepositoryImpl implements CustomerOrderRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        System.out.println("|=================================================================|");
-        System.out.println("|                       LISTADO DE PEDIDOS                        |");
-        System.out.println("|=================================================================|");
-        System.out.printf("| %-4s | %-20s | %-12s | %-15s | %-8s |\n",
+        Scanner sc = new Scanner(System.in);
+        System.out.println("╔════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                            LISTADO DE PEDIDOS                              ║");
+        System.out.println("║════════════════════════════════════════════════════════════════════════════║");
+        System.out.printf("║ %-4s ║ %-20s ║ %-12s ║ %-15s ║ %-10s  ║\n",
                 "ID", "CLIENTE", "FECHA", "ESTADO", "TOTAL");
-        System.out.println("|-----------------------------------------------------------------|");
+        System.out.println("║════════════════════════════════════════════════════════════════════════════║");
 
         for (CustomerOrder order : customerOrders) {
-            System.out.printf("| %-4d | %-20s | %-12s | %-15s | $%-7.2f |\n",
+            System.out.printf("║ %-4d ║ %-20s ║ %-12s ║ %-15s ║ $%-10.2f ║\n",
                     order.getId(),
                     order.getCustomerName(),
                     order.getOrderDate(),
                     order.getStatusName(),
                     order.getTotal());
         }
-        System.out.println("|=================================================================|");
-
+        System.out.println("╚════════════════════════════════════════════════════════════════════════════╝");
+        ConsoleUtils.pressEnterToContinue(sc);
         return customerOrders;
     }
 

@@ -28,6 +28,6 @@ public class RegisterCustomerType {
         String description = sc.nextLine();
 
         customerTypeUseCase.registerCustomerType(typeName, description.isEmpty() ? null : description);
-        System.out.println("🚀 Tipo de cliente registrado exitosamente.");
+        System.out.println(":D Tipo de cliente registrado exitosamente.");
     }
 }

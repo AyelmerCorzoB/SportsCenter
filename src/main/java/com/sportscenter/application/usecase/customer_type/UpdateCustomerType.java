@@ -34,6 +34,6 @@ public class UpdateCustomerType {
         String newDescription = sc.nextLine();
         
         customerTypeUseCase.updateCustomerType(id, newTypeName, newDescription.isEmpty() ? null : newDescription);
-        System.out.println("🚀 Tipo de cliente actualizado exitosamente.");
+        System.out.println(":D Tipo de cliente actualizado exitosamente.");
     }
 }

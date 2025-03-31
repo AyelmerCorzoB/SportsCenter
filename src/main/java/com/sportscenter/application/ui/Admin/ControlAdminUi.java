@@ -1,6 +1,7 @@
 package com.sportscenter.application.ui.Admin;
 
 import com.sportscenter.adapter.global.ConsoleUtils;
+import com.sportscenter.application.ui.Inventory.ProductUI;
 import com.sportscenter.application.usecase.Sale.SaleUseCase;
 import com.sportscenter.application.usecase.category.CategoryUseCase;
 import com.sportscenter.application.usecase.color.ColorUseCase;
@@ -9,6 +10,7 @@ import com.sportscenter.application.usecase.customer_type.CustomerTypeUseCase;
 import com.sportscenter.application.usecase.customerorder.CustomerOrderUseCase;
 import com.sportscenter.application.usecase.employee.EmployeeUseCase;
 import com.sportscenter.application.usecase.invoice.InvoiceUseCase;
+import com.sportscenter.application.usecase.product.ProductUseCase;
 import com.sportscenter.application.usecase.saledetail.SaleDetailUseCase;
 import com.sportscenter.application.usecase.supplier.SupplierUseCase;
 import com.sportscenter.domain.entities.User;
@@ -27,18 +29,14 @@ public class ControlAdminUi {
     private static final int MAX_OPTIONS_PER_PAGE = 6;
     private static final int EXIT_OPTION = 7;
 
-    public ControlAdminUi() {
-        this.scanner = new Scanner(System.in);
-        this.userService = new UserService(new UserRepositoryImpl(ConnectionFactory.crearConexion()));
+    public ControlAdminUi(Scanner scanner, UserService userService, User currentUser) {
+        this.scanner = scanner;
+        this.userService = userService;
+        this.currentUser = currentUser;
     }
 
     public void start() {
-        showWelcomeMessage();
         showMainMenu();
-    }
-
-    private void showWelcomeMessage() {
-        System.out.println("======= Bienvenido al sistema de gestión del Sports Center =======");
     }
 
     private void showMainMenu() {
@@ -62,10 +60,13 @@ public class ControlAdminUi {
     }
 
     private void printMainMenuOptions() {
-        System.out.println("\n=== PANEL DE CONTROL ADMINISTRATIVO ===");
-        System.out.println("Página " + currentPage + " de 2");
-        System.out.println("--------------------------------------");
-        
+        System.out.println("╔═══════════════════════════════════════╗");
+        System.out.println("║     PANEL DE CONTROL ADMINISTRATIVO   ║");
+        System.out.println("╠═══════════════════════════════════════╣");
+        System.out.printf("║ Usuario: %-28s ║%n", currentUser.getUsername());
+        System.out.printf("║ Página %d de 2 %-23s ║%n", currentPage, "");
+        System.out.println("╠═══════════════════════════════════════╣");
+
         if (currentPage == 1) {
             printPage1Options();
         } else {
@@ -75,23 +76,27 @@ public class ControlAdminUi {
     }
 
     private void printPage1Options() {
-        System.out.println("1. Gestión de Categorías");
-        System.out.println("2. Gestión de Colores");
-        System.out.println("3. Gestión de Pedidos");
-        System.out.println("4. Gestión de Tipos de Cliente");
-        System.out.println("5. Gestión de Clientes");
-        System.out.println("\n6. Siguiente página");
-        System.out.println("7. Volver al menú principal");
+        System.out.println("║ 1. Gestión de Categorías              ║");
+        System.out.println("║ 2. Gestión de Colores                 ║");
+        System.out.println("║ 3. Gestión de Pedidos                 ║");
+        System.out.println("║ 4. Gestión de Tipos de Cliente        ║");
+        System.out.println("║ 5. Gestión de Clientes                ║");
+        System.out.println("║                                       ║");
+        System.out.println("║ 6. ->  Siguiente página               ║");
+        System.out.println("║ 7. <<- Volver al menú principal       ║");
+        System.out.println("╚═══════════════════════════════════════╝");
     }
 
     private void printPage2Options() {
-        System.out.println("1. Gestión de Facturas");
-        System.out.println("2. Gestión de Productos");
-        System.out.println("3. Gestión de Proveedores");
-        System.out.println("4. Gestión de Usuarios");
-        System.out.println("5. Gestión de Ventas");
-        System.out.println("\n6. Página anterior");
-        System.out.println("7. Volver al menú principal");
+        System.out.println("║ 1. Gestión de Facturas                ║");
+        System.out.println("║ 2. Gestión de Productos               ║");
+        System.out.println("║ 3. Gestión de Proveedores             ║");
+        System.out.println("║ 4. Gestión de Usuarios                ║");
+        System.out.println("║ 5. Gestión de Ventas                  ║");
+        System.out.println("║                                       ║");
+        System.out.println("║ 6. <-  Página anterior                ║");
+        System.out.println("║ 7. <<- Volver al menú principal       ║");
+        System.out.println("╚═══════════════════════════════════════╝");
     }
 
     private void handleMenuOption(int option) {
@@ -122,7 +127,7 @@ public class ControlAdminUi {
     private void handlePage2Options(int option) {
         switch (option) {
             case 1 -> manageInvoices();
-            //case 2 -> manageProducts();
+            case 2 -> manageProducts();
             case 3 -> manageSuppliers();
             case 4 -> manageEmployees();
             case 5 -> manageSales();
@@ -134,13 +139,14 @@ public class ControlAdminUi {
     private void manageCategories() {
         CategoryRepository repository = new CategoryRepositoryImpl(ConnectionFactory.crearConexion());
         CategoryUseCase useCase = new CategoryUseCase(repository);
-        CategoryUI.mostrarMenu(scanner,useCase);
+        CategoryUI.mostrarMenu(scanner, useCase);
     }
 
     private void manageColors() {
         ColorRepository repository = new ColorRepositoryImpl(ConnectionFactory.crearConexion());
         ColorUseCase useCase = new ColorUseCase(repository);
-        ColorUI.mostrarMenu(scanner, useCase);;
+        ColorUI.mostrarMenu(scanner, useCase);
+        ;
     }
 
     private void manageCustomerOrders() {
@@ -167,11 +173,13 @@ public class ControlAdminUi {
         InvoiceUI.mostrarMenu(scanner, useCase);
     }
 
-    // private void manageProducts() {
-    //     ProductRepository repository = new ProductRepositoryImpl(ConnectionFactory.crearConexion());
-    //     ProductUseCase useCase = new ProductUseCase(repository);
-    //     ProductUI.mostrarMenu();
-    // }
+    private void manageProducts() {
+        ProductRepository repository = new ProductRepositoryImpl(ConnectionFactory.crearConexion());
+        ProductUseCase useCase = new ProductUseCase(repository);
+        ProductUI productUI = new ProductUI(scanner, useCase, userService);
+        productUI.setCurrentUser(currentUser);
+        productUI.mostrarMenu();
+    }
 
     private void manageSuppliers() {
         SupplierRepository repository = new SupplierRepositoryImpl(ConnectionFactory.crearConexion());
@@ -184,8 +192,7 @@ public class ControlAdminUi {
         SaleDetailRepository saleDetailRepository = new SaleDetailRepositoryImpl(ConnectionFactory.crearConexion());
         SaleUseCase useCase = new SaleUseCase(repository);
         SaleDetailUseCase saleDetailUseCase = new SaleDetailUseCase(saleDetailRepository);
-        SaleUI saleUI = new SaleUI();
-        SaleUI.mostrarMenu(scanner, useCase,saleDetailUseCase);
+        SaleUI.mostrarMenu(scanner, useCase, saleDetailUseCase);
     }
 
     private void manageEmployees() {

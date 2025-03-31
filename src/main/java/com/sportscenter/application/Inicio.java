@@ -55,12 +55,21 @@ public class Inicio {
     }
 
     private void mostrarMenuPrincipal() {
+        final String RESET = "\u001B[0m";
+        final String CYAN_BOLD = "\u001B[32m";
+        final String GREEN = "\u001B[1;36m";
+        final String RED = "\u001B[91m";
+        final String YELLOW = "\u001B[33m";
+
         while (true) {
             ConsoleUtils.clear();
-            System.out.println("\nBienvenido al Sports Center");
-            System.out.println("1. Login");
-            System.out.println("2. Registrarse");
-            System.out.println("3. Salir");
+            System.out.println(CYAN_BOLD + "╔═════════════════════════════╗");
+            System.out.println("║ Bienvenido al Sports Center ║");
+            System.out.println("╠═════════════════════════════╣");
+            System.out.println("║ 1. Login                    ║");
+            System.out.println("║ 2. Registrarse              ║");
+            System.out.println("║ 3. Salir                    ║");
+            System.out.println("╚═════════════════════════════╝"+RESET);
             System.out.print("Elija una opción: ");
 
             int option = obtenerOpcionValida(1, 3);
@@ -99,23 +108,45 @@ public class Inicio {
     }
 
     private void Login() {
-        System.out.print("\nUsername: ");
+        ConsoleUtils.clear();
+
+        final String RESET = "\u001B[0m";
+        final String CYAN_BOLD = "\u001B[32m";
+        final String GREEN = "\u001B[1;36m";
+        final String RED = "\u001B[91m";
+        final String YELLOW = "\u001B[33m";
+
+        System.out.println(CYAN_BOLD + "╔════════════════════════════════════╗" + RESET);
+        System.out.println(
+                CYAN_BOLD + "║" + YELLOW + "           INICIO DE SESIÓN         " + RESET + CYAN_BOLD + "║" + RESET);
+        System.out.println(CYAN_BOLD + "╠════════════════════════════════════╣" + RESET);
+
+        System.out.print(CYAN_BOLD + "║ " + RESET + " ° Usuario:  ");
         String username = scanner.nextLine();
 
-        System.out.print("Password: ");
+        System.out.print(CYAN_BOLD + "║ " + RESET + " ° Contraseña: ");
         String password = scanner.nextLine();
+        System.out.println(CYAN_BOLD + "╚════════════════════════════════════╝" + RESET);
 
-        currentUser = userService.authenticate(username, password);
+        User user = userService.authenticate(username, password);
 
-        if (currentUser != null) {
+        if (user != null) {
+            this.currentUser = user;
             ConsoleUtils.clear();
-            System.out.println("\nLogin exitoso!");
-            System.out.println("Bienvenido, " + currentUser.getUsername());
-            System.out.println("Tu rol: " + currentUser.getRole());
+
+            System.out.println(GREEN + "╔════════════════════════════════════╗");
+            System.out.println("║           LOGIN EXITOSO            ║");
+            System.out.println("╠════════════════════════════════════╣");
+            System.out.printf("║ %-20s: %-12s ║\n", "Bienvenido", user.getUsername());
+            System.out.printf("║ %-20s: %-12s ║\n", "Rol", user.getRole());
+            System.out.println("╚════════════════════════════════════╝" + RESET);
+
             ConsoleUtils.pressEnterToContinue(scanner);
             redirigirSegunRol();
         } else {
-            System.out.println("\nUsuario o contraseña inválidos");
+            System.out.println(RED + "\n╔════════════════════════════════════╗");
+            System.out.println("║    ¡¡¡¡CREDENCIALES INVÁLIDAS!!!   ║");
+            System.out.println("╚════════════════════════════════════╝" + RESET);
             ConsoleUtils.pressEnterToContinue(scanner);
         }
     }
@@ -143,23 +174,34 @@ public class Inicio {
         UpdatePassword UpdatePassword = new UpdatePassword(userRepository);
 
         switch (currentUser.getRole()) {
-            case "ADMIN" -> new AdminUI(scanner, userService, currentUser).mostrarMenu();
-            case "CASHIER" ->
-                new CashierUI(scanner, currentUser, saleUseCase, saleDetailUseCase, invoiceUseCase, reportUseCase)
-                        .mostrarMenuPrincipal();
-            case "INVENTORY" ->
-                new InventoryUi(scanner, productUseCase, ListProducts, currentUser, productRepository, userService)
-                        .mostrarMenu();
-            case "CONSUMER" -> new ConsumerUI(
-                    scanner,
-                    productUseCase,
-                    currentUser,
-                    ListProducts,
-                    ListSalesPorUsuario,
-                    ListInvoice,
-                    UpdatePassword,
-                    invoiceUseCase).mostrarMenuPrincipal();
+            case "ADMIN" -> {
+                AdminUI adminUI = new AdminUI(scanner, userService, currentUser);
+                adminUI.mostrarMenu();
+            }
+            case "CASHIER" -> {
+                CashierUI cashierUI = new CashierUI(scanner, currentUser, saleUseCase, saleDetailUseCase,
+                        invoiceUseCase, reportUseCase);
+                cashierUI.mostrarMenuPrincipal();
+            }
+            case "INVENTORY" -> {
+                InventoryUi inventoryUI = new InventoryUi(scanner, productUseCase, ListProducts, currentUser,
+                        productRepository, userService);
+                inventoryUI.mostrarMenu();
+            }
+            case "CONSUMER" -> {
+                ConsumerUI consumerUI = new ConsumerUI(
+                        scanner,
+                        productUseCase,
+                        currentUser,
+                        ListProducts,
+                        ListSalesPorUsuario,
+                        ListInvoice,
+                        UpdatePassword,
+                        invoiceUseCase);
+                consumerUI.mostrarMenuPrincipal();
+            }
         }
+        this.currentUser = null;
     }
 
     private void Register() {

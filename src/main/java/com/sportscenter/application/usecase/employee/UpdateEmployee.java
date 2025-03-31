@@ -52,6 +52,6 @@ public class UpdateEmployee {
         sc.nextLine();
 
         employeeUseCase.updateEmployee(id, name, position, phone, userId);
-        System.out.println("🚀 Empleado actualizado exitosamente.");
+        System.out.println(":D Empleado actualizado exitosamente.");
     }
 }

@@ -14,6 +14,6 @@ public class DeleteCustomerOrder {
         sc.nextLine(); // limpiar buffer
 
         customerOrderUseCase.deleteCustomerOrder(id);
-        System.out.println("🚀 Orden de cliente eliminada exitosamente.");
+        System.out.println(":D Orden de cliente eliminada exitosamente.");
     }
 }

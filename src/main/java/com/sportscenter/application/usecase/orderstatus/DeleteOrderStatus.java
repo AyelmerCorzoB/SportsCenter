@@ -15,6 +15,6 @@ public class DeleteOrderStatus {
         sc.nextLine();
         
         orderStatusUseCase.deleteOrderStatus(id);
-        System.out.println("🚀 Estado de pedido eliminado exitosamente.");
+        System.out.println(":D Estado de pedido eliminado exitosamente.");
     }
 }

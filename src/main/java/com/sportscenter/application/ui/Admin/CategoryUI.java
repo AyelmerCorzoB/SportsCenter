@@ -7,20 +7,25 @@ import com.sportscenter.adapter.validations.ValidationInt;
 import com.sportscenter.application.usecase.category.*;
 
 public class CategoryUI {
+
     public static void mostrarMenu(Scanner sc, CategoryUseCase categoryUseCase) {
         int opcion;
         ConsoleUtils.clear();
         do {
-            String menuCategory = """
-                    ******** Category ********
-                    1. Registrar Category
-                    2. Obtener category por ID
-                    3. Listar todos los category
-                    4. Update un category
-                    5. Eliminar un category
-                    6. Salir...
+            String menu = """
+                    \n╔════════════════════════════╗
+                    ║      MENÚ CATEGORÍAS       ║
+                    ╠════════════════════════════╣
+                    ║ 1. Registrar categoría     ║
+                    ║ 2. Buscar categoría por ID ║
+                    ║ 3. Listar todas            ║
+                    ║ 4. Actualizar categoría    ║
+                    ║ 5. Eliminar categoría      ║
+                    ║ 6. Salir                   ║
+                    ╚════════════════════════════╝
                     Seleccione una opción:""";
-            System.out.print(menuCategory);
+            ConsoleUtils.clear();
+            System.out.print(menu);
 
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
@@ -52,6 +57,5 @@ public class CategoryUI {
             }
         } while (opcion != 6);
     }
-
 
 }

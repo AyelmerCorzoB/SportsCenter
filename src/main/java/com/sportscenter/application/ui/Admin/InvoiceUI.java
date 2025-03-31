@@ -13,14 +13,19 @@ public class InvoiceUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE FACTURAS ********");
-            System.out.println("1. Registrar factura");
-            System.out.println("2. Search factura por ID");
-            System.out.println("3. Listar todas las facturas");
-            System.out.println("4. Actualizar una factura");
-            System.out.println("5. Eliminar una factura");
-            System.out.println("6. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                        \n╔══════════════════════════════╗
+                        ║        MENÚ FACTURAS         ║
+                        ╠══════════════════════════════╣
+                        ║ 1. Registrar Factura         ║
+                        ║ 2. Buscar Factura por ID     ║
+                        ║ 3. Listar todas las Facturas ║
+                        ║ 4. Actualizar Factura        ║
+                        ║ 5. Eliminar Factura          ║
+                        ║ 6. Salir                     ║
+                        ╚══════════════════════════════╝
+                        Seleccione una opción:""";
+            System.out.print(menu);
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
             sc.nextLine();

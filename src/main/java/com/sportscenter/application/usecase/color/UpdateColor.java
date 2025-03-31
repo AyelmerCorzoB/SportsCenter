@@ -33,6 +33,6 @@ public class UpdateColor {
         }
 
         colorUseCase.updateColor(id, newName, newHexCode);
-        System.out.println("🚀 Color actualizado exitosamente.");
+        System.out.println(":D Color actualizado exitosamente.");
     }
 }

@@ -1,6 +1,8 @@
 package com.sportscenter.application.usecase.category;
 
 import java.util.Scanner;
+
+import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.validations.ValidationString;
 
 public class RegisterCategory {
@@ -12,6 +14,7 @@ public class RegisterCategory {
         String description = sc.nextLine();
         
         categoryUseCase.registerCategory(name, description);
-        System.out.println("🚀 Categoría registrada exitosamente.");
+        System.out.println(":D Categoría registrada exitosamente.");
+        ConsoleUtils.pressEnterToContinue(sc);
     }
 }

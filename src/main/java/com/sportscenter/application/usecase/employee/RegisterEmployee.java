@@ -23,6 +23,6 @@ public class RegisterEmployee {
         sc.nextLine(); // limpiar buffer
 
         employeeUseCase.registerEmployee(name, position, phone, userId);
-        System.out.println("🚀 Empleado registrado exitosamente.");
+        System.out.println(":D Empleado registrado exitosamente.");
     }
 }

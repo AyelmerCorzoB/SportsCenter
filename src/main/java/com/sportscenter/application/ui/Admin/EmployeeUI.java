@@ -11,14 +11,19 @@ public class EmployeeUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE EMPLEADOS ********");
-            System.out.println("1. Registrar empleado");
-            System.out.println("2. Search empleado por ID");
-            System.out.println("3. Listar todas los empleados");
-            System.out.println("4. Actualizar un empleado");
-            System.out.println("5. Eliminar una empleado");
-            System.out.println("6. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                        \n╔═══════════════════════════════╗
+                        ║        MENÚ EMPLEADOS         ║
+                        ╠═══════════════════════════════╣
+                        ║ 1. Registrar Empleado         ║
+                        ║ 2. Buscar Empleado por ID     ║
+                        ║ 3. Listar todos los empleados ║
+                        ║ 4. Actualizar Empleado        ║
+                        ║ 5. Eliminar Empleado          ║
+                        ║ 6. Salir                      ║
+                        ╚═══════════════════════════════╝
+                        Seleccione una opción:""";
+            System.out.print(menu);
 
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
@@ -33,6 +38,7 @@ public class EmployeeUI {
                     break;
                 case 3:
                     ListAllEmployees(employeeUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 4:
                     new UpdateEmployee().Update(sc, employeeUseCase);
@@ -51,25 +57,29 @@ public class EmployeeUI {
     }
     private static void ListAllEmployees(EmployeeUseCase employeeUseCase) {
         ConsoleUtils.clear();
-        System.out.println("\n--- LISTA DE EMPLEADOS ---");
+        System.out.println("\n╔════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                          LISTA DE EMPLEADOS                                ║");
+        System.out.println("╠═════╦══════════════════════╦════════════════╦══════════════╦═══════════════╣");
+        System.out.printf("║ %-3s ║ %-20s ║ %-14s ║ %-12s ║ %-13s ║%n",
+                "ID", "Nombre", "Posición", "Teléfono", "Usuario ID");
+        System.out.println("╠═════╬══════════════════════╬════════════════╬══════════════╬═══════════════╣");
     
         var employees = employeeUseCase.getAllEmployees();
     
         if (employees.isEmpty()) {
-            System.out.println("No hay empleados registrados.");
-            return;
+            System.out.println("║                          No hay empleados registrados.                        ║");
+        } else {
+            for (var employee : employees) {
+                System.out.printf("║ %-3d ║ %-20s ║ %-14s ║ %-12s ║ %-13d ║%n",
+                        employee.getId(),
+                        employee.getName(),
+                        employee.getPosition(),
+                        employee.getPhone(),
+                        employee.getUserId());
+            }
         }
-
-        System.out.printf("%-5s %-20s %-15s %-15s %-30s %-10s%n",
-                "ID", "Nombre", "Posición", "Teléfono", "Email", "Usuario ID");
     
-        for (var employee : employees) {
-            System.out.printf("%-5d %-20s %-15s %-15s %-30s %-10d%n",
-                    employee.getId(),
-                    employee.getName(),
-                    employee.getPosition(),
-                    employee.getPhone(),
-                    employee.getUserId());
-        }
+        System.out.println("╚═════╩══════════════════════╩════════════════╩══════════════╩═══════════════╝");
     }
+    
 }

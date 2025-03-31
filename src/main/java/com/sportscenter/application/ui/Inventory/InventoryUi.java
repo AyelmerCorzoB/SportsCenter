@@ -50,11 +50,11 @@ public class InventoryUi {
     }
 
     private void mostrarOpcionesMenu() {
-        System.out.println("1. List todos los productos");
+        System.out.println("1. Listar todos los productos");
         System.out.println("2. Agregar nuevo producto");
         System.out.println("3. Actualizar producto");
         System.out.println("4. Eliminar producto");
-        System.out.println("5. Search producto por ID");
+        System.out.println("5. Buscar producto por ID");
         System.out.println("6. Volver al menú principal");
         System.out.print("\nSeleccione una opción: ");
     }
@@ -101,4 +101,5 @@ public class InventoryUi {
         }
         return true;
     }
+    
 }

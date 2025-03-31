@@ -30,7 +30,7 @@ public class RegisterPurchasedetail {
 
         try {
             purchaseDetailUseCase.registerPurchaseDetail(purchaseId, productId, quantity, unitPrice);
-            System.out.println("🚀 Detalle de compra registrado exitosamente.");
+            System.out.println(":D Detalle de compra registrado exitosamente.");
         } catch (Exception e) {
             System.out.println("X Error al registrar detalle de compra: " + e.getMessage());
         }

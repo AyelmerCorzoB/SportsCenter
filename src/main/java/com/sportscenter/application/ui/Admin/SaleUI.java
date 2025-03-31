@@ -14,15 +14,20 @@ public class SaleUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE VENTAS ********");
-            System.out.println("1. Registrar venta");
-            System.out.println("2. Search venta por ID");
-            System.out.println("3. Listar todas las ventas");
-            System.out.println("4. Actualizar una venta");
-            System.out.println("5. Eliminar una venta");
-            System.out.println("6. Menú de detalles de venta");
-            System.out.println("7. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                    \n╔═══════════════════════════╗
+                    ║        MENÚ VENTAS        ║
+                    ╠═══════════════════════════╣
+                    ║ 1. Registrar Ventas       ║
+                    ║ 2. Buscar venta por ID    ║
+                    ║ 3. Listar todos           ║
+                    ║ 4. Actualizar venta       ║
+                    ║ 5. Eliminar venta         ║
+                    ║ 6. Menu de detalles       ║
+                    ║ 7. Salir                  ║
+                    ╚═══════════════════════════╝
+                    Seleccione una opción:""";
+            System.out.print(menu);
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
             sc.nextLine();
@@ -44,7 +49,7 @@ public class SaleUI {
                     DeleteSale.Delete(sc, saleUseCase);
                     break;
                 case 6:
-                    
+
                     SaleDetailUI.manejarMenuSaleDetail(sc, saleDetailUseCase);
                     break;
                 case 7:
@@ -58,25 +63,32 @@ public class SaleUI {
     }
 
     private static void ListTodasVentas(SaleUseCase saleUseCase) {
-        System.out.println("\n--- LISTA DE VENTAS ---");
-        List<Sale> ventas = saleUseCase.getAllSales();
-
-        if (ventas.isEmpty()) {
-            System.out.println("No hay ventas registradas");
-            return;
-        }
-
-        System.out.printf("%-5s %-10s %-12s %-15s %-10s %-10s%n",
+        System.out.println("\n╔════════════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                               LISTA DE VENTAS                                      ║");
+        System.out.println("╠═════╦════════════╦════════════╦════════════════╦════════════╦═══════════════╣");
+        System.out.printf("║ %-3s ║ %-10s ║ %-10s ║ %-14s ║ %-10s ║ %-13s ║%n",
                 "ID", "Cliente", "Fecha", "Método Pago", "Total", "Usuario");
-
-        for (Sale venta : ventas) {
-            System.out.printf("%-5d %-10d %-12s %-15d %-10.2f %-10d%n",
-                    venta.getId(),
-                    venta.getCustomerId(),
-                    venta.getSaleDate(),
-                    venta.getPaymentMethodId(),
-                    venta.getTotal(),
-                    venta.getUserId());
+        System.out.println("╠═════╬════════════╬════════════╬════════════════╬════════════╬═══════════════╣");
+        
+        List<Sale> ventas = saleUseCase.getAllSales();
+        
+        if (ventas.isEmpty()) {
+            System.out.println("║                          No hay ventas registradas                                ║");
+        } else {
+            for (Sale venta : ventas) {
+                System.out.printf("║ %-3d ║ %-10d ║ %-10s ║ %-14d ║ %-10.2f ║ %-13d ║%n",
+                        venta.getId(),
+                        venta.getCustomerId(),
+                        venta.getSaleDate(),
+                        venta.getPaymentMethodId(),
+                        venta.getTotal(),
+                        venta.getUserId());
+            }
         }
+        System.out.println("╚═════╩════════════╩════════════╩════════════════╩════════════╩═══════════════╝\n");
+    }
+    
+    public static void procesarNuevaVenta(Scanner sc, SaleUseCase saleUseCase) {
+        RegisterSale.Register(sc, saleUseCase);
     }
 }

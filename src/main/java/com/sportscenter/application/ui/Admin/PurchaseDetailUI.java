@@ -12,14 +12,19 @@ public class PurchaseDetailUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE DETALLES DE COMPRA ********");
-            System.out.println("1. Registrar detalle de compra");
-            System.out.println("2. Search detalle de compra por ID");
-            System.out.println("3. Listar todos los detalles de compra");
-            System.out.println("4. Actualizar un detalle de compra");
-            System.out.println("5. Eliminar un detalle de compra");
-            System.out.println("6. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                    \n╔════════════════════════════════════╗
+                    ║       MENÚ DETALLES DE COMPRA      ║
+                    ╠════════════════════════════════════╣
+                    ║ 1. Registrar Detalle de compra     ║
+                    ║ 2. Buscar detalle de compra por ID ║
+                    ║ 3. Listar todos los detalles       ║
+                    ║ 4. Actualizar detalle de compra    ║
+                    ║ 5. Eliminar detalle de compra      ║
+                    ║ 6. Salir                           ║
+                    ╚════════════════════════════════════╝
+                    Seleccione una opción:""";
+            System.out.print(menu);
 
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
@@ -55,7 +60,8 @@ public class PurchaseDetailUI {
         System.out.println("\n--- LISTA DE DETALLES DE COMPRA ---");
         // Aquí deberías implementar la lógica para mostrar los detalles
         // Por ejemplo:
-        // List<PurchaseDetail> detalles = purchaseDetailUseCase.getAllPurchaseDetails();
+        // List<PurchaseDetail> detalles =
+        // purchaseDetailUseCase.getAllPurchaseDetails();
         // detalles.forEach(System.out::println);
     }
 }

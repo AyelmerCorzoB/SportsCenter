@@ -46,6 +46,6 @@ public class UpdateSale {
         sc.nextLine();
 
         saleUseCase.updateSale(id, customerId, saleDate, paymentMethodId, total);
-        System.out.println("🚀 Venta actualizada exitosamente.");
+        System.out.println(":D Venta actualizada exitosamente.");
     }
 }

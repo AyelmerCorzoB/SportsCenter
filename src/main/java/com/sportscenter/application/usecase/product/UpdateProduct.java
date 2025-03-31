@@ -17,7 +17,7 @@ public class UpdateProduct {
         sc.nextLine();
 
         if (currentUser == null || currentUser.getId() <= 0) {
-            System.out.println("❌ No se ha iniciado sesión. Registre un producto como administrador.");
+            System.out.println(" No se ha iniciado sesión. Registre un producto como administrador.");
             return;
         }
 
@@ -25,11 +25,11 @@ public class UpdateProduct {
         try {
             existingProduct = productUseCase.getProductById(id);
             if (existingProduct == null) {
-                System.out.println("❌ No se encontró un producto con el ID " + id);
+                System.out.println(" No se encontró un producto con el ID " + id);
                 return;
             }
         } catch (Exception e) {
-            System.out.println("❌ Error al obtener el producto: " + e.getMessage());
+            System.out.println(" Error al obtener el producto: " + e.getMessage());
             return;
         }
 
@@ -210,9 +210,9 @@ public class UpdateProduct {
                     newDescription != null && newDescription.isEmpty() ? null : newDescription,
                     newUnitPrice, newSize, newCurrentStock, newMinimumStock,
                     entryDate, categoryId, supplierId, colorId, currentUser.getId());
-            System.out.println("🚀 Producto actualizado exitosamente.");
+            System.out.println(":D Producto actualizado exitosamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al actualizar producto: " + e.getMessage());
+            System.out.println(" Error al actualizar producto: " + e.getMessage());
         }
     }
 }

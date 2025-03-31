@@ -11,14 +11,19 @@ public class PurchaseUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE PURCHASE ********");
-            System.out.println("1. Registrar purchase");
-            System.out.println("2. Search purchase por ID");
-            System.out.println("3. Listar todas los purchase");
-            System.out.println("4. Actualizar un purchase");
-            System.out.println("5. Eliminar una purchase");
-            System.out.println("6. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                        \n╔══════════════════════════════╗
+                        ║        MENÚ Purchase         ║
+                        ╠══════════════════════════════╣
+                        ║ 1. Registrar Purchase        ║
+                        ║ 2. Buscar Purchase por ID    ║
+                        ║ 3. Listar todos              ║
+                        ║ 4. Actualizar Purchase       ║
+                        ║ 5. Eliminar Purchase         ║
+                        ║ 6. Salir                     ║
+                        ╚══════════════════════════════╝
+                        Seleccione una opción:""";
+            System.out.print(menu);
 
             ValidationInt.validate(sc);
             opcion = sc.nextInt();

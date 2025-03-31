@@ -51,7 +51,7 @@ public class RegisterCustomer {
         }
         try {
             customerUseCase.registerCustomer(typeId, name, identityDoc, email, phone, address, regDate);
-            System.out.println("🚀 Cliente registrado exitosamente.");
+            System.out.println(":D Cliente registrado exitosamente.");
         } catch (Exception e) {
             System.out.println("X Error al registrar cliente: " + e.getMessage());
         }

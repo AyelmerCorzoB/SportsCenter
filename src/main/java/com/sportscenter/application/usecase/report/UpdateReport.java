@@ -67,7 +67,7 @@ public class UpdateReport {
 
             // Guardar cambios
             reportUseCase.updateReport(report);
-            System.out.println("🚀 Reporte actualizado exitosamente.");
+            System.out.println(":D Reporte actualizado exitosamente.");
         } catch (Exception e) {
             System.out.println("X Error al actualizar el reporte: " + e.getMessage());
         }

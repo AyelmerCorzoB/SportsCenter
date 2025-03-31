@@ -38,7 +38,7 @@ public class UpdatePurchaseStatus {
         
         try {
             purchaseStatusUseCase.updatePurchaseStatus(id, newStatusName, newDescription.isEmpty() ? null : newDescription);
-            System.out.println("🚀 Estado de compra actualizado exitosamente.");
+            System.out.println(":D Estado de compra actualizado exitosamente.");
 
         } catch (Exception e) {
             System.out.println("X Error al actualizar el estado de venta: " + e.getMessage());

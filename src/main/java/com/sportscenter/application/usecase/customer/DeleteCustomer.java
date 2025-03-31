@@ -14,6 +14,6 @@ public class DeleteCustomer {
         sc.nextLine(); // limpiar buffer
 
         customerUseCase.deleteCustomer(id);
-        System.out.println("🚀 Cliente eliminado exitosamente.");
+        System.out.println(":D Cliente eliminado exitosamente.");
     }
 }

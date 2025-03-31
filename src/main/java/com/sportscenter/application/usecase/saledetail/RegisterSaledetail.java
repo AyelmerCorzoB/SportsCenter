@@ -32,7 +32,7 @@ public class RegisterSaledetail {
 
         try {
             saleDetailUseCase.registerSaleDetail(saleId, productId, quantity, unitPrice);
-            System.out.println("🚀 Detalle de venta registrado exitosamente.");
+            System.out.println(":D Detalle de venta registrado exitosamente.");
         } catch (Exception e) {
             System.out.println("X Error al registrar detalle de venta: " + e.getMessage());
         }

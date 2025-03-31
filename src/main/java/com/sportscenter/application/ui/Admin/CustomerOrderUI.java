@@ -11,16 +11,20 @@ public class CustomerOrderUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            String menuCustomerOrder = """
-                    ******** CustomerOrder ********
-                    1. Registrar CustomerOrder
-                    2. Obtener customerOrder por ID
-                    3. Listar todos los customerOrder
-                    4. Update un customerOrder
-                    5. Eliminar un customerOrder
-                    6. Salir...
-                    Seleccione una opción:""";
-            System.out.print(menuCustomerOrder);
+            String menu = """
+                        \n╔═══════════════════════════════╗
+                        ║       MENÚ CUSTOMER ORDER      ║
+                        ╠════════════════════════════════╣
+                        ║ 1. Registrar CustomerOrder     ║
+                        ║ 2. Buscar customerOrder por ID ║
+                        ║ 3. Listar todos                ║
+                        ║ 4. Actualizar customerOrder    ║
+                        ║ 5. Eliminar customerOrder      ║
+                        ║ 6. Salir                       ║
+                        ╚════════════════════════════════╝
+                        Seleccione una opción:""";
+            
+            System.out.print(menu);
 
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
@@ -41,7 +45,7 @@ public class CustomerOrderUI {
                     new UpdateCustomerorder().Update(sc, customerOrderUseCase);
                     break;
                 case 5:
-                    new DeleteCustomerOrder().Delete(sc, customerOrderUseCase); 
+                    new DeleteCustomerOrder().Delete(sc, customerOrderUseCase);
                     break;
                 case 6:
                     System.out.println("Saliendo....");

@@ -33,7 +33,7 @@ public class UpdateSaleDetail {
         sc.nextLine();
 
         saleDetailUseCase.updateSaleDetail(id, quantity, unitPrice);
-        System.out.println("🚀 Detalle actualizado exitosamente.");
+        System.out.println(":D Detalle actualizado exitosamente.");
     }
 
     private static void mostrarDetalle(SaleDetail detalle) {

@@ -36,7 +36,7 @@ public class RegisterReport {
         try {
             reportUseCase.generateReport(tipo, userId, filePath,
                     parameters.isEmpty() ? null : parameters);
-            System.out.println("🚀 Reporte registrado exitosamente.");
+            System.out.println(":D Reporte registrado exitosamente.");
             System.out.println("Ubicación: " + filePath);
         } catch (Exception e) {
             System.out.println("X Error al registrar el reporte: " + e.getMessage());

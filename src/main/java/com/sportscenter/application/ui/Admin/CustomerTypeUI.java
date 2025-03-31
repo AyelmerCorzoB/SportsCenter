@@ -13,13 +13,16 @@ public class CustomerTypeUI {
         ConsoleUtils.clear();
         do {
             String menuCustomerType = """
-                    ******** CustomerType ********
-                    1. Registrar CustomerType
-                    2. Obtener customerType por ID
-                    3. Listar todos los customerType
-                    4. Update un customerType
-                    5. Eliminar un customerType
-                    6. Salir...
+                    \n╔═══════════════════════════════════╗
+                    ║           MENU CustomerType       ║
+                    ╠═══════════════════════════════════╣
+                    ║ 1. Registrar CustomerType         ║
+                    ║ 2. Obtener customerType por ID    ║
+                    ║ 3. Listar todos los customerType  ║
+                    ║ 4. Update un customerType         ║
+                    ║ 5. Eliminar un customerType       ║
+                    ║ 6. Salir...                       ║
+                    ╚═══════════════════════════════════╝
                     Seleccione una opción:""";
             System.out.print(menuCustomerType);
 

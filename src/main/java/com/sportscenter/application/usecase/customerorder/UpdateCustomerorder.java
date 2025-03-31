@@ -19,8 +19,29 @@ public class UpdateCustomerorder {
         int customerId = sc.nextInt();
         sc.nextLine();
 
-        System.out.print("Fecha de la orden (AAAA-MM-DD): ");
-        LocalDate orderDate = LocalDate.parse(sc.nextLine());
+        LocalDate orderDate;
+        System.out.print("¿Desea ingresar una fecha personalizada? (S/N): ");
+        String opcionFecha = sc.nextLine().trim().toUpperCase();
+
+        if (opcionFecha.equals("S")) {
+            while (true) {
+                try {
+                    System.out.print("Ingrese fecha (YYYY-MM-DD): ");
+                    String orderDateStr = sc.nextLine();
+                    orderDate = LocalDate.parse(orderDateStr);
+                    if (orderDate.isAfter(LocalDate.now())) {
+                        System.out.println("La fecha no puede ser futura");
+                        continue;
+                    }
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Formato de fecha inválido. Use YYYY-MM-DD");
+                }
+            }
+        } else {
+            orderDate = LocalDate.now();
+            System.out.println("Se asignará la fecha actual: " + orderDate);
+        }
 
         System.out.print("ID del estado: ");
         ValidationInt.validate(sc);
@@ -32,6 +53,6 @@ public class UpdateCustomerorder {
         sc.nextLine(); // limpiar buffer
 
         customerOrderUseCase.updateCustomerOrder(id, customerId, orderDate, statusId, total);
-        System.out.println("🚀 Orden de cliente actualizada exitosamente.");
+        System.out.println(":D Orden de cliente actualizada exitosamente.");
     }
 }

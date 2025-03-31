@@ -16,7 +16,7 @@ public class SearchPurchaseStatus {
 
         try {
             PurchaseStatus status = purchaseStatusUseCase.getPurchaseStatusById(id);
-            System.out.println("🚀 Estado de compra actualizado exitosamente.");
+            System.out.println(":D Estado de compra actualizado exitosamente.");
             if (status != null) {
                 System.out.println("\nInformación del estado:");
                 System.out.println("ID: " + status.getId());

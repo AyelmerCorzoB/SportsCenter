@@ -14,6 +14,6 @@ public class DeleteCustomerType {
         sc.nextLine();
         
         customerTypeUseCase.deleteCustomerType(id);
-        System.out.println("🚀 Tipo de cliente eliminado exitosamente.");
+        System.out.println(":D Tipo de cliente eliminado exitosamente.");
     }
 }

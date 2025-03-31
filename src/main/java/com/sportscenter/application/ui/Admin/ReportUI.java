@@ -11,14 +11,20 @@ public class ReportUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE REPORTES ********");
-            System.out.println("1. Registrar reporte");
-            System.out.println("2. Search reporte por ID");
-            System.out.println("3. Listar todos los reportes");
-            System.out.println("4. Actualizar un reporte");
-            System.out.println("5. Eliminar un reporte");
-            System.out.println("6. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                        \n╔══════════════════════════════╗
+                        ║        MENÚ REPORTES         ║
+                        ╠══════════════════════════════╣
+                        ║ 1. Registrar REPORTE         ║
+                        ║ 2. Buscar reporte por ID     ║
+                        ║ 3. Listar todos los repottes ║
+                        ║ 4. Actualizar reporte        ║
+                        ║ 5. Eliminar reporte          ║
+                        ║ 6. Salir                     ║
+                        ╚══════════════════════════════╝
+                        Seleccione una opción:""";
+            System.out.print(menu);
+
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
             sc.nextLine();

@@ -11,14 +11,19 @@ public class OrderStatusUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE ORDERSTATUS ********");
-            System.out.println("1. Registrar orderstatus");
-            System.out.println("2. Search orderstatus por ID");
-            System.out.println("3. Listar todas los orderstatus");
-            System.out.println("4. Actualizar un orderstatus");
-            System.out.println("5. Eliminar una orderstatus");
-            System.out.println("6. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                        \n╔══════════════════════════════════╗
+                        ║          MENÚ ORDERSTATUS        ║
+                        ╠══════════════════════════════════╣
+                        ║ 1. Registrar Estado de orden     ║
+                        ║ 2. Buscar Estado de orden por ID ║
+                        ║ 3. Listar todos los estados      ║
+                        ║ 4. Actualizar Estado de orden    ║
+                        ║ 5. Eliminar Estado de orden      ║
+                        ║ 6. Salir                         ║
+                        ╚══════════════════════════════════╝
+                        Seleccione una opción:""";
+            System.out.print(menu);
 
             ValidationInt.validate(sc);
             opcion = sc.nextInt();

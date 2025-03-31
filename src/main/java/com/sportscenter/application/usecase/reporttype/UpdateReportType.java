@@ -37,6 +37,6 @@ public class UpdateReportType {
         String newDescription = sc.nextLine();
         
         reportTypeUseCase.updateReportType(id, newTypeName, newDescription.isEmpty() ? null : newDescription);
-        System.out.println("🚀 Tipo de reporte actualizado exitosamente.");
+        System.out.println(":D Tipo de reporte actualizado exitosamente.");
     }
 }

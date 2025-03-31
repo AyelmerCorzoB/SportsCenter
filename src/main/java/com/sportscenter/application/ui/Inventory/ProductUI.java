@@ -3,7 +3,6 @@
 import java.util.List;
 import java.util.Scanner;
 import com.sportscenter.adapter.global.ConsoleUtils;
-import com.sportscenter.adapter.validations.ValidationInt;
 import com.sportscenter.application.usecase.product.*;
 import com.sportscenter.domain.entities.Product;
 import com.sportscenter.domain.entities.User;
@@ -13,6 +12,7 @@ public class ProductUI {
     private final ProductUseCase productUseCase;
     private final Scanner scanner;
     private final UserService userService;
+    private User currentUser;
 
     public ProductUI(Scanner scanner, ProductUseCase productUseCase, UserService userService) {
         this.scanner = scanner;
@@ -20,27 +20,20 @@ public class ProductUI {
         this.userService = userService;
     }
 
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+    }
+
     public void agregarProducto() {
-        User currentUser = userService.getCurrentUser();
-        if(currentUser == null) {
-            System.out.println("❌ Error: Debes iniciar sesión para agregar productos");
-            return;
-        }
-        
-        new RegisterProduct().Register(scanner, productUseCase, currentUser);
+        new RegisterProduct().Register(scanner, productUseCase, this.currentUser);
+    }
+
+    public void UpdateProducto() {
+        new UpdateProduct().Update(scanner, productUseCase, currentUser);
     }
 
     public void SearchProductoPorId() {
         new SearchProduct().Search(scanner, productUseCase);
-    }
-
-    public void UpdateProducto() {
-        User currentUser = userService.getCurrentUser();
-        if(currentUser == null) {
-            System.out.println("❌ Error: Debes iniciar sesión para agregar productos");
-            return;
-        }
-        new UpdateProduct().Update(scanner, productUseCase,currentUser);
     }
 
     public void DeleteProducto() {
@@ -84,26 +77,32 @@ public class ProductUI {
 
     public void mostrarMenu() {
         boolean volver = false;
+        
         while (!volver) {
             ConsoleUtils.clear();
-            System.out.println("\n=== MENÚ DE PRODUCTOS ===");
-            System.out.println("1. Listar productos");
-            System.out.println("2. Agregar producto");
-            System.out.println("3. Search producto por ID");
-            System.out.println("4. Actualizar producto");
-            System.out.println("5. Eliminar producto");
-            System.out.println("6. Volver al menú anterior");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                        \n╔═════════════════════════════╗
+                        ║       MENÚ PRODUCTOS        ║
+                        ╠═════════════════════════════╣
+                        ║ 1. Registrar PRODUCTOS      ║
+                        ║ 2. Buscar PRODUCTOS por ID  ║
+                        ║ 3. Listar todos             ║
+                        ║ 4. Actualizar PRODUCTOS     ║
+                        ║ 5. Eliminar PRODUCTOS       ║
+                        ║ 6. Salir                    ║
+                        ╚═════════════════════════════╝
+                        Seleccione una opción:""";
+            System.out.print(menu);
 
             int opcion = scanner.nextInt();
             scanner.nextLine();
 
             switch (opcion) {
-                case 1 -> ListProductos();
-                case 2 -> agregarProducto();
-                case 3 -> SearchProductoPorId();
-                case 4 -> UpdateProducto();
-                case 5 -> DeleteProducto();
+                case 1 -> this.ListProductos();
+                case 2 -> this.agregarProducto();
+                case 3 -> this.SearchProductoPorId();
+                case 4 -> this.UpdateProducto();
+                case 5 -> this.DeleteProducto();
                 case 6 -> volver = true;
                 default -> System.out.println("Opción inválida");
             }

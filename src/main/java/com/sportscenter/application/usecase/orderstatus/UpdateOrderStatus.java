@@ -39,6 +39,6 @@ public class UpdateOrderStatus {
         String newDescription = sc.nextLine();
         
         orderStatusUseCase.updateOrderStatus(id, newStatusName, newDescription.isEmpty() ? null : newDescription);
-        System.out.println("🚀 Estado de pedido actualizado exitosamente.");
+        System.out.println(":D Estado de pedido actualizado exitosamente.");
     }
 }

@@ -32,6 +32,6 @@ public class RegisterPaymentMethod {
         String description = sc.nextLine();
 
         paymentMethodUseCase.registerPaymentMethod(methodName, description.isEmpty() ? null : description);
-        System.out.println("🚀 Método de pago registrado exitosamente.");
+        System.out.println(":D Método de pago registrado exitosamente.");
     }
 }

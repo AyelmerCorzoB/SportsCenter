@@ -32,7 +32,7 @@ public class UpdatePurchase {
 
         try {
             purchaseUseCase.updatePurchase(id, date, supplierId, statusId);
-            System.out.println("🚀 Compra actualizada exitosamente.");
+            System.out.println(":D Compra actualizada exitosamente.");
         } catch (Exception e) {
             System.out.println("X Error al actualizar compra: " + e.getMessage());
         }

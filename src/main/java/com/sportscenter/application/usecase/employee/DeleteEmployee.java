@@ -13,6 +13,6 @@ public class DeleteEmployee {
         sc.nextLine(); // limpiar buffer
 
         employeeUseCase.deleteEmployee(id);
-        System.out.println("🚀 Empleado eliminado exitosamente.");
+        System.out.println(":D Empleado eliminado exitosamente.");
     }
 }

@@ -34,6 +34,6 @@ public class UpdateCustomer {
         String address = sc.nextLine();
 
         customerUseCase.updateCustomer(id, customerTypeId, name, identityDocument, email, phone, address);
-        System.out.println("🚀 Cliente actualizado exitosamente.");
+        System.out.println(":D Cliente actualizado exitosamente.");
     }
 }

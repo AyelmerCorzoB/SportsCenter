@@ -11,14 +11,19 @@ public class CustomerUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE CLIENTES ********");
-            System.out.println("1. Registrar cliente");
-            System.out.println("2. Search cliente por ID");
-            System.out.println("3. Listar todas las órdenes");
-            System.out.println("4. Actualizar una cliente");
-            System.out.println("5. Eliminar una cliente");
-            System.out.println("6. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                    \n╔══════════════════════════════╗
+                    ║          MENÚ CLIENTES       ║
+                    ╠══════════════════════════════╣
+                    ║ 1. Registrar CLIENTE         ║
+                    ║ 2. Buscar Cliente por ID     ║
+                    ║ 3. Listar todos los Clientes ║
+                    ║ 4. Actualizar Cliente        ║
+                    ║ 5. Eliminar Cliente          ║
+                    ║ 6. Salir                     ║
+                    ╚══════════════════════════════╝
+                    Seleccione una opción:""";
+            System.out.print(menu);
 
             ValidationInt.validate(sc);
             opcion = sc.nextInt();

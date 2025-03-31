@@ -14,6 +14,6 @@ public class DeleteReport {
         sc.nextLine();
 
         reportUseCase.deleteReport(id);
-        System.out.println("🚀 Reporte eliminado exitosamente.");
+        System.out.println(":D Reporte eliminado exitosamente.");
     }
 }

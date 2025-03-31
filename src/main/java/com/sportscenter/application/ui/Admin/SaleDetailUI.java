@@ -13,14 +13,20 @@ public class SaleDetailUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE DETALLES DE VENTA ********");
-            System.out.println("1. Registrar detalle de venta");
-            System.out.println("2. Search detalles por ID de venta");
-            System.out.println("3. Listar todos los detalles de venta");
-            System.out.println("4. Actualizar un detalle de venta");
-            System.out.println("5. Eliminar detalles de venta");
-            System.out.println("6. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                        \n╔═══════════════════════════════════╗
+                        ║        MENÚ DETALLES DE VENTA     ║
+                        ╠═══════════════════════════════════╣
+                        ║ 1. Registrar DETALLES DE VENTA    ║
+                        ║ 2. Buscar detalle de venta por ID ║
+                        ║ 3. Listar todos                   ║
+                        ║ 4. Actualizar detalle de venta    ║
+                        ║ 5. Eliminar detalle de venta      ║
+                        ║ 6. Salir                          ║
+                        ╚═══════════════════════════════════╝
+                        Seleccione una opción:""";
+            System.out.print(menu);
+
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
             sc.nextLine();

@@ -11,14 +11,19 @@ public class PurchaseStatusUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE PURCHASESTATUS ********");
-            System.out.println("1. Registrar purchaseStatus");
-            System.out.println("2. Search purchaseStatus por ID");
-            System.out.println("3. Listar todas los purchaseStatus");
-            System.out.println("4. Actualizar un purchaseStatus");
-            System.out.println("5. Eliminar una purchaseStatus");
-            System.out.println("6. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                        \n╔═════════════════════════════════╗
+                        ║       MENÚ PURCHASESTATUS       ║
+                        ╠═════════════════════════════════╣
+                        ║ 1. Registrar PURCHASESTATUS     ║
+                        ║ 2. Buscar PURCHASESTATUS por ID ║
+                        ║ 3. Listar todos                 ║
+                        ║ 4. Actualizar PURCHASESTATUS    ║
+                        ║ 5. Eliminar PURCHASESTATUS      ║
+                        ║ 6. Salir                        ║
+                        ╚═════════════════════════════════╝
+                        Seleccione una opción:""";
+            System.out.print(menu);
 
             ValidationInt.validate(sc);
             opcion = sc.nextInt();

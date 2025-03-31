@@ -14,6 +14,6 @@ public class DeletePaymentMethod {
         sc.nextLine();
         
         paymentMethodUseCase.deletePaymentMethod(id);
-        System.out.println("🚀 Método de pago eliminado exitosamente.");
+        System.out.println(":D Método de pago eliminado exitosamente.");
     }
 }

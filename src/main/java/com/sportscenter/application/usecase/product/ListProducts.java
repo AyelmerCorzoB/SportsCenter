@@ -8,7 +8,6 @@ import com.sportscenter.domain.repository.ProductRepository;
 
 public class ListProducts {
     public ListProducts(ProductRepository productRepository) {
-        //TODO Auto-generated constructor stub
     }
 
     public void List(ProductUseCase productUseCase) {

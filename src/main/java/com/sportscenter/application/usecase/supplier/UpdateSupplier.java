@@ -38,7 +38,7 @@ public class UpdateSupplier {
 
         try {
             supplierUseCase.updateSupplier(id, newName, newPhone, newEmail, newAddress, newTaxId);
-        System.out.println("🚀 Proveedor actualizado exitosamente.");
+        System.out.println(":D Proveedor actualizado exitosamente.");
 
         } catch (Exception e) {
             System.out.println("X Error al actualizar el proveedor: " + e.getMessage());

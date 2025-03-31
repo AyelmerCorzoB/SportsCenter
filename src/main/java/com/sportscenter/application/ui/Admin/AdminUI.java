@@ -5,8 +5,11 @@ import com.sportscenter.domain.entities.User;
 import com.sportscenter.domain.service.UserService;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class AdminUI {
     private final Scanner scanner;
@@ -22,12 +25,17 @@ public class AdminUI {
     public void mostrarMenu() {
         while (true) {
             ConsoleUtils.clear();
-            System.out.println("\n--- Panel de Administración ---");
-            System.out.println("Usuario actual: " + currentUser.getUsername() + " (" + currentUser.getRole() + ")");
-            System.out.println("1. Registrar nuevo usuario administrativo");
-            System.out.println("2. Listar todos los usuarios");
-            System.out.println("3. Panel de control");
-            System.out.println("4. Cerrar sesion");
+            System.out.println("\n╔════════════════════════════════════════════╗");
+            System.out.println("║          PANEL DE ADMINISTRACIÓN           ║");
+            System.out.println("╣                                            ╣");
+            System.out.printf("║ Usuario actual: %-26s ║%n",
+                    currentUser.getUsername() + " (" + currentUser.getRole() + ")");
+            System.out.println("╠════════════════════════════════════════════╣");
+            System.out.println("║ 1. Registrar nuevo usuario administrativo  ║");
+            System.out.println("║ 2. Listar todos los usuarios               ║");
+            System.out.println("║ 3. Panel de control                        ║");
+            System.out.println("║ 4. Cerrar sesión                           ║");
+            System.out.println("╚════════════════════════════════════════════╝");
             System.out.print("Elija una opción: ");
 
             int option = obtenerOpcionValida();
@@ -41,118 +49,126 @@ public class AdminUI {
                 }
                 default -> System.out.println("Opción inválida.");
             }
-            
+
             ConsoleUtils.pressEnterToContinue(scanner);
         }
     }
 
     private int obtenerOpcionValida() {
-        try {
-            while (!scanner.hasNextInt()) {
-                System.out.println("Por favor, ingrese un número válido.");
-                scanner.next();
-            }
-            int opcion = scanner.nextInt();
-            scanner.nextLine();
-            return opcion;
-        } catch (NoSuchElementException e) {
-            System.out.println("Error al leer la entrada. Volviendo al menú principal.");
-            return 4;
-        }
+        return Optional.of(scanner)
+                .filter(s -> s.hasNextInt())
+                .map(s -> {
+                    int opcion = s.nextInt();
+                    s.nextLine();
+                    return opcion;
+                })
+                .orElseGet(() -> {
+                    System.out.println("Por favor, ingrese un número válido.");
+                    scanner.next();
+                    return obtenerOpcionValida();
+                });
     }
 
     private void mostrarPanelControl() {
-        ControlAdminUi controlAdmin = new ControlAdminUi();
-        controlAdmin.start();}
+        ControlAdminUi adminUi = new ControlAdminUi(scanner, userService, currentUser);
+        adminUi.start();
+    }
 
     private void RegisterAdminUser() {
         ConsoleUtils.clear();
-        System.out.println("\n--- Registro de usuario administrativo ---");
-        
-        try {
-            User adminUser = solicitarDatosAdmin();
-            User registeredUser = userService.register(adminUser, true);
-            
-            if (registeredUser != null) {
-                System.out.println("\n🚀 Usuario administrativo registrado con éxito!");
-                System.out.println("|------------------------------|");
-                System.out.printf("| %-15s: %-10s |\n", "ID", registeredUser.getId());
-                System.out.printf("| %-15s: %-10s |\n", "Usuario", registeredUser.getUsername());
-                System.out.printf("| %-15s: %-10s |\n", "Rol", registeredUser.getRole());
-                System.out.println("|------------------------------|");
-            }
-        } catch (Exception e) {
-            System.out.println("\nX Error durante el registro: " + e.getMessage());
-        }
+        System.out.println("\n╔═════════════════════════════════════════╗");
+        System.out.println("║    Registro de usuario administrativo   ║");
+        System.out.println("╠═════════════════════════════════════════╣");
+        Optional.ofNullable(solicitarDatosAdmin())
+                .map(adminUser -> userService.register(adminUser, true))
+                .ifPresentOrElse(
+                        registeredUser -> {
+
+                            System.out.println("╔══════════════════════════════╗");
+                            System.out.println("║     Registrado con éxito!    ║");
+                            System.out.println("╠══════════════════════════════╣");
+                            System.out.printf("║ %-15s ║ %-10s ║%n", "ID", registeredUser.getId());
+                            System.out.printf("║ %-15s ║ %-10s ║%n", "Usuario", registeredUser.getUsername());
+                            System.out.printf("║ %-15s ║ %-10s ║%n", "Rol", registeredUser.getRole());
+                            System.out.println("╚══════════════════════════════╝");
+
+                        },
+                        () -> System.out.println("\nX Error durante el registro"));
+    }
+
+    private String solicitarInput(String mensaje, Predicate<String> validador) {
+        String input;
+        do {
+            System.out.print(mensaje);
+            input = scanner.nextLine().trim();
+        } while (!validador.test(input));
+        return input;
     }
 
     private User solicitarDatosAdmin() {
-        String username;
-        do {
-            System.out.print("Username (mín. 3 caracteres): ");
-            username = scanner.nextLine().trim();
-        } while (username.length() < 3);
-        
-        String password;
-        do {
-            System.out.print("Password (mín. 8 caracteres): ");
-            password = scanner.nextLine().trim();
-        } while (password.length() < 8);
-        
+        String username = solicitarInput(
+                "║ Username (mín. 3 caracteres): ",
+                s -> s.length() >= 3);
+
+        String password = solicitarInput(
+                "║ Password (mín. 8 caracteres): ",
+                s -> s.length() >= 8);
+
         String role = seleccionarRol();
-        
+
         return new User(username, password, role);
     }
-    
+
     private String seleccionarRol() {
-        System.out.println("\nSeleccione el rol:");
-        System.out.println("1. ADMIN");
-        System.out.println("2. CASHIER");
-        System.out.println("3. INVENTORY");
-        System.out.print("Opción: ");
+        System.out.println("║ Seleccione el rol:");
+        System.out.println("║ 1. ADMIN");
+        System.out.println("║ 2. CASHIER");
+        System.out.println("║ 3. INVENTORY");
+        System.out.print("║ Opción: ");
 
-        int roleOption = obtenerOpcionValida();
+        Map<Integer, Supplier<String>> roleSuppliers = Map.of(
+                1, () -> "ADMIN",
+                2, () -> "CASHIER",
+                3, () -> "INVENTORY");
 
-        return switch (roleOption) {
-            case 1 -> "ADMIN";
-            case 2 -> "CASHIER";
-            case 3 -> "INVENTORY";
-            default -> {
-                System.out.println("Opción inválida. Se asignará rol CASHIER por defecto.");
-                yield "CASHIER";
-            }
-        };
+        return Optional.ofNullable(roleSuppliers.get(obtenerOpcionValida()))
+                .map(Supplier::get)
+                .orElseGet(() -> {
+                    System.out.println("Opción inválida. Se asignará rol CASHIER por defecto.");
+                    return "CASHIER";
+                });
     }
 
     private void ListUsuarios() {
         ConsoleUtils.clear();
-        System.out.println("\n--- Listado de Usuarios ---");
-        
+        System.out.println("");
+        System.out.println("╔════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                         LISTADO DE USUARIOS                            ║");
+        System.out.println("╠════╦══════════════════╦════════════════════╦═════════════╦═════════════╣");
+        System.out.println("║ ID ║ Username         ║ Fecha Creación     ║ Rol         ║ Activo      ║");
+        System.out.println("╠════╬══════════════════╬════════════════════╬═════════════╬═════════════╣");
+
         try {
             List<User> users = userService.getAllUsers();
-            
+
             if (users.isEmpty()) {
-                System.out.println("No hay usuarios registrados.");
+                System.out.println("║                       No hay usuarios registrados.                      ║");
+                System.out.println("╚═════════════════════════════════════════════════════════════════════════╝");
                 return;
             }
-            
-            System.out.println("|------------------------------------------------------------------------|");
-            System.out.println("| ID  | Username           | Fecha Creación     | Rol      | Activo      |");
-            System.out.println("|------------------------------------------------------------------------|");
-            
-            for (User user : users) {
-                System.out.printf("| %-3d | %-18s | %-18s | %-8s | %-12s |\n",
+
+            users.forEach(user -> System.out.printf(
+                    "║ %-2d ║ %-16s ║ %-18s ║ %-10s  ║ %-11s ║%n",
                     user.getId(),
                     user.getUsername(),
                     user.getCreated_at().toString().substring(0, 16),
                     user.getRole(),
-                    user.isActive() ? "Sí" : "No");
-            }
-            
-            System.out.println("|-------------------------------------------------------------------------|");
-            System.out.println("\nTotal de usuarios: " + users.size());
+                    user.isActive() ? "Sí" : "No"));
+            System.out.println("╚════╩══════════════════╩════════════════════╩═════════════╩═════════════╝");
+            System.out.println("Total de usuarios: " + users.size());
         } catch (Exception e) {
-            System.out.println("X Error al obtener la lista de usuarios: " + e.getMessage());
+            System.out.println(" Error al obtener la lista de usuarios: " + e.getMessage());
         }
     }
+
 }

@@ -15,7 +15,7 @@ public class DeletePurchase {
         
         try {
             purchaseUseCase.deletePurchase(id);
-            System.out.println("🚀 Compra eliminada exitosamente.");
+            System.out.println(":D Compra eliminada exitosamente.");
         } catch (Exception e) {
             System.out.println("X Error al eliminar compra: " + e.getMessage());
         }

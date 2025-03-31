@@ -14,6 +14,6 @@ public class DeleteSale {
         sc.nextLine();
 
         saleUseCase.deleteSale(id);
-        System.out.println("🚀 Venta eliminada exitosamente.");
+        System.out.println(":D Venta eliminada exitosamente.");
     }
 }

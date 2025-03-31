@@ -36,6 +36,6 @@ public class RegisterSale {
         sc.nextLine();
 
         saleUseCase.registerSale(customerId, saleDate, paymentMethodId, total, userId);
-        System.out.println("🚀 Venta registrada exitosamente.");
+        System.out.println(":D Venta registrada exitosamente.");
     }
 }

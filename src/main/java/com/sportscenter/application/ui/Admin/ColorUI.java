@@ -12,14 +12,17 @@ public class ColorUI {
         ConsoleUtils.clear();
         do {
             String menuColor = """
-                    ******** Color ********
-                    1. Registrar Color
-                    2. Obtener color por ID
-                    3. Listar todos los color
-                    4. Update un color
-                    5. Eliminar un color
-                    6. Salir...
-                    Seleccione una opción:""";
+                        \n╔═══════════════════════════╗
+                        ║        MENÚ COLOR         ║
+                        ╠═══════════════════════════╣
+                        ║ 1. Registrar Color        ║
+                        ║ 2. Buscar color por ID    ║
+                        ║ 3. Listar todos           ║
+                        ║ 4. Actualizar color       ║
+                        ║ 5. Eliminar color         ║
+                        ║ 6. Salir                  ║
+                        ╚═══════════════════════════╝
+                        Seleccione una opción:""";
             System.out.print(menuColor);
 
             ValidationInt.validate(sc);
@@ -32,7 +35,7 @@ public class ColorUI {
                     new RegisterColor().Register(sc, colorUseCase);
                     break;
                 case 2:
-                    new SearchColor().Search(sc, colorUseCase);    
+                    new SearchColor().Search(sc, colorUseCase);
                     break;
                 case 3:
                     colorUseCase.getAllColors();

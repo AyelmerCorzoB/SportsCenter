@@ -13,14 +13,19 @@ public class SupplierUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE VENTAS ********");
-            System.out.println("1. Registrar venta");
-            System.out.println("2. Search venta por ID");
-            System.out.println("3. Listar todas las ventas");
-            System.out.println("4. Actualizar una venta");
-            System.out.println("5. Eliminar una venta");
-            System.out.println("6. Menú de detalles de venta");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                        \n╔═════════════════════════════╗
+                        ║       MENÚ PROVEEDORES      ║
+                        ╠═════════════════════════════╣
+                        ║ 1. Registrar Proveedor      ║
+                        ║ 2. Buscar Proveedor por ID  ║
+                        ║ 3. Listar todos             ║
+                        ║ 4. Actualizar Proveedor     ║
+                        ║ 5. Eliminar Proveedor       ║
+                        ║ 6. Salir                    ║
+                        ╚═════════════════════════════╝
+                        Seleccione una opción:""";
+            System.out.print(menu);
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
             sc.nextLine();

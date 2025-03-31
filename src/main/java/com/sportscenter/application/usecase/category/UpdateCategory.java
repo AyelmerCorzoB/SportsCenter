@@ -32,6 +32,7 @@ public class UpdateCategory {
         String newDescription = sc.nextLine();
 
         categoryUseCase.updateCategory(id, newName, newDescription.isEmpty() ? null : newDescription);
-        System.out.println("🚀 Categoría actualizada exitosamente.");
+        System.out.println(":D Categoría actualizada exitosamente.");
+        ConsoleUtils.pressEnterToContinue(sc);
     }
 }

@@ -9,13 +9,10 @@ import com.sportscenter.domain.entities.User;
 public class RegisterProduct {
 
     public void Register(Scanner sc, ProductUseCase productUseCase, User currentUser) {
+        
         System.out.println("\n=== REGISTRO DE PRODUCTO ===");
 
-        if (currentUser == null || currentUser.getId() <= 0) {
-            System.out.println("❌ No se ha iniciado sesión. Registre un producto como administrador.");
-            return;
-        }
-
+        
         System.out.print("Nombre: ");
         String name = sc.nextLine();
         while (name.trim().isEmpty()) {
@@ -136,9 +133,9 @@ public class RegisterProduct {
                     supplierId,
                     colorId,
                     currentUser.getId());
-            System.out.println("🚀 Producto registrado exitosamente.");
+            System.out.println(":D Producto registrado exitosamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al registrar producto: " + e.getMessage());
+            System.out.println(" Error al registrar producto: " + e.getMessage());
         }
     }
 }

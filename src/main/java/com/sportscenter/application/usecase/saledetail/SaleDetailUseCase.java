@@ -44,4 +44,9 @@ public class SaleDetailUseCase {
     public void deleteDetailsBySaleId(int saleId) {
         repository.deleteBySaleId(saleId);
     }
+
+    public boolean addProductToSale(int ventaId, int productoId, int cantidad) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addProductToSale'");
+    }
 }

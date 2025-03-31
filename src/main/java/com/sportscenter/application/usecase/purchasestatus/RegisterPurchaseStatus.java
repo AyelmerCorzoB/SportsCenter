@@ -32,7 +32,7 @@ public class RegisterPurchaseStatus {
         
         try {
             purchaseStatusUseCase.registerPurchaseStatus(statusName, description.isEmpty() ? null : description);
-        System.out.println("🚀 Estado de compra registrado exitosamente.");
+        System.out.println(":D Estado de compra registrado exitosamente.");
         } catch (Exception e) {
             System.out.println("X Error al registrar el estado de venta: " + e.getMessage());
         }

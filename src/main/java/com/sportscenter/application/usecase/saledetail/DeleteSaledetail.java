@@ -38,7 +38,7 @@ public class DeleteSaledetail {
         }
 
         saleDetailUseCase.deleteSaleDetail(id);
-        System.out.println("🚀 Detalle eliminado exitosamente");
+        System.out.println(":D Detalle eliminado exitosamente");
     }
 
     private static void DeletePorVentaId(Scanner sc, SaleDetailUseCase saleDetailUseCase) {
@@ -48,6 +48,6 @@ public class DeleteSaledetail {
         sc.nextLine();
 
         saleDetailUseCase.deleteDetailsBySaleId(saleId);
-        System.out.println("🚀 Detalles de venta eliminados exitosamente");
+        System.out.println(":D Detalles de venta eliminados exitosamente");
     }
 }

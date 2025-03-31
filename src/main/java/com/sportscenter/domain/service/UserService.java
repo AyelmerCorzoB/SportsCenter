@@ -8,7 +8,7 @@ import java.util.List;
 
 public class UserService {
     private final UserRepository userRepository;
-    private User currentUser; // Variable para mantener el usuario actual
+    private User currentUser;
 
     public User getCurrentUser() {
         return this.currentUser;
@@ -24,15 +24,20 @@ public class UserService {
 
     public User authenticate(String username, String password) {
         User user = userRepository.findByUsername(username);
-
-        if (user != null && user.isActive() && user.getPassword().equals(password)) {
-            user.setLast_login(new Timestamp(System.currentTimeMillis()));
-            userRepository.update(user);
-            this.currentUser = user; // Establecer el usuario actual
-            return user;
+        
+        if (user == null || !user.getPassword().equals(password)) {
+            return null;
         }
-        this.currentUser = null; // Limpiar el usuario actual si la autenticación falla
-        return null;
+    
+        if (!user.isActive()) {
+            System.err.println("Cuenta desactivada");
+            return null;
+        }
+    
+        user.setLast_login(new Timestamp(System.currentTimeMillis()));
+        userRepository.update(user);
+        this.currentUser = user;
+        return user;
     }
 
     public User register(User user, boolean isAdmin) {

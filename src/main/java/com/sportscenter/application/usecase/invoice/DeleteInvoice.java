@@ -14,6 +14,6 @@ public class DeleteInvoice {
         sc.nextLine(); // limpiar buffer
 
         invoiceUseCase.deleteInvoice(id);
-        System.out.println("🚀 Factura eliminada exitosamente.");
+        System.out.println(":D Factura eliminada exitosamente.");
     }
 }

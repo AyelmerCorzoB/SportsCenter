@@ -37,6 +37,6 @@ public class UpdatePaymentMethod {
         String newDescription = sc.nextLine();
 
         paymentMethodUseCase.updatePaymentMethod(id, newMethodName, newDescription.isEmpty() ? null : newDescription);
-        System.out.println("🚀 Método de pago actualizado exitosamente.");
+        System.out.println(":D Método de pago actualizado exitosamente.");
     }
 }

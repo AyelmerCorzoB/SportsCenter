@@ -14,6 +14,6 @@ public class DeleteReportType {
         sc.nextLine();
         
         reportTypeUseCase.deleteReportType(id);
-        System.out.println("🚀 Tipo de reporte eliminado exitosamente.");
+        System.out.println(":D Tipo de reporte eliminado exitosamente.");
     }
 }

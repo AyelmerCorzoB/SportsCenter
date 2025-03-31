@@ -114,6 +114,6 @@ public class ConsumerUI {
         } while (nuevaContraseña.isBlank());
 
         UpdatePassword.cambiar(currentUser.getId(), nuevaContraseña);
-        System.out.println("🚀 Contraseña actualizada exitosamente.");
+        System.out.println(":D Contraseña actualizada exitosamente.");
     }
 }

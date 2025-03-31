@@ -32,6 +32,6 @@ public class RegisterReportType {
         String description = sc.nextLine();
         
         reportTypeUseCase.registerReportType(typeName, description.isEmpty() ? null : description);
-        System.out.println("🚀 Tipo de reporte registrado exitosamente.");
+        System.out.println(":D Tipo de reporte registrado exitosamente.");
     }
 }

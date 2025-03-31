@@ -28,7 +28,7 @@ public class UpdatePurchaseDetail {
 
         try {
             purchaseDetailUseCase.updatePurchaseDetail(id, quantity, unitPrice);
-            System.out.println("🚀 Detalle de compra actualizado exitosamente.");
+            System.out.println(":D Detalle de compra actualizado exitosamente.");
             System.out.println("Nuevo subtotal calculado: " + (quantity * unitPrice));
         } catch (Exception e) {
             System.out.println("X Error al actualizar el detalle de compra: " + e.getMessage());

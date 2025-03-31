@@ -28,6 +28,6 @@ public class RegisterColor {
         }
         
         colorUseCase.registerColor(name, hexCode);
-        System.out.println("🚀 Color registrado exitosamente.");
+        System.out.println(":D Color registrado exitosamente.");
     }
 }

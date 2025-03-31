@@ -32,7 +32,7 @@ public class RegisterPurchase {
         
         try {
             purchaseUseCase.registerPurchase(date, supplierId, statusId, employeeId);
-            System.out.println("🚀 Compra registrada exitosamente.");
+            System.out.println(":D Compra registrada exitosamente.");
         } catch (Exception e) {
             System.out.println("X Error al registrar compra: " + e.getMessage());
         }

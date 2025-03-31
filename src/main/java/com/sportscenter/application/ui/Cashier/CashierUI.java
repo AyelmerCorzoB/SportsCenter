@@ -79,8 +79,9 @@ public class CashierUI {
 
     private void procesarNuevaVenta() {
         System.out.println("\n--- PROCESAR NUEVA VENTA ---");
-        ConsoleUtils.pressEnterToContinue(scanner);
+        SaleUI.procesarNuevaVenta(scanner, saleUseCase);
     }
+    
 
     private void gestionarFacturas() {
         int opcion;

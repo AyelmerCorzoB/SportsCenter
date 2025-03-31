@@ -11,14 +11,20 @@ public class PaymentMethodUI {
         int opcion;
         ConsoleUtils.clear();
         do {
-            System.out.println("\n******** MENÚ DE PAYMENTMETHOD ********");
-            System.out.println("1. Registrar paymentMethod");
-            System.out.println("2. Search paymentMethod por ID");
-            System.out.println("3. Listar todas los paymentMethod");
-            System.out.println("4. Actualizar un paymentMethod");
-            System.out.println("5. Eliminar una paymentMethod");
-            System.out.println("6. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
+            String menu = """
+                        \n╔══════════════════════════════════════╗
+                        ║         MENÚ METODO DE PAGOS         ║
+                        ╠══════════════════════════════════════╣
+                        ║ 1. Registrar Metodo de pago          ║
+                        ║ 2. Buscar Metodo de pago por ID      ║
+                        ║ 3. Listar todos los Metodos de pagos ║
+                        ║ 4. Actualizar Metodo de pago         ║
+                        ║ 5. Eliminar Metodo de pago           ║
+                        ║ 6. Salir                             ║
+                        ╚══════════════════════════════════════╝
+                        Seleccione una opción:""";
+            System.out.print(menu);
+            
 
             ValidationInt.validate(sc);
             opcion = sc.nextInt();

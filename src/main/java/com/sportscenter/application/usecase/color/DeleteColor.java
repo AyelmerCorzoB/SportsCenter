@@ -14,6 +14,6 @@ public class DeleteColor {
         sc.nextLine();
         
         colorUseCase.deleteColor(id);
-        System.out.println("🚀 Color eliminado exitosamente.");
+        System.out.println(":D Color eliminado exitosamente.");
     }
 }

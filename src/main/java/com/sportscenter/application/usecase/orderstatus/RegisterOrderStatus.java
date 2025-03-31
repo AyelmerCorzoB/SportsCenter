@@ -34,6 +34,6 @@ public class RegisterOrderStatus {
         String description = sc.nextLine();
         
         orderStatusUseCase.registerOrderStatus(statusName, description.isEmpty() ? null : description);
-        System.out.println("🚀 Estado de pedido registrado exitosamente.");
+        System.out.println(":D Estado de pedido registrado exitosamente.");
     }
 }

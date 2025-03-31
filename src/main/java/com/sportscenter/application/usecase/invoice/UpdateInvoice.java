@@ -16,7 +16,7 @@ public class UpdateInvoice {
 
         Invoice invoice = invoiceUseCase.getInvoiceById(id);
         if (invoice == null) {
-            System.out.println("❌ No se encontró una factura con el ID proporcionado");
+            System.out.println(" No se encontró una factura con el ID proporcionado");
             return;
         }
 
@@ -54,9 +54,9 @@ public class UpdateInvoice {
 
         try {
             invoiceUseCase.updateInvoice(invoice);
-            System.out.println("🚀 Factura actualizada exitosamente.");
+            System.out.println(":D Factura actualizada exitosamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al actualizar la factura: " + e.getMessage());
+            System.out.println(" Error al actualizar la factura: " + e.getMessage());
         }
     }
 }
