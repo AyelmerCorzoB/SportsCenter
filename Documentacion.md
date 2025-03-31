@@ -1,4 +1,4 @@
-# Documentación del Proyecto - SportsCenter
+# Documentación - SportsCenter
 
 
 #### Descripción General
@@ -6,9 +6,9 @@
 Este proyecto es un sistema de gestión para una tienda de ropa deportiva desarrollado en **Java** con **Maven**. El sistema permite la administración de usuarios, productos, ventas y proveedores mediante un sistema de roles.
 
 ### Tecnologías Utilizadas
-- **Lenguaje:** Java
-- **Gestor de dependencias:** Maven
-- **Base de datos:** MySQL
+- **Lenguaje:** Java ☕
+- **Gestor de dependencias:** Maven 🪶
+- **Base de datos:** MySQL 🐘
 - **Arquitectura:** Consola con menús interactivos
 
 ## **Requerimientos Funcionales**
@@ -102,39 +102,23 @@ Este proyecto es un sistema de gestión para una tienda de ropa deportiva desarr
 
 ------
 
-**Reportes**
+### **Reportes**
 
-1. **Generar  reporte de ventas diarias**: El sistema genera un reporte de todas las ventas realizadas en un día.
-2. **Generar  reporte de ventas semanales**: El sistema genera un reporte de todas las ventas realizadas en una semana.
-3. **Generar reporte de ventas mensuales**: El sistema genera un reporte de todas las ventas realizadas en un mes.
-4. **Listar  productos más vendidos**: El sistema muestra un listado de los productos con mayor cantidad de ventas.
-5. **Mostrar clientes con mayor número de Purchases**: El sistema muestra un listado de los clientes que más Purchases han realizado.
-6. **Generar reporte de productos con bajo inventario**: El sistema genera un reporte de los productos que tienen un stock por debajo del mínimo establecido.
+1. **Generar reporte de ventas:** El sistema genera un reporte detallado de todas las ventas registradas, incluyendo la información del cliente, método de pago, descuento aplicado y total de la compra.
+2. **Generar reporte de ingresos:** El sistema genera un reporte con el total de ingresos generados por las ventas, desglosando cada transacción con su fecha, descuento aplicado y monto total.
+3. **Generar reporte de productos vendidos en cada venta:** El sistema genera un reporte detallado de cada venta realizada, incluyendo los productos vendidos, su cantidad, precio unitario y subtotal.
 
 ------
 
-**Casos de uso adicionales**
 
-1. **Buscar un producto por nombre o categoría**: El sistema permite buscar productos utilizando filtros como nombre o categoría.
-2. **Buscar un cliente por nombre o documento**: El sistema permite buscar clientes utilizando filtros como nombre o documento.
-3. **Exportar reportes a formato PDF o Excel**: El sistema permite exportar los reportes generados en formatos como PDF o Excel.
-4. **Notificar vencimiento de productos**: El sistema notifica cuando un producto está próximo a vencer (si aplica).
-5. **Registrar devoluciones**: El sistema permite registrar devoluciones de productos y ajustar el inventario.
-6. **Consultar ventas por empleado**: El sistema muestra un reporte de las ventas realizadas por cada empleado.
-7. **Generar reporte de ganancias**: El sistema genera un reporte de las ganancias obtenidas en un período específico.
-8. **Consultar proveedores**: El sistema muestra un listado de los proveedores registrados.
-9. **Registrar un nuevo proveedor**: El sistema permite agregar un proveedor con sus datos de contacto.
-10. **Editar información de un proveedor**: El sistema permite modificar los datos de un proveedor registrado.
-
- 
 
 ## BASE DE DATOS RELACIONADA A LA CUARTA FORMA
-
-
 
 ![sportscenter](C:\Users\ALAN\sportscenter.png)
 
 
+## DIAGRAMA DE CLASES
+![sportscenter](C:\Users\ALAN\Pictures\Screenshots\Captura de pantalla 2025-03-30 144830.png)
 ## Roles y Funcionalidades
 
 ### 1. **ADMIN (Administrador)**
