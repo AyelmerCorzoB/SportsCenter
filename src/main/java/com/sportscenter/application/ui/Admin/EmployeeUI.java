@@ -20,7 +20,7 @@ public class EmployeeUI {
                         ║ 3. Listar todos los empleados ║
                         ║ 4. Actualizar Empleado        ║
                         ║ 5. Eliminar Empleado          ║
-                        ║ 6. Salir                      ║
+                        ║ 6. Volver                     ║
                         ╚═══════════════════════════════╝
                         Seleccione una opción:""";
             System.out.print(menu);

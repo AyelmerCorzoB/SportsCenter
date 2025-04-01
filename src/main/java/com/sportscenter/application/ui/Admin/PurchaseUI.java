@@ -20,7 +20,7 @@ public class PurchaseUI {
                         ║ 3. Listar todos              ║
                         ║ 4. Actualizar Purchase       ║
                         ║ 5. Eliminar Purchase         ║
-                        ║ 6. Salir                     ║
+                        ║ 6. Volver                    ║
                         ╚══════════════════════════════╝
                         Seleccione una opción:""";
             System.out.print(menu);

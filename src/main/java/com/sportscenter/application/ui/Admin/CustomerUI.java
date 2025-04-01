@@ -20,7 +20,7 @@ public class CustomerUI {
                     ║ 3. Listar todos los Clientes ║
                     ║ 4. Actualizar Cliente        ║
                     ║ 5. Eliminar Cliente          ║
-                    ║ 6. Salir                     ║
+                    ║ 6. Volver                    ║
                     ╚══════════════════════════════╝
                     Seleccione una opción:""";
             ConsoleUtils.clear();
@@ -33,20 +33,24 @@ public class CustomerUI {
             switch (opcion) {
                 case 1:
                     new RegisterCustomer().Register(sc, customerUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 2:
                     new SearchCustomer().Search(sc, customerUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 3:
                     ConsoleUtils.clear();
-                    customerUseCase.getAllCustomers();
+                    new ListCustomer().List(customerUseCase);
                     ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 4:
                     new UpdateCustomer().Update(sc, customerUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 5:
                     new DeleteCustomer().Delete(sc, customerUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 6:
                     System.out.println("Regresando al menú principal...");

@@ -1,7 +1,6 @@
 package com.sportscenter.application.usecase.customer;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 import com.sportscenter.adapter.validations.ValidationInt;
@@ -34,20 +33,31 @@ public class RegisterCustomer {
         System.out.print("Dirección: ");
         String address = ValidationString.validate(sc);
 
-        LocalDate regDate = null;
-        boolean validDate = false;
-        while (!validDate) {
-            try {
-                System.out.print("Fecha de registro (YYYY-MM-DD): ");
-                String dateStr = sc.nextLine();
-                regDate = LocalDate.parse(dateStr);
-                validDate = true;
-            } catch (DateTimeParseException e) {
-                System.out.println("Formato de fecha inválido. Use YYYY-MM-DD");
+        LocalDate orderDate;
+        System.out.print("¿Desea ingresar una fecha personalizada? (S/N): ");
+        String opcionFecha = sc.nextLine().trim().toUpperCase();
+
+        if (opcionFecha.equals("S")) {
+            while (true) {
+                try {
+                    System.out.print("Ingrese fecha (YYYY-MM-DD): ");
+                    String orderDateStr = sc.nextLine();
+                    orderDate = LocalDate.parse(orderDateStr);
+                    if (orderDate.isAfter(LocalDate.now())) {
+                        System.out.println("La fecha no puede ser futura");
+                        continue;
+                    }
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Formato de fecha inválido. Use YYYY-MM-DD");
+                }
             }
+        } else {
+            orderDate = LocalDate.now();
+            System.out.println("Se asignará la fecha actual: " + orderDate);
         }
         try {
-            customerUseCase.registerCustomer(typeId, name, identityDoc, phone, address, regDate);
+            customerUseCase.registerCustomer(typeId, name, identityDoc, phone, address, orderDate);
             System.out.println(":D Cliente registrado exitosamente.");
         } catch (Exception e) {
             System.out.println("X Error al registrar cliente: " + e.getMessage());

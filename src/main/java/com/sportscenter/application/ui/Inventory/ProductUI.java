@@ -42,37 +42,41 @@ public class ProductUI {
 
     public void ListProductos() {
         List<Product> productos = productUseCase.getAllProducts();
-
+    
         if (productos.isEmpty()) {
-            System.out.println("\nNo hay productos registrados.");
+            System.out.println("\n╔════════════════════════════════╗");
+            System.out.println("║   No hay productos registrados  ║");
+            System.out.println("╚════════════════════════════════╝");
             return;
         }
-
-        System.out.println("\nLISTADO DE PRODUCTOS");
-        System.out.println(
-                "+----------------------------------------------------------------------------------------------------------------+");
-        System.out.printf("| %-5s | %-20s | %-30s | %-10s | %-8s | %-15s | %-15s | %-10s |\n",
-                "ID", "Nombre", "Descripción", "Precio", "Stock", "Categoría", "Proveedor", "Color");
-        System.out.println(
-                "+----------------------------------------------------------------------------------------------------------------+");
-
+    
+        System.out.println("\n╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                                            LISTADO DE PRODUCTOS                                                     ║");
+        System.out.println("╠════╦══════════════════════╦════════════════════════════╦══════════╦════════╦══════════════╦══════════════╦══════════╗");
+        System.out.println("║ ID ║ Nombre               ║ Descripción                ║ Precio   ║ Stock  ║ Categoría    ║ Proveedor    ║ Color    ║");
+        System.out.println("╠════╬══════════════════════╬════════════════════════════╬══════════╬════════╬══════════════╬══════════════╬══════════╣");
+    
         for (Product p : productos) {
-            System.out.printf("| %-5d | %-20s | %-30s | $%-9.2f | %-8d | %-15s | %-15s | %-10s |\n",
-                    p.getId(),
-                    p.getName(),
-                    p.getDescription() != null
-                            ? (p.getDescription().length() > 30 ? p.getDescription().substring(0, 27) + "..."
-                                    : p.getDescription())
-                            : "",
-                    p.getUnitPrice(),
-                    p.getCurrentStock(),
-                    p.getCategoryName(),
-                    p.getSupplierName(),
-                    p.getColorName());
+            System.out.printf(
+                "║ %-2d ║ %-20s ║ %-26s ║ $%-7.2f ║ %-6d ║ %-12s ║ %-12s ║ %-8s ║%n",
+                p.getId(),
+                truncate(p.getName(), 20),
+                truncate(p.getDescription(), 26),
+                p.getUnitPrice(),
+                p.getCurrentStock(),
+                truncate(p.getCategoryName(), 12),
+                truncate(p.getSupplierName(), 12),
+                truncate(p.getColorName(), 8)
+            );
         }
-        System.out.println(
-                "+----------------------------------------------------------------------------------------------------------------+");
-        System.out.println("Total de productos: " + productos.size());
+        System.out.println("╚════╩══════════════════════╩════════════════════════════╩══════════╩════════╩══════════════╩══════════════╩══════════╝");
+        System.out.println("║ Total de productos: " + productos.size()+"    ║");
+        System.out.println("╚═══════════════════════════╝");
+    }
+    
+    private String truncate(String value, int maxLength) {
+        if (value == null) return "N/A";
+        return value.length() > maxLength ? value.substring(0, maxLength - 3) + "..." : value;
     }
 
     public void mostrarMenu() {
@@ -89,7 +93,7 @@ public class ProductUI {
                         ║ 3. Listar todos             ║
                         ║ 4. Actualizar PRODUCTOS     ║
                         ║ 5. Eliminar PRODUCTOS       ║
-                        ║ 6. Salir                    ║
+                        ║ 6. Volver                   ║
                         ╚═════════════════════════════╝
                         Seleccione una opción:""";
             System.out.print(menu);

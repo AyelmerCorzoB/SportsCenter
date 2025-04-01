@@ -22,7 +22,7 @@ public class InvoiceUI {
                     ║ 3. Listar todas las Facturas ║
                     ║ 4. Actualizar Factura        ║
                     ║ 5. Eliminar Factura          ║
-                    ║ 6. Salir                     ║
+                    ║ 6. Volver                    ║
                     ╚══════════════════════════════╝
                     Seleccione una opción:""";
             ConsoleUtils.clear();

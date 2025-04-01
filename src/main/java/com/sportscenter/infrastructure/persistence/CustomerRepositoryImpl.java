@@ -1,6 +1,5 @@
 package com.sportscenter.infrastructure.persistence;
 
-import com.sportscenter.domain.entities.Category;
 import com.sportscenter.domain.entities.Customer;
 import com.sportscenter.domain.repository.CustomerRepository;
 import com.sportscenter.infrastructure.database.ConnectionDb;
@@ -20,8 +19,17 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public void save(Customer customer) {
-        String sql = "INSERT INTO Customer (customer_type_id, name, identity_document, phone, address) " +
-                "VALUES (?, ?, ?, ?, ?)";
+
+        if (customer.getPhone() == null || customer.getPhone().trim().isEmpty()) {
+            throw new IllegalArgumentException("El número de teléfono es obligatorio");
+        }
+        if (customer.getRegistrationDate() == null) {
+            customer.setRegistrationDate(LocalDate.now());
+        }
+
+        String sql = "INSERT INTO Customer (customer_type_id, name, identity_document, phone, address, registration_date) "
+                +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = connection.getConexion();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -29,12 +37,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             stmt.setInt(1, customer.getCustomerTypeId());
             stmt.setString(2, customer.getName());
             stmt.setString(3, customer.getIdentityDocument());
-            stmt.setInt(4, customer.getPhone());
+            stmt.setString(4, customer.getPhone());
             stmt.setString(5, customer.getAddress());
+            stmt.setDate(6, Date.valueOf(customer.getRegistrationDate()));
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error al guardar el cliente: " + e.getMessage(), e);
         }
     }
 
@@ -54,8 +63,10 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 customer.setCustomerTypeId(rs.getInt("customer_type_id"));
                 customer.setName(rs.getString("name"));
                 customer.setIdentityDocument(rs.getString("identity_document"));
-                customer.setPhone(rs.getInt("phone"));
+                customer.setPhone(rs.getString("phone"));
                 customer.setAddress(rs.getString("address"));
+                customer.setRegistrationDate(
+                        rs.getDate("registration_date") != null ? rs.getDate("registration_date").toLocalDate() : null);
                 return customer;
             }
         } catch (SQLException e) {
@@ -79,38 +90,15 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 customer.setCustomerTypeId(rs.getInt("customer_type_id"));
                 customer.setName(rs.getString("name"));
                 customer.setIdentityDocument(rs.getString("identity_document"));
-                customer.setPhone(rs.getInt("phone"));
+                customer.setPhone(rs.getString("phone"));
                 customer.setAddress(rs.getString("address"));
+                customer.setRegistrationDate(
+                        rs.getDate("registration_date") != null ? rs.getDate("registration_date").toLocalDate() : null);
                 customers.add(customer);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }              
-        System.out.println("╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                                             LISTADO DE CUSTOMERS                                                  ║");
-        System.out.println("╠════╦══════════════════════╦══════════════════╦════════════════════════╦══════════╦════════════════════════════════╣");
-        System.out.println("║ ID ║ Nombre               ║ Tipo de Cliente  ║ Documento de Identidad ║ Teléfono ║ Dirección                      ║");
-        System.out.println(
-                "╠════╬══════════════════════╬══════════════════╬════════════════════════╬══════════╬════════════════════════════════╣");
-
-        if (customers.isEmpty()) {
-            System.out.println("║                 No hay Customers registradas.                ║");
-            System.out.println("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
-        } else {
-            for (Customer customer : customers) {
-                System.out.printf(
-                        "║ %-4d ║ %-20s ║ %-18s ║ %-22s ║ %-10s ║ %-30s ║%n",
-                        customer.getId(),
-                        customer.getName(),
-                        customer.getCustomerTypeId(),
-                        customer.getIdentityDocument(),
-                        customer.getPhone(),
-                        customer.getAddress());
-            }
-            System.out.println(
-                    "╚════╩══════════════════════╩══════════════════╩════════════════════════╩══════════╩════════════════════════════════╝");
         }
-
         return customers;
     }
 
@@ -125,7 +113,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             stmt.setInt(1, customer.getCustomerTypeId());
             stmt.setString(2, customer.getName());
             stmt.setString(3, customer.getIdentityDocument());
-            stmt.setInt(4, customer.getPhone());
+            stmt.setString(4, customer.getPhone());
             stmt.setString(5, customer.getAddress());
             stmt.setInt(6, customer.getId());
 
@@ -138,6 +126,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public void guardarCliente(int customerTypeId, String name, String identityDocument, String phone, String address,
             LocalDate registrationDate, int createdBy) {
+
+        if (phone == null || phone.trim().isEmpty()) {
+            throw new IllegalArgumentException("El número de teléfono es obligatorio");
+        }
+
         String sql = "INSERT INTO Customer (customer_type_id, name, identity_document, " +
                 "phone, address, registration_date, created_by) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -165,7 +158,6 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                     System.out.println("Cliente registrado con ID: " + id);
                 }
             }
-
         } catch (SQLException e) {
             throw new RuntimeException("Error al guardar cliente: " + e.getMessage(), e);
         }

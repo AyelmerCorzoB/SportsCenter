@@ -21,7 +21,7 @@ public class ColorUI {
                     ║ 3. Listar todos           ║
                     ║ 4. Actualizar color       ║
                     ║ 5. Eliminar color         ║
-                    ║ 6. Salir                  ║
+                    ║ 6. Volver                 ║
                     ╚═══════════════════════════╝
                     Seleccione una opción:""";
             ConsoleUtils.clear();
@@ -35,9 +35,11 @@ public class ColorUI {
             switch (opcion) {
                 case 1:
                     new RegisterColor().Register(sc, colorUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 2:
                     new SearchColor().Search(sc, colorUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 3:
                     ConsoleUtils.clear();
@@ -46,9 +48,11 @@ public class ColorUI {
                     break;
                 case 4:
                     new UpdateColor().Update(sc, colorUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 5:
                     new DeleteColor().Delete(sc, colorUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 6:
                     System.out.println("Saliendo....");

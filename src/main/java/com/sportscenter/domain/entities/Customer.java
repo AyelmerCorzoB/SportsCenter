@@ -12,7 +12,7 @@ public class Customer {
     private int customerTypeId;
     private String name;
     private String identityDocument;
-    private int phone;
+    private String phone;
     private String address;
     private LocalDate registrationDate;
     private int createdBy;
@@ -26,7 +26,7 @@ public class Customer {
         this.id = id;
     }
 
-    public Customer(int customerTypeId, String name, String identityDocument, int phone, String address, LocalDate registrationDate) {
+    public Customer(int customerTypeId, String name, String identityDocument, String phone, String address, LocalDate registrationDate) {
         this.customerTypeId = customerTypeId;
         this.name = name;
         this.identityDocument = identityDocument;
@@ -48,8 +48,8 @@ public class Customer {
     public String getIdentityDocument() { return identityDocument; }
     public void setIdentityDocument(String identityDocument) { this.identityDocument = identityDocument; }
 
-    public int getPhone() { return phone; }
-    public void setPhone(int phone) { this.phone = phone; }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
 
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }

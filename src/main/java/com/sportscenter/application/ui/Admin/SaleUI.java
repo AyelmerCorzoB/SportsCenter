@@ -24,7 +24,7 @@ public class SaleUI {
                     ║ 4. Actualizar venta       ║
                     ║ 5. Eliminar venta         ║
                     ║ 6. Menu de detalles       ║
-                    ║ 7. Salir                  ║
+                    ║ 7. Volver                 ║
                     ╚═══════════════════════════╝
                     Seleccione una opción:""";
             System.out.print(menu);

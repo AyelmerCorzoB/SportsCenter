@@ -20,7 +20,7 @@ public class PurchaseStatusUI {
                         ║ 3. Listar todos                 ║
                         ║ 4. Actualizar PURCHASESTATUS    ║
                         ║ 5. Eliminar PURCHASESTATUS      ║
-                        ║ 6. Salir                        ║
+                        ║ 6. Volver                       ║
                         ╚═════════════════════════════════╝
                         Seleccione una opción:""";
             System.out.print(menu);

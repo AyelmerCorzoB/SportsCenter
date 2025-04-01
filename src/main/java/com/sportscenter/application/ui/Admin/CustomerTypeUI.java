@@ -22,7 +22,7 @@ public class CustomerTypeUI {
                     ║ 3. Listar todos los customerType        ║
                     ║ 4. Update un customerType               ║
                     ║ 5. Eliminar un customerType             ║
-                    ║ 6. Salir...                             ║
+                    ║ 6. Volver                               ║
                     ╚═════════════════════════════════════════╝
                     Seleccione una opción:""";
             ConsoleUtils.clear();
@@ -36,16 +36,22 @@ public class CustomerTypeUI {
                     ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 2:
+                    ConsoleUtils.clear();
                     new SearchCustomerType().Search(sc, customerTypeUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 3:
-                    customerTypeUseCase.getAllCustomerTypes();
+                ConsoleUtils.clear();
+                    new ListCustomerTypes().List(customerTypeUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 4:
                     new UpdateCustomerType().Update(sc, customerTypeUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 5:
                     new DeleteCustomerType().Delete(sc, customerTypeUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 6:
                     System.out.println("Saliendo....");

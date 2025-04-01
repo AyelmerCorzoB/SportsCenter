@@ -11,21 +11,21 @@ import com.sportscenter.domain.entities.Supplier;
 public class SupplierUI {
     public static void mostrarMenu(Scanner sc, SupplierUseCase supplierUseCase) {
         int opcion;
-        
+
         do {
             ConsoleUtils.clear();
             String menu = """
-                        \n╔═════════════════════════════╗
-                        ║       MENÚ PROVEEDORES      ║
-                        ╠═════════════════════════════╣
-                        ║ 1. Registrar Proveedor      ║
-                        ║ 2. Buscar Proveedor por ID  ║
-                        ║ 3. Listar todos             ║
-                        ║ 4. Actualizar Proveedor     ║
-                        ║ 5. Eliminar Proveedor       ║
-                        ║ 6. Salir                    ║
-                        ╚═════════════════════════════╝
-                        Seleccione una opción:""";
+                    \n╔═════════════════════════════╗
+                    ║       MENÚ PROVEEDORES      ║
+                    ╠═════════════════════════════╣
+                    ║ 1. Registrar Proveedor      ║
+                    ║ 2. Buscar Proveedor por ID  ║
+                    ║ 3. Listar todos             ║
+                    ║ 4. Actualizar Proveedor     ║
+                    ║ 5. Eliminar Proveedor       ║
+                    ║ 6. Volver                   ║
+                    ╚═════════════════════════════╝
+                    Seleccione una opción:""";
             System.out.print(menu);
             ValidationInt.validate(sc);
             opcion = sc.nextInt();
@@ -53,7 +53,7 @@ public class SupplierUI {
                     DeleteSupplier.Delete(sc, supplierUseCase);
                     ConsoleUtils.pressEnterToContinue(sc);
                     break;
-                case 6: 
+                case 6:
                     System.out.println("Saliendo...");
                     break;
                 default:
@@ -64,36 +64,49 @@ public class SupplierUI {
     }
 
     private static void ListProveedores(SupplierUseCase supplierUseCase) {
-        System.out.println("╔══════════════════════════════════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                         LISTADO DE PROVEEDORES                                               ║");
-        System.out.println("╠════╦════════════════════════════╦════════════════════╦════════════════════╦══════════════════╣");
-        System.out.println("║ ID ║ Nombre                     ║ Teléfono           ║ Dirección          ║ RFC              ║");
-        System.out.println("╠════╬════════════════════════════╬════════════════════╬════════════════════╬══════════════════╣");
-    
+
         try {
             List<Supplier> proveedores = supplierUseCase.getAllSuppliers();
-    
+            System.out.println(
+                    "╔══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            System.out.println(
+                    "║                         LISTADO DE PROVEEDORES                                               ║");
+            System.out.println(
+                    "╠══════════════════════════════════════════════════════════════════════════════════════════════╣");
+
             if (proveedores.isEmpty()) {
-                System.out.println("║                       No hay proveedores registrados.                        ║");
-                System.out.println("╚══════════════════════════════════════════════════════════════════════════════╝");
+                System.out.println("║                            No hay proveedores registrados.                                   ║");
+                System.out.println("║                            No hay proveedores registrados.                                   ║");
+                System.out.println("║                            No hay proveedores registrados.                                   ║");
+                System.out.println("╚══════════════════════════════════════════════════════════════════════════════════════════════╝");
                 return;
             }
+            System.out.println(
+                    "║ ID ║ Nombre                     ║ Teléfono           ║ Dirección          ║ RFC              ║");
+            System.out.println(
+                    "╠════╬════════════════════════════╬════════════════════╬════════════════════╬══════════════════╣");
             for (Supplier prov : proveedores) {
                 System.out.printf(
-                    "║ %-4d ║ %-26s ║ %-18s ║ %-18s ║ %-16s ║%n",
-                    prov.getId(),
-                    prov.getName(),
-                    prov.getPhone(),
-                    prov.getAddress(),
-                    prov.getTaxId()
-                );
+                        "║ %-2d ║ %-26s ║ %-18s ║ %-18s ║ %-16s ║%n",
+                        prov.getId(),
+                        truncate(prov.getName(), 26),
+                        prov.getPhone(),
+                        truncate(prov.getAddress(), 18),
+                        prov.getTaxId());
             }
-    
-            System.out.println("╚════╩════════════════════════════╩════════════════════╩════════════════════╩══════════════════╝");
+
+            System.out.println(
+                    "╚════╩════════════════════════════╩════════════════════╩════════════════════╩══════════════════╝");
             System.out.println("Total de proveedores: " + proveedores.size());
         } catch (Exception e) {
             System.out.println(" Error al obtener la lista de proveedores: " + e.getMessage());
         }
     }
-    
+
+    private static String truncate(String value, int maxLength) {
+        if (value == null || value.trim().isEmpty()) {
+            return "N/A";
+        }
+        return value.length() > maxLength ? value.substring(0, maxLength - 3) + "..." : value;
     }
+}

@@ -13,17 +13,21 @@ public class SearchCustomerorder {
         System.out.print("ID de la orden: ");
         ValidationInt.validate(sc);
         int id = sc.nextInt();
-        sc.nextLine(); 
+        sc.nextLine();
 
         CustomerOrder order = customerOrderUseCase.getCustomerOrderById(id);
         if (order != null) {
-            System.out.println("\nInformación de la orden:");
-            System.out.println("ID: " + order.getId());
-            System.out.println("ID Cliente: " + order.getCustomerId());
-            System.out.println("Fecha de Orden: " + order.getOrderDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
-            System.out.println("ID Estado: " + order.getStatusId());
-            System.out.println("Total: $" + order.getTotal());
-            System.out.println("ID Usuario: " + order.getUserId());
+            System.out.println("\n╔══════════════════════════════╗");
+            System.out.println("║      INFORMACIÓN DE LA ORDEN ║");
+            System.out.println("╠══════════════════════════════╣");
+            System.out.println(String.format("║ ID: %-24s ║", order.getId()));
+            System.out.println(String.format("║ Cliente: %-19s ║", order.getCustomerId()));
+            System.out.println(
+                    String.format("║ Fecha: %-21s ║", order.getOrderDate().format(DateTimeFormatter.ISO_LOCAL_DATE)));
+            System.out.println(String.format("║ Estado: %-20s ║", order.getStatusId()));
+            System.out.println(String.format("║ Total: $%-20s ║", order.getTotal()));
+            System.out.println(String.format("║ Usuario: %-19s ║", order.getUserId()));
+            System.out.println("╚══════════════════════════════╝");
         } else {
             System.out.println("X No se encontró la orden con ID: " + id);
         }

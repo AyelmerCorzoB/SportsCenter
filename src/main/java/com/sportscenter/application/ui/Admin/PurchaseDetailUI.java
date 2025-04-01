@@ -21,7 +21,7 @@ public class PurchaseDetailUI {
                     ║ 3. Listar todos los detalles       ║
                     ║ 4. Actualizar detalle de compra    ║
                     ║ 5. Eliminar detalle de compra      ║
-                    ║ 6. Salir                           ║
+                    ║ 6. Volver                          ║
                     ╚════════════════════════════════════╝
                     Seleccione una opción:""";
             System.out.print(menu);

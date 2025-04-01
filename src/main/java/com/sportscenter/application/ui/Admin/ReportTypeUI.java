@@ -20,7 +20,7 @@ public class ReportTypeUI {
                         ║ 3. Listar todos los tipo de reporte ║
                         ║ 4. Actualizar tipo de reporte       ║
                         ║ 5. Eliminar tipo de reporte         ║
-                        ║ 6. Salir                            ║
+                        ║ 6. Volver                           ║
                         ╚═════════════════════════════════════╝
                         Seleccione una opción:""";
             System.out.print(menu);

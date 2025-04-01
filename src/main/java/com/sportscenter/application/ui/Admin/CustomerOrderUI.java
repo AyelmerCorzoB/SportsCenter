@@ -20,7 +20,7 @@ public class CustomerOrderUI {
                         ║ 3. Listar todos                ║
                         ║ 4. Actualizar customerOrder    ║
                         ║ 5. Eliminar customerOrder      ║
-                        ║ 6. Salir                       ║
+                        ║ 6. Volver                      ║
                         ╚════════════════════════════════╝
                         Seleccione una opción:""";
             ConsoleUtils.clear();
@@ -33,10 +33,14 @@ public class CustomerOrderUI {
 
             switch (opcion) {
                 case 1:
+                    
                 new RegisterCustomerorder().Register(sc, customerOrderUseCase);
+                ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 2:
+                ConsoleUtils.clear();
                 new SearchCustomerorder().Search(sc, customerOrderUseCase);
+                ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 3:
                 ConsoleUtils.clear();
@@ -45,9 +49,11 @@ public class CustomerOrderUI {
                     break;
                 case 4:
                     new UpdateCustomerorder().Update(sc, customerOrderUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 5:
                     new DeleteCustomerOrder().Delete(sc, customerOrderUseCase);
+                    ConsoleUtils.pressEnterToContinue(sc);
                     break;
                 case 6:
                     System.out.println("Saliendo....");

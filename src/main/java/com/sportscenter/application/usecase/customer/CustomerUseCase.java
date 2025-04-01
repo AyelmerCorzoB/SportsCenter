@@ -19,6 +19,7 @@ public class CustomerUseCase {
         customer.setCustomerTypeId(customerTypeId);
         customer.setName(name);
         customer.setIdentityDocument(identityDocument);
+        customer.setPhone(phone);
         customer.setAddress(address);
         customer.setRegistrationDate(registrationDate);
         repository.save(customer);
@@ -32,7 +33,7 @@ public class CustomerUseCase {
         return repository.findAll();
     }
 
-    public void updateCustomer(int id, int customerTypeId, String name, String identityDocument, int phone, String address) {
+    public void updateCustomer(int id, int customerTypeId, String name, String identityDocument, String phone, String address,LocalDate registrationDate) {
         Customer customer = new Customer();
         customer.setId(id);
         customer.setCustomerTypeId(customerTypeId);
@@ -40,6 +41,7 @@ public class CustomerUseCase {
         customer.setIdentityDocument(identityDocument);
         customer.setPhone(phone);
         customer.setAddress(address);
+        customer.setRegistrationDate(registrationDate);
         repository.update(customer);
     }
 

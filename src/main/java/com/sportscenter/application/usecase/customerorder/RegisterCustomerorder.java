@@ -3,7 +3,6 @@ package com.sportscenter.application.usecase.customerorder;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.adapter.validations.ValidationInt;
 
 public class RegisterCustomerorder {
@@ -56,6 +55,5 @@ public class RegisterCustomerorder {
 
         customerOrderUseCase.registerCustomerOrder(customerId, orderDate, statusId, total, userId);
         System.out.println(":D Orden de cliente registrada exitosamente.");
-        ConsoleUtils.pressEnterToContinue(sc);
     }
 }

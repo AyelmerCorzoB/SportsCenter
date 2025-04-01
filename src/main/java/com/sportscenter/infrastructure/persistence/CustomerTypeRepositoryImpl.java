@@ -74,15 +74,6 @@ public class CustomerTypeRepositoryImpl implements CustomerTypeRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("|-------------------------------------------------------------------------|");
-        System.out.println("|                          TIPOS DE CLIENTES                              |");
-        for (CustomerType customerType : customerTypes) {
-
-            System.out.println("| ID: " + customerType.getId() + "\n" +
-                    "| Nombre: " + customerType.getTypeName() + "\n" +
-                    "| Descripcion: " + customerType.getDescription());
-            System.out.println("|-------------------------------------------------------------------------|");
-        }
         return customerTypes;
     }
 

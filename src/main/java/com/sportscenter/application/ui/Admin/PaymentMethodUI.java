@@ -20,7 +20,7 @@ public class PaymentMethodUI {
                         ║ 3. Listar todos los Metodos de pagos ║
                         ║ 4. Actualizar Metodo de pago         ║
                         ║ 5. Eliminar Metodo de pago           ║
-                        ║ 6. Salir                             ║
+                        ║ 6. Volver                            ║
                         ╚══════════════════════════════════════╝
                         Seleccione una opción:""";
             System.out.print(menu);
