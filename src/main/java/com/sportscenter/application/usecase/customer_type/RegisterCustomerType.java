@@ -11,9 +11,11 @@ public class RegisterCustomerType {
         System.out.println("Opciones: \n1. INDIVIDUAL \n2. COMPANY");
         System.out.print("Tipo de cliente: ");
         ValidationInt.validate(sc);
+        int typeNameOption = sc.nextInt();
+        sc.nextLine();
+
         String typeName = null;
-        int TypeNameOption = sc.nextInt();
-        switch (TypeNameOption) {
+        switch (typeNameOption) {
             case 1:
                 typeName = "INDIVIDUAL";
                 break;
@@ -21,13 +23,21 @@ public class RegisterCustomerType {
                 typeName = "COMPANY";
                 break;
             default:
-                System.out.println("Opcion invalido debe ser 1,2 o 3");
-                break;
+                System.out.println("Opción inválida. Debe ser 1 o 2.");
+                return;
         }
-        System.out.print("Descripción (opcional): ");
-        String description = sc.nextLine();
 
-        customerTypeUseCase.registerCustomerType(typeName, description.isEmpty() ? null : description);
-        System.out.println(":D Tipo de cliente registrado exitosamente.");
+        System.out.print("Descripción (opcional): ");
+        String description = sc.nextLine().trim();
+
+        try {
+            customerTypeUseCase.registerCustomerType(
+                    typeName,
+                    description.isEmpty() ? null : description);
+            System.out.println(":D Tipo de cliente registrado exitosamente.");
+        } catch (Exception e) {
+
+            System.out.println("Error: No se pudo registrar el tipo de cliente. " + e.getMessage());
+        }
     }
 }
