@@ -1,6 +1,19 @@
 # Documentación - SportsCenter
 
 
+---
+
+## Credenciales de Acceso
+| Rol        | Usuario    | Contraseña    |
+|------------|-----------|--------------|
+| ADMIN      | admin     | admin123     |
+| INVENTORY  | inventario | inventario123 |
+| CASHIER    | cajero    | cajero123    |
+| CUSTOMER   | cliente   | cliente123   |
+
+---
+
+
 #### Descripción General
 
 Este proyecto es un sistema de gestión para una tienda de ropa deportiva desarrollado en **Java** con **Maven**. El sistema permite la administración de usuarios, productos, ventas y proveedores mediante un sistema de roles.
@@ -270,15 +283,3 @@ CREATE TABLE Product (
     CHECK (LENGTH(name) > 0)
 );
 ```
-
----
-
-## Credenciales de Acceso
-| Rol        | Usuario    | Contraseña    |
-|------------|-----------|--------------|
-| ADMIN      | admin     | admin123     |
-| INVENTORY  | inventario | inventario123 |
-| CASHIER    | cajero    | cajero123    |
-| CUSTOMER   | cliente   | cliente123   |
-
----

@@ -54,8 +54,9 @@ public class UserService {
                 return null;
             }
 
-            user.setRole(isAdmin ? "ADMIN" : "CONSUMER");
-            user.setActive(true);
+            if(!isAdmin) {
+                user.setRole("CONSUMER"); 
+            }
 
             return userRepository.save(user);
 

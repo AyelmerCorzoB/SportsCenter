@@ -18,13 +18,29 @@ public class RegisterSupplier {
         String address = getValidatedString(sc);
 
         System.out.print("RUC/NIT: ");
-        String taxId = getValidatedString(sc);
+        String taxId = getValidatedTaxId(sc);
 
         try {
             supplierUseCase.registerSupplier(name, phone, address, taxId);
             System.out.println(":D Proveedor registrado exitosamente.");
         } catch (Exception e) {
-            System.out.println("X Error al obtener a los proveedores: " + e.getMessage());
+            System.out.println("X Error al registrar el proveedor: " + e.getMessage());
+        }
+    }
+
+    private static String getValidatedTaxId(Scanner sc) {
+        String input;
+        while (true) {
+            input = sc.nextLine().trim();
+            if (input.isEmpty()) {
+                System.out.println("¡El RUC/NIT no puede estar vacío! Ingrese nuevamente:");
+            } else if (!input.matches("\\d+")) {
+                System.out.println("¡El RUC/NIT debe contener solo dígitos! Ingrese nuevamente:");
+            } else if (input.length() != 11) {
+                System.out.println("¡El RUC/NIT debe tener 11 dígitos! Ingrese nuevamente:");
+            } else {
+                return input;
+            }
         }
     }
 

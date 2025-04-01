@@ -4,12 +4,9 @@ import com.sportscenter.adapter.global.ConsoleUtils;
 import com.sportscenter.domain.entities.User;
 import com.sportscenter.domain.service.UserService;
 
+import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Scanner;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public class AdminUI {
     private final Scanner scanner;
@@ -42,8 +39,8 @@ public class AdminUI {
             int option = obtenerOpcionValida();
 
             switch (option) {
-                case 1 -> RegisterAdminUser();
-                case 2 -> ListUsuarios();
+                case 1 -> registerAdminUser();
+                case 2 -> listUsuarios();
                 case 3 -> mostrarPanelControl();
                 case 4 -> {
                     return;
@@ -55,19 +52,25 @@ public class AdminUI {
         }
     }
 
-    private int obtenerOpcionValida() {
-        return Optional.of(scanner)
-                .filter(s -> s.hasNextInt())
-                .map(s -> {
-                    int opcion = s.nextInt();
-                    s.nextLine();
+    private int obtenerOpcionValida(int min, int max) {
+        while (true) {
+            try {
+                int opcion = scanner.nextInt();
+                scanner.nextLine();
+                
+                if (opcion >= min && opcion <= max) {
                     return opcion;
-                })
-                .orElseGet(() -> {
-                    System.out.println("Por favor, ingrese un número válido.");
-                    scanner.next();
-                    return obtenerOpcionValida();
-                });
+                }
+                System.out.printf("Por favor, ingrese un número entre %d y %d: ", min, max);
+            } catch (InputMismatchException e) {
+                System.out.print("Entrada inválida. Por favor ingrese un número: ");
+                scanner.next();
+            }
+        }
+    }
+
+    private int obtenerOpcionValida() {
+        return obtenerOpcionValida(1, 4);
     }
 
     private void mostrarPanelControl() {
@@ -75,72 +78,56 @@ public class AdminUI {
         adminUi.start();
     }
 
-    private void RegisterAdminUser() {
+    private void registerAdminUser() {
         ConsoleUtils.clear();
         System.out.println("\n╔═════════════════════════════════════════╗");
         System.out.println("║    Registro de usuario administrativo   ║");
         System.out.println("╠═════════════════════════════════════════╣");
-        Optional.ofNullable(solicitarDatosAdmin())
-                .map(adminUser -> userService.register(adminUser, true))
-                .ifPresentOrElse(
-                        registeredUser -> {
-
-                            System.out.println("╔══════════════════════════════╗");
-                            System.out.println("║     Registrado con éxito!    ║");
-                            System.out.println("╠══════════════════════════════╣");
-                            System.out.printf("║ %-15s ║ %-10s ║%n", "ID", registeredUser.getId());
-                            System.out.printf("║ %-15s ║ %-10s ║%n", "Usuario", registeredUser.getUsername());
-                            System.out.printf("║ %-15s ║ %-10s ║%n", "Rol", registeredUser.getRole());
-                            System.out.println("╚══════════════════════════════╝");
-
-                        },
-                        () -> System.out.println("\nX Error durante el registro"));
-    }
-
-    private String solicitarInput(String mensaje, Predicate<String> validador) {
-        String input;
+        
+        // Solicitar username
+        String username;
         do {
-            System.out.print(mensaje);
-            input = scanner.nextLine().trim();
-        } while (!validador.test(input));
-        return input;
-    }
-
-    private User solicitarDatosAdmin() {
-        String username = solicitarInput(
-                "║ Username (mín. 3 caracteres): ",
-                s -> s.length() >= 3);
-
-        String password = solicitarInput(
-                "║ Password (mín. 8 caracteres): ",
-                s -> s.length() >= 8);
-
-        String role = seleccionarRol();
-
-        return new User(username, password, role);
-    }
-
-    private String seleccionarRol() {
+            System.out.print("║ Username (mín. 3 caracteres): ");
+            username = scanner.nextLine().trim();
+        } while (username.length() < 3);
+        
+        // Solicitar password
+        String password;
+        do {
+            System.out.print("║ Password (mín. 8 caracteres): ");
+            password = scanner.nextLine().trim();
+        } while (password.length() < 8);
+        
+        // Seleccionar rol
         System.out.println("║ Seleccione el rol:");
         System.out.println("║ 1. ADMIN");
         System.out.println("║ 2. CASHIER");
         System.out.println("║ 3. INVENTORY");
         System.out.print("║ Opción: ");
-
-        Map<Integer, Supplier<String>> roleSuppliers = Map.of(
-                1, () -> "ADMIN",
-                2, () -> "CASHIER",
-                3, () -> "INVENTORY");
-
-        return Optional.ofNullable(roleSuppliers.get(obtenerOpcionValida()))
-                .map(Supplier::get)
-                .orElseGet(() -> {
-                    System.out.println("Opción inválida. Se asignará rol CASHIER por defecto.");
-                    return "CASHIER";
-                });
+        
+        int opcionRol = obtenerOpcionValida(1, 3);
+        String rol = switch (opcionRol) {
+            case 1 -> "ADMIN";
+            case 2 -> "CASHIER";
+            case 3 -> "INVENTORY";
+            default -> "CASHIER"; // Nunca llegará aquí por la validación anterior
+        };
+        
+        // Crear y registrar usuario
+        User nuevoUsuario = new User(username, password, rol);
+        User usuarioRegistrado = userService.register(nuevoUsuario, true);
+        
+        // Mostrar resultados
+        System.out.println("╔══════════════════════════════╗");
+        System.out.println("║     Registrado con éxito!    ║");
+        System.out.println("╠══════════════════════════════╣");
+        System.out.printf("║ %-15s ║ %-10s ║%n", "ID", usuarioRegistrado.getId());
+        System.out.printf("║ %-15s ║ %-10s ║%n", "Usuario", usuarioRegistrado.getUsername());
+        System.out.printf("║ %-15s ║ %-10s ║%n", "Rol", usuarioRegistrado.getRole());
+        System.out.println("╚══════════════════════════════╝");
     }
 
-    private void ListUsuarios() {
+    private void listUsuarios() {
         ConsoleUtils.clear();
         System.out.println("╔════════════════════════════════════════════════════════════════════════╗");
         System.out.println("║                         LISTADO DE USUARIOS                            ║");
@@ -170,5 +157,4 @@ public class AdminUI {
             System.out.println(" Error al obtener la lista de usuarios: " + e.getMessage());
         }
     }
-
 }
